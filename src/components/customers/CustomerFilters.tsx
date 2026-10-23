@@ -34,15 +34,16 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
   return (
     <div
       style={{
-        backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border-light)',
-        borderRadius: 'var(--radius-md)',
-        padding: '16px',
+        backgroundColor: 'rgba(15, 21, 35, 0.75)',
+        backdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRadius: '14px',
+        padding: '16px 20px',
         marginBottom: '20px',
-        boxShadow: 'var(--shadow-xs)',
+        boxShadow: 'var(--shadow-sm)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '12px',
+        gap: '14px',
       }}
     >
       <div
@@ -51,16 +52,16 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '12px',
+          gap: '14px',
         }}
       >
         {/* Search Input */}
-        <div style={{ position: 'relative', flex: '1 1 280px', minWidth: '240px' }}>
+        <div style={{ position: 'relative', flex: '1 1 300px', minWidth: '240px' }}>
           <Search
             size={16}
             style={{
               position: 'absolute',
-              left: '12px',
+              left: '14px',
               top: '50%',
               transform: 'translateY(-50%)',
               color: 'var(--text-tertiary)',
@@ -69,7 +70,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           <input
             type="text"
             className="form-input"
-            style={{ paddingLeft: '36px', paddingRight: searchQuery ? '32px' : '12px' }}
+            style={{ paddingLeft: '40px', paddingRight: searchQuery ? '36px' : '14px' }}
             placeholder="Search by name, company, email, or phone..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
@@ -79,12 +80,13 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
               onClick={() => onSearchChange('')}
               style={{
                 position: 'absolute',
-                right: '10px',
+                right: '12px',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 color: 'var(--text-tertiary)',
                 display: 'flex',
                 padding: '2px',
+                borderRadius: '4px',
               }}
               aria-label="Clear search text"
             >
@@ -93,10 +95,10 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           )}
         </div>
 
-        {/* Status Filter Buttons / Dropdown */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginRight: '4px', color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>
-            <Filter size={14} />
+        {/* Status Filter Buttons */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginRight: '4px', color: 'var(--text-tertiary)', fontSize: '0.8125rem', fontWeight: 500 }}>
+            <Filter size={14} color="var(--accent-violet)" />
             <span>Stage:</span>
           </div>
           {STATUS_OPTIONS.map((opt) => {
@@ -106,13 +108,14 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
                 key={opt.value}
                 onClick={() => onStatusChange(opt.value)}
                 style={{
-                  padding: '6px 12px',
-                  borderRadius: 'var(--radius-full)',
+                  padding: '6px 14px',
+                  borderRadius: '9999px',
                   fontSize: '0.8125rem',
                   fontWeight: isActive ? 600 : 400,
-                  backgroundColor: isActive ? 'var(--primary)' : 'var(--bg-secondary)',
-                  color: isActive ? 'var(--text-inverse)' : 'var(--text-secondary)',
-                  border: `1px solid ${isActive ? 'var(--primary)' : 'var(--border-light)'}`,
+                  backgroundColor: isActive ? 'var(--primary-subtle)' : 'rgba(255, 255, 255, 0.04)',
+                  color: isActive ? '#FFFFFF' : 'var(--text-secondary)',
+                  border: `1px solid ${isActive ? 'var(--primary-border)' : 'var(--border-light)'}`,
+                  boxShadow: isActive ? '0 0 16px rgba(99, 102, 241, 0.25)' : 'none',
                   transition: 'all var(--transition-fast)',
                 }}
               >
@@ -131,7 +134,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           justifyContent: 'space-between',
           fontSize: '0.8125rem',
           color: 'var(--text-secondary)',
-          paddingTop: '8px',
+          paddingTop: '10px',
           borderTop: '1px solid var(--border-light)',
         }}
       >
@@ -145,16 +148,16 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
             onClick={onReset}
             className="btn-ghost"
             style={{
-              padding: '2px 6px',
+              padding: '2px 8px',
               fontSize: '0.8125rem',
-              color: 'var(--primary)',
+              color: 'var(--accent-blue)',
               display: 'flex',
               alignItems: 'center',
               gap: '4px',
-              textDecoration: 'underline',
+              fontWeight: 500,
             }}
           >
-            <X size={12} />
+            <X size={13} />
             Reset all filters
           </button>
         )}

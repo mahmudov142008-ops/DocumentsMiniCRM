@@ -45,26 +45,26 @@ export interface DashboardStats {
 export const STATUS_CONFIG: Record<CustomerStatus, { label: string; color: string; bg: string; border: string }> = {
   New: {
     label: 'New',
-    color: '#183C28',
-    bg: '#EBF3EE',
-    border: '#C5DEC8',
+    color: '#38BDF8',
+    bg: 'rgba(56, 189, 248, 0.12)',
+    border: 'rgba(56, 189, 248, 0.28)',
   },
   Contacted: {
     label: 'Contacted',
-    color: '#8A6008',
-    bg: '#FBF4E4',
-    border: '#EED9A7',
+    color: '#FBBF24',
+    bg: 'rgba(251, 191, 36, 0.12)',
+    border: 'rgba(251, 191, 36, 0.28)',
   },
   Negotiation: {
     label: 'Negotiation',
-    color: '#5C4B7E',
-    bg: '#F2EEF8',
-    border: '#D8CCE8',
+    color: '#C084FC',
+    bg: 'rgba(192, 132, 252, 0.14)',
+    border: 'rgba(192, 132, 252, 0.32)',
   },
   Lost: {
     label: 'Lost',
-    color: '#626764',
-    bg: '#F0F1F0',
-    border: '#D4D7D5',
+    color: '#94A3B8',
+    bg: 'rgba(148, 163, 184, 0.12)',
+    border: 'rgba(148, 163, 184, 0.24)',
   },
 };

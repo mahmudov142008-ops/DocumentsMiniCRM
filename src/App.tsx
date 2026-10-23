@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider, useToast } from './context/ToastContext';
+import { LandingPage } from './pages/LandingPage';
 import { AuthPage } from './pages/AuthPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { CustomersPage } from './pages/CustomersPage';
@@ -10,6 +11,8 @@ import { customerService } from './services/customerService';
 import { Customer, CustomerInput, CustomerStatus } from './types/crm';
 import './styles/main.css';
 
+type PublicView = 'landing' | 'login' | 'register';
+
 const MainApplication: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
@@ -17,6 +20,48 @@ const MainApplication: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<AppPage>('dashboard');
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loadingCustomers, setLoadingCustomers] = useState(false);
+
+  // Public route navigation
+  const getInitialPublicView = (): PublicView => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#login') return 'login';
+      if (hash === '#register') return 'register';
+    }
+    return 'landing';
+  };
+
+  const [publicView, setPublicView] = useState<PublicView>(getInitialPublicView);
+
+  // Sync publicView with browser hash
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#login') {
+        setPublicView('login');
+      } else if (hash === '#register') {
+        setPublicView('register');
+      } else if (!hash || hash === '#' || hash === '#/' || hash === '#features' || hash === '#workflow' || hash === '#about') {
+        if (!window.location.hash.startsWith('#login') && !window.location.hash.startsWith('#register')) {
+          setPublicView('landing');
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const navigatePublicView = (view: PublicView) => {
+    setPublicView(view);
+    if (view === 'login') {
+      window.location.hash = '#login';
+    } else if (view === 'register') {
+      window.location.hash = '#register';
+    } else {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+  };
 
   // Stable ref to toast so it never causes useCallback to re-create
   const toastRef = useRef(toast);
@@ -42,7 +87,7 @@ const MainApplication: React.FC = () => {
     } finally {
       setLoadingCustomers(false);
     }
-  }, [user]); // toast intentionally omitted — accessed via stable ref to prevent render loop
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -117,30 +162,45 @@ const MainApplication: React.FC = () => {
       >
         <div
           style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--primary)',
-            color: 'var(--text-inverse)',
+            width: '46px',
+            height: '46px',
+            borderRadius: '12px',
+            background: 'var(--primary-gradient)',
+            boxShadow: '0 0 28px rgba(99, 102, 241, 0.45)',
+            color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontWeight: 700,
+            fontWeight: 800,
             fontSize: '1.25rem',
           }}
         >
           M
         </div>
         <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Loading Mini CRM...
+          Loading MiniCRM...
         </span>
       </div>
     );
   }
 
-  // Not authenticated
+  // Not authenticated: Show Public Landing Page or Auth Page based on route
   if (!user) {
-    return <AuthPage />;
+    if (publicView === 'landing') {
+      return (
+        <LandingPage
+          onGetStarted={() => navigatePublicView('register')}
+          onSignIn={() => navigatePublicView('login')}
+        />
+      );
+    }
+
+    return (
+      <AuthPage
+        initialMode={publicView === 'register' ? 'register' : 'login'}
+        onBackToLanding={() => navigatePublicView('landing')}
+      />
+    );
   }
 
   // Authenticated Main Workspace

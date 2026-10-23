@@ -33,17 +33,26 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
   };
 
   return (
-    <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <div
+      className="card"
+      style={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'linear-gradient(180deg, rgba(20, 27, 45, 0.7) 0%, rgba(13, 18, 30, 0.85) 100%)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+      }}
+    >
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: '16px',
+          marginBottom: '20px',
         }}
       >
-        <h3 style={{ fontSize: '1rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Clock size={16} color="var(--primary)" />
+        <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', color: '#FFFFFF' }}>
+          <Clock size={18} color="var(--accent-violet)" />
           Recently Added Leads
         </h3>
         <button
@@ -51,12 +60,20 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
           className="btn-ghost"
           style={{
             fontSize: '0.8125rem',
-            color: 'var(--primary)',
-            padding: '4px 6px',
+            color: 'var(--accent-blue)',
+            padding: '4px 8px',
             display: 'flex',
             alignItems: 'center',
             gap: '4px',
             fontWeight: 500,
+            borderRadius: '6px',
+            transition: 'all 150ms',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(56, 189, 248, 0.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'transparent';
           }}
         >
           View all <ArrowRight size={13} />
@@ -71,15 +88,15 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '32px 16px',
+            padding: '36px 16px',
             textAlign: 'center',
-            color: 'var(--text-secondary)',
+            color: 'var(--text-tertiary)',
           }}
         >
-          <p style={{ fontSize: '0.875rem', marginBottom: '14px' }}>
+          <p style={{ fontSize: '0.875rem', marginBottom: '16px' }}>
             No customer records created yet.
           </p>
-          <button onClick={onAddCustomer} className="btn btn-primary" style={{ fontSize: '0.8125rem' }}>
+          <button onClick={onAddCustomer} className="btn btn-primary" style={{ fontSize: '0.8125rem', padding: '8px 16px' }}>
             <Plus size={14} /> Add your first lead
           </button>
         </div>
@@ -93,20 +110,22 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '10px 12px',
-                borderRadius: 'var(--radius-sm)',
-                border: '1px solid var(--border-light)',
-                backgroundColor: 'var(--bg-card-subtle)',
+                padding: '12px 14px',
+                borderRadius: '10px',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                backgroundColor: 'rgba(15, 21, 35, 0.6)',
                 cursor: 'pointer',
-                transition: 'border-color var(--transition-fast), background-color var(--transition-fast)',
+                transition: 'all var(--transition-fast)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--bg-hover)';
-                e.currentTarget.style.borderColor = 'var(--border-medium)';
+                e.currentTarget.style.backgroundColor = 'rgba(25, 35, 58, 0.75)';
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.35)';
+                e.currentTarget.style.transform = 'translateX(2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--bg-card-subtle)';
-                e.currentTarget.style.borderColor = 'var(--border-light)';
+                e.currentTarget.style.backgroundColor = 'rgba(15, 21, 35, 0.6)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                e.currentTarget.style.transform = 'none';
               }}
             >
               <div style={{ minWidth: 0, paddingRight: '8px' }}>
@@ -129,15 +148,15 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
                     color: 'var(--text-tertiary)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px',
+                    gap: '5px',
                     marginTop: '2px',
                   }}
                 >
-                  <Building size={11} /> {c.company}
+                  <Building size={12} /> {c.company}
                 </span>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
                   {formatDate(c.created_at)}
                 </span>

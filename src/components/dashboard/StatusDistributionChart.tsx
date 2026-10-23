@@ -41,13 +41,22 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
   });
 
   return (
-    <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <PieChartIcon size={16} color="var(--primary)" />
+    <div
+      className="card"
+      style={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'linear-gradient(180deg, rgba(20, 27, 45, 0.7) 0%, rgba(13, 18, 30, 0.85) 100%)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+        <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', color: '#FFFFFF' }}>
+          <PieChartIcon size={18} color="var(--accent-blue)" />
           Pipeline Distribution
         </h3>
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
+        <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', background: 'rgba(255, 255, 255, 0.05)', padding: '2px 8px', borderRadius: '999px', border: '1px solid var(--border-light)' }}>
           {total} total records
         </span>
       </div>
@@ -59,12 +68,12 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--text-secondary)',
+            color: 'var(--text-tertiary)',
             fontSize: '0.875rem',
-            padding: '32px 0',
+            padding: '36px 0',
           }}
         >
-          No data available to generate pipeline chart
+          No active customer data to generate pipeline breakdown
         </div>
       ) : (
         <div
@@ -84,7 +93,7 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                 cy="80"
                 r={radius}
                 fill="none"
-                stroke="var(--bg-secondary)"
+                stroke="rgba(255, 255, 255, 0.06)"
                 strokeWidth="18"
               />
               {segments.map((s) => (
@@ -114,17 +123,17 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                 pointerEvents: 'none',
               }}
             >
-              <span style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1 }}>
+              <span style={{ fontSize: '1.625rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1 }}>
                 {total}
               </span>
-              <span style={{ fontSize: '0.6875rem', color: 'var(--text-tertiary)', marginTop: '2px' }}>
+              <span style={{ fontSize: '0.6875rem', color: 'var(--text-tertiary)', marginTop: '2px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Deals
               </span>
             </div>
           </div>
 
           {/* Breakdown bars and legend */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {segments.map((s) => (
               <div key={s.stage}>
                 <div
@@ -133,19 +142,20 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     fontSize: '0.8125rem',
-                    marginBottom: '4px',
+                    marginBottom: '5px',
                   }}
                 >
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span
                       style={{
                         width: '8px',
                         height: '8px',
                         borderRadius: '50%',
                         backgroundColor: s.config.color,
+                        boxShadow: `0 0 8px ${s.config.color}`,
                       }}
                     />
-                    <strong style={{ fontWeight: 500 }}>{s.config.label}</strong>
+                    <strong style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{s.config.label}</strong>
                   </span>
                   <span style={{ color: 'var(--text-secondary)' }}>
                     {s.count} ({s.percentage}%)
@@ -155,7 +165,7 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                 <div
                   style={{
                     height: '5px',
-                    backgroundColor: 'var(--bg-secondary)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
                     borderRadius: 'var(--radius-full)',
                     overflow: 'hidden',
                   }}
@@ -167,6 +177,7 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                       backgroundColor: s.config.color,
                       borderRadius: 'var(--radius-full)',
                       transition: 'width 0.4s ease',
+                      boxShadow: `0 0 10px ${s.config.color}`,
                     }}
                   />
                 </div>

@@ -1,70 +1,93 @@
 :root {
-  /* Color Palette - Warm Ivory, Forest Green, Subtle Violet, Graphite */
-  --bg-primary: #FAF8F5;
-  --bg-secondary: #F3EFEA;
-  --bg-card: #FFFFFF;
-  --bg-card-subtle: #FCFBF9;
-  --bg-hover: #F0ECE5;
+  /* ==============================================================================
+     MiniCRM Design Tokens — Premium Dark Glassmorphism SaaS
+     Deep Navy / Graphite backgrounds with Violet and Electric Blue Accents
+     ============================================================================== */
 
-  /* Primary: Deep Forest Green */
-  --primary: #183C28;
-  --primary-hover: #235438;
-  --primary-active: #10291B;
-  --primary-subtle: #EBF3EE;
-  --primary-border: #C8DEC9;
+  /* Backgrounds */
+  --bg-primary: #080B11;
+  --bg-secondary: #0D121D;
+  --bg-tertiary: #121826;
+  --bg-card: rgba(15, 21, 35, 0.75);
+  --bg-card-hover: rgba(22, 31, 52, 0.85);
+  --bg-card-subtle: rgba(12, 17, 28, 0.65);
+  --bg-card-solid: #0F1523;
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --bg-active: rgba(255, 255, 255, 0.09);
 
-  /* Secondary / Accent: Subtle Violet */
-  --accent-violet: #6E5D91;
-  --accent-violet-hover: #5A4A7A;
-  --accent-violet-subtle: #F3F0F8;
-  --accent-violet-border: #D7CEE5;
+  /* Primary Palette: Vibrant Indigo to Violet Gradient */
+  --primary: #6366F1;
+  --primary-hover: #4F46E5;
+  --primary-active: #4338CA;
+  --primary-subtle: rgba(99, 102, 241, 0.14);
+  --primary-border: rgba(99, 102, 241, 0.32);
+  --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  --primary-glow: 0 0 24px rgba(99, 102, 241, 0.32);
 
-  /* Semantic Status Colors */
-  --status-new-text: #183C28;
-  --status-new-bg: #EBF3EE;
-  --status-new-border: #C5DEC8;
+  /* Secondary Accents: Electric Blue / Cyan & Violet */
+  --accent-blue: #38BDF8;
+  --accent-blue-hover: #0EA5E9;
+  --accent-blue-subtle: rgba(56, 189, 248, 0.12);
+  --accent-blue-border: rgba(56, 189, 248, 0.3);
 
-  --status-contacted-text: #8A6008;
-  --status-contacted-bg: #FBF4E4;
-  --status-contacted-border: #EED9A7;
+  --accent-violet: #8B5CF6;
+  --accent-violet-hover: #7C3AED;
+  --accent-violet-subtle: rgba(139, 92, 246, 0.14);
+  --accent-violet-border: rgba(139, 92, 246, 0.35);
 
-  --status-negotiation-text: #5C4B7E;
-  --status-negotiation-bg: #F2EEF8;
-  --status-negotiation-border: #D8CCE8;
+  /* Semantic Status Colors (Glassmorphic Badges & Indicators) */
+  --status-new-text: #38BDF8;
+  --status-new-bg: rgba(56, 189, 248, 0.12);
+  --status-new-border: rgba(56, 189, 248, 0.28);
 
-  --status-lost-text: #5A625D;
-  --status-lost-bg: #EFEFEF;
-  --status-lost-border: #D8DDD9;
+  --status-contacted-text: #FBBF24;
+  --status-contacted-bg: rgba(251, 191, 36, 0.12);
+  --status-contacted-border: rgba(251, 191, 36, 0.28);
+
+  --status-negotiation-text: #C084FC;
+  --status-negotiation-bg: rgba(192, 132, 252, 0.14);
+  --status-negotiation-border: rgba(192, 132, 252, 0.32);
+
+  --status-lost-text: #94A3B8;
+  --status-lost-bg: rgba(148, 163, 184, 0.12);
+  --status-lost-border: rgba(148, 163, 184, 0.24);
 
   /* Destructive */
-  --danger: #B4342B;
-  --danger-hover: #982A22;
-  --danger-subtle: #FDEDEC;
-  --danger-border: #F7C6C3;
+  --danger: #EF4444;
+  --danger-hover: #DC2626;
+  --danger-subtle: rgba(239, 68, 68, 0.12);
+  --danger-border: rgba(239, 68, 68, 0.28);
 
-  /* Typography Colors - Graphite */
-  --text-primary: #232825;
-  --text-secondary: #58605B;
-  --text-tertiary: #87908B;
+  /* Typography Colors - Crisp SaaS Contrast */
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
   --text-inverse: #FFFFFF;
 
   /* Borders & Dividers */
-  --border-light: #EBE6DC;
-  --border-medium: #DCD6CA;
-  --border-strong: #BCB4A5;
+  --border-light: rgba(255, 255, 255, 0.07);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --border-glow: rgba(139, 92, 246, 0.45);
 
-  /* Shadows (Restrained & Elegant) */
-  --shadow-xs: 0 1px 2px rgba(24, 40, 30, 0.04);
-  --shadow-sm: 0 2px 6px rgba(24, 40, 30, 0.05);
-  --shadow-md: 0 6px 18px rgba(24, 40, 30, 0.07);
-  --shadow-lg: 0 12px 32px rgba(24, 40, 30, 0.09);
+  /* Shadows (Glassmorphic Depth) */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 28px rgba(99, 102, 241, 0.28);
+  --shadow-glow-cyan: 0 0 28px rgba(56, 189, 248, 0.22);
+
+  /* Glassmorphism Blur */
+  --glass-blur: blur(16px);
+  --glass-blur-sm: blur(8px);
 
   /* Border Radii */
   --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 
   /* Spacing */

@@ -21,29 +21,33 @@ export const StatCards: React.FC<StatCardsProps> = ({ customers }) => {
       label: 'Total Customers',
       value: total,
       sub: 'All registered leads',
-      icon: <Users size={20} color="var(--primary)" />,
-      accentBg: 'var(--primary-subtle)',
+      icon: <Users size={20} color="var(--accent-blue)" />,
+      accentBg: 'rgba(56, 189, 248, 0.12)',
+      borderAccent: 'rgba(56, 189, 248, 0.25)',
     },
     {
       label: 'New Leads',
       value: newCount,
       sub: 'Awaiting first contact',
-      icon: <UserPlus size={20} color="var(--primary)" />,
-      accentBg: 'var(--status-new-bg)',
+      icon: <UserPlus size={20} color="#34D399" />,
+      accentBg: 'rgba(16, 185, 129, 0.12)',
+      borderAccent: 'rgba(16, 185, 129, 0.25)',
     },
     {
       label: 'Active Pipeline',
       value: activePipeline,
       sub: `${contactedCount} contacted, ${negotiationCount} negotiating`,
       icon: <TrendingUp size={20} color="var(--accent-violet)" />,
-      accentBg: 'var(--accent-violet-subtle)',
+      accentBg: 'rgba(139, 92, 246, 0.14)',
+      borderAccent: 'rgba(139, 92, 246, 0.28)',
     },
     {
       label: 'Negotiation Rate',
       value: `${conversionRate}%`,
       sub: `${lostCount} lost deals`,
-      icon: <AlertOctagon size={20} color="var(--text-secondary)" />,
-      accentBg: 'var(--bg-secondary)',
+      icon: <AlertOctagon size={20} color="#FBBF24" />,
+      accentBg: 'rgba(251, 191, 36, 0.12)',
+      borderAccent: 'rgba(251, 191, 36, 0.25)',
     },
   ];
 
@@ -64,14 +68,16 @@ export const StatCards: React.FC<StatCardsProps> = ({ customers }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '20px',
+            padding: '20px 22px',
+            border: `1px solid ${s.borderAccent}`,
+            background: 'linear-gradient(180deg, rgba(20, 27, 45, 0.7) 0%, rgba(13, 18, 30, 0.85) 100%)',
           }}
         >
           <div>
             <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
               {s.label}
             </span>
-            <div style={{ fontSize: '1.75rem', fontWeight: 700, margin: '4px 0', color: 'var(--text-primary)' }}>
+            <div style={{ fontSize: '1.875rem', fontWeight: 700, margin: '4px 0', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
               {s.value}
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>{s.sub}</span>
@@ -79,10 +85,11 @@ export const StatCards: React.FC<StatCardsProps> = ({ customers }) => {
 
           <div
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: 'var(--radius-md)',
+              width: '46px',
+              height: '46px',
+              borderRadius: '12px',
               backgroundColor: s.accentBg,
+              border: `1px solid ${s.borderAccent}`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

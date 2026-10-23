@@ -112,19 +112,22 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
       <div
         className="modal-container"
         style={{
-          maxWidth: '620px',
-          height: '85vh',
+          maxWidth: '640px',
+          height: '88vh',
           display: 'flex',
           flexDirection: 'column',
+          backgroundColor: '#0F1523',
+          border: '1px solid rgba(255, 255, 255, 0.12)',
+          boxShadow: '0 24px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(99, 102, 241, 0.2)',
         }}
       >
         {/* Header */}
-        <div className="modal-header">
+        <div className="modal-header" style={{ padding: '20px 24px', borderBottom: '1px solid var(--border-light)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <h2 className="modal-title">{customer.name}</h2>
+            <h2 className="modal-title" style={{ fontSize: '1.25rem', color: '#FFFFFF' }}>{customer.name}</h2>
             <Badge status={customer.status} />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
               onClick={() => onEdit(customer)}
               className="btn btn-secondary"
@@ -146,7 +149,7 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
             <button
               onClick={onClose}
               className="btn-ghost"
-              style={{ padding: '6px', borderRadius: 'var(--radius-sm)' }}
+              style={{ padding: '6px', borderRadius: '8px', color: 'var(--text-tertiary)' }}
               aria-label="Close details"
             >
               <X size={18} />
@@ -162,46 +165,54 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
               gap: '16px',
-              backgroundColor: 'var(--bg-card-subtle)',
-              border: '1px solid var(--border-light)',
-              borderRadius: 'var(--radius-md)',
-              padding: '16px',
+              backgroundColor: 'rgba(20, 27, 45, 0.65)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: '14px',
+              padding: '18px',
               marginBottom: '28px',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Building size={16} color="var(--primary)" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(99, 102, 241, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Building size={18} color="var(--accent-blue)" />
+              </div>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'block' }}>Company</span>
-                <span style={{ fontSize: '0.9375rem', fontWeight: 500 }}>{customer.company}</span>
+                <span style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)' }}>{customer.company}</span>
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Mail size={16} color="var(--primary)" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(139, 92, 246, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Mail size={18} color="var(--accent-violet)" />
+              </div>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'block' }}>Email</span>
-                <a href={`mailto:${customer.email}`} style={{ fontSize: '0.9375rem', wordBreak: 'break-all' }}>
+                <a href={`mailto:${customer.email}`} style={{ fontSize: '0.9375rem', wordBreak: 'break-all', color: 'var(--accent-blue)' }}>
                   {customer.email}
                 </a>
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Phone size={16} color="var(--primary)" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Phone size={18} color="#34D399" />
+              </div>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'block' }}>Phone</span>
-                <a href={`tel:${customer.phone}`} style={{ fontSize: '0.9375rem' }}>
+                <a href={`tel:${customer.phone}`} style={{ fontSize: '0.9375rem', color: '#34D399' }}>
                   {customer.phone}
                 </a>
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Calendar size={16} color="var(--primary)" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(251, 191, 36, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Calendar size={18} color="#FBBF24" />
+              </div>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'block' }}>Added On</span>
-                <span style={{ fontSize: '0.9375rem' }}>{formatDate(customer.created_at)}</span>
+                <span style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)' }}>{formatDate(customer.created_at)}</span>
               </div>
             </div>
           </div>
@@ -216,16 +227,17 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                 marginBottom: '16px',
               }}
             >
-              <h3 style={{ fontSize: '1rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <MessageSquare size={16} color="var(--primary)" />
-                Activity & Notes
+              <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', color: '#FFFFFF' }}>
+                <MessageSquare size={18} color="var(--accent-blue)" />
+                Activity & Interaction Notes
                 <span
                   style={{
                     fontSize: '0.75rem',
-                    backgroundColor: 'var(--bg-secondary)',
+                    backgroundColor: 'rgba(99, 102, 241, 0.14)',
                     padding: '2px 8px',
-                    borderRadius: 'var(--radius-full)',
-                    color: 'var(--text-secondary)',
+                    borderRadius: '9999px',
+                    color: 'var(--accent-blue)',
+                    border: '1px solid var(--primary-border)',
                   }}
                 >
                   {notes.length}
@@ -235,11 +247,11 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
 
             {/* Add Note Input */}
             <form onSubmit={handleAddNote} style={{ marginBottom: '24px' }}>
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ display: 'flex', gap: '10px' }}>
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="Add a timestamped note or meeting summary..."
+                  placeholder="Add a timestamped note, call summary, or next step..."
                   value={newNoteContent}
                   onChange={(e) => setNewNoteContent(e.target.value)}
                   disabled={submittingNote}
@@ -249,9 +261,9 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                   type="submit"
                   className="btn btn-primary"
                   disabled={submittingNote || !newNoteContent.trim()}
-                  style={{ padding: '0 16px' }}
+                  style={{ padding: '0 18px', borderRadius: '10px' }}
                 >
-                  <Send size={14} />
+                  <Send size={15} />
                   {submittingNote ? 'Saving...' : 'Add Note'}
                 </button>
               </div>
@@ -260,17 +272,18 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
             {/* Notes Timeline List */}
             {loadingNotes ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <div style={{ height: '50px', backgroundColor: 'var(--border-light)', borderRadius: 'var(--radius-sm)' }} />
-                <div style={{ height: '50px', backgroundColor: 'var(--border-light)', borderRadius: 'var(--radius-sm)' }} />
+                <div style={{ height: '60px', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '10px' }} />
+                <div style={{ height: '60px', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '10px' }} />
               </div>
             ) : notes.length === 0 ? (
               <div
                 style={{
                   textAlign: 'center',
-                  padding: '28px 16px',
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderRadius: 'var(--radius-md)',
-                  color: 'var(--text-secondary)',
+                  padding: '32px 16px',
+                  backgroundColor: 'rgba(20, 27, 45, 0.45)',
+                  border: '1px dashed rgba(255, 255, 255, 0.1)',
+                  borderRadius: '12px',
+                  color: 'var(--text-tertiary)',
                   fontSize: '0.875rem',
                 }}
               >
@@ -282,20 +295,23 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                   <div
                     key={note.id}
                     style={{
-                      padding: '14px 16px',
-                      backgroundColor: 'var(--bg-card)',
-                      border: '1px solid var(--border-light)',
-                      borderRadius: 'var(--radius-md)',
+                      padding: '16px 18px',
+                      backgroundColor: 'rgba(20, 27, 45, 0.7)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '12px',
                       boxShadow: 'var(--shadow-xs)',
                       position: 'relative',
+                      transition: 'border-color 150ms',
                     }}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)')}
                   >
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        marginBottom: '6px',
+                        marginBottom: '8px',
                       }}
                     >
                       <span
@@ -304,22 +320,24 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                           color: 'var(--text-tertiary)',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '4px',
+                          gap: '6px',
                         }}
                       >
-                        <Clock size={12} />
+                        <Clock size={13} color="var(--accent-violet)" />
                         {formatDate(note.created_at)}
                       </span>
                       <button
                         onClick={() => handleDeleteNote(note.id)}
                         className="btn-ghost"
-                        style={{ padding: '2px 4px', fontSize: '0.75rem', color: 'var(--danger)' }}
+                        style={{ padding: '3px 6px', fontSize: '0.75rem', color: 'var(--danger)', borderRadius: '4px' }}
                         title="Delete note"
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.15)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                       >
                         <Trash2 size={13} />
                       </button>
                     </div>
-                    <p style={{ color: 'var(--text-primary)', fontSize: '0.9375rem', whiteSpace: 'pre-wrap' }}>
+                    <p style={{ color: 'var(--text-primary)', fontSize: '0.9375rem', whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>
                       {note.content}
                     </p>
                   </div>

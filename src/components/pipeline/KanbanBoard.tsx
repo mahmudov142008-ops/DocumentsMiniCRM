@@ -47,7 +47,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '16px',
+          gap: '18px',
           overflowX: 'auto',
           paddingBottom: '16px',
           alignItems: 'start',
@@ -61,13 +61,15 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
             <div
               key={columnKey}
               style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderRadius: 'var(--radius-lg)',
-                padding: '14px',
-                border: '1px solid var(--border-light)',
+                backgroundColor: 'rgba(13, 18, 29, 0.75)',
+                backdropFilter: 'blur(16px)',
+                borderRadius: '16px',
+                padding: '16px',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
                 display: 'flex',
                 flexDirection: 'column',
-                minHeight: '480px',
+                minHeight: '520px',
+                boxShadow: 'var(--shadow-sm)',
               }}
             >
               {/* Column Header */}
@@ -76,8 +78,8 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  marginBottom: '12px',
-                  paddingBottom: '8px',
+                  marginBottom: '14px',
+                  paddingBottom: '10px',
                   borderBottom: `2px solid ${config.border}`,
                 }}
               >
@@ -88,9 +90,10 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                       height: '8px',
                       borderRadius: '50%',
                       backgroundColor: config.color,
+                      boxShadow: `0 0 8px ${config.color}`,
                     }}
                   />
-                  <h3 style={{ fontSize: '0.9375rem', fontWeight: 600 }}>{config.label}</h3>
+                  <h3 style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)' }}>{config.label}</h3>
                   <span
                     style={{
                       fontSize: '0.75rem',
@@ -98,7 +101,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                       backgroundColor: config.bg,
                       color: config.color,
                       padding: '2px 8px',
-                      borderRadius: 'var(--radius-full)',
+                      borderRadius: '9999px',
                       border: `1px solid ${config.border}`,
                     }}
                   >
@@ -110,9 +113,18 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                   onClick={() => onAddInStage(columnKey)}
                   className="btn-ghost"
                   style={{
-                    padding: '4px',
-                    borderRadius: 'var(--radius-sm)',
-                    color: 'var(--text-secondary)',
+                    padding: '6px',
+                    borderRadius: '8px',
+                    color: 'var(--text-tertiary)',
+                    transition: 'all 150ms',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'var(--text-primary)';
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'var(--text-tertiary)';
+                    e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                   title={`Add customer directly to ${columnKey}`}
                 >
@@ -128,10 +140,11 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                     {...provided.droppableProps}
                     style={{
                       flex: 1,
-                      minHeight: '200px',
-                      backgroundColor: snapshot.isDraggingOver ? 'var(--primary-subtle)' : 'transparent',
-                      borderRadius: 'var(--radius-md)',
-                      transition: 'background-color var(--transition-fast)',
+                      minHeight: '220px',
+                      backgroundColor: snapshot.isDraggingOver ? 'rgba(99, 102, 241, 0.12)' : 'transparent',
+                      borderRadius: '12px',
+                      border: snapshot.isDraggingOver ? '1px dashed var(--accent-violet)' : '1px solid transparent',
+                      transition: 'all var(--transition-fast)',
                       padding: '4px',
                     }}
                   >
@@ -139,9 +152,9 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                       <div
                         style={{
                           textAlign: 'center',
-                          padding: '32px 12px',
-                          border: '1px dashed var(--border-medium)',
-                          borderRadius: 'var(--radius-md)',
+                          padding: '36px 12px',
+                          border: '1px dashed rgba(255, 255, 255, 0.1)',
+                          borderRadius: '12px',
                           color: 'var(--text-tertiary)',
                           fontSize: '0.8125rem',
                         }}

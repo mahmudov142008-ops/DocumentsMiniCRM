@@ -1,6 +1,8 @@
 @import './tokens.css';
 
-/* CSS Reset & Apple-inspired Base */
+/* ==============================================================================
+   CSS Reset & Base Setup
+   ============================================================================== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -12,25 +14,29 @@ html, body {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+              radial-gradient(circle at 100% 40%, rgba(56, 189, 248, 0.04) 0%, transparent 50%),
+              var(--bg-primary);
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 p {
@@ -38,13 +44,13 @@ p {
 }
 
 a {
-  color: var(--primary);
+  color: var(--accent-blue);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--primary-hover);
+  color: #7dd3fc;
 }
 
 button, input, select, textarea {
@@ -78,19 +84,30 @@ button {
 
 .form-input, .form-select, .form-textarea {
   width: 100%;
-  padding: 9px 12px;
-  background: var(--bg-card);
+  padding: 10px 14px;
+  background: rgba(15, 21, 35, 0.85);
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
   font-size: 0.9375rem;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: all var(--transition-fast);
+  backdrop-filter: var(--glass-blur-sm);
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+  color: var(--text-tertiary);
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(24, 60, 40, 0.12);
+  border-color: var(--accent-violet);
+  background: rgba(20, 28, 48, 0.95);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.22), 0 0 16px rgba(139, 92, 246, 0.15);
+}
+
+.form-select option {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .form-input.has-error, .form-select.has-error {
@@ -98,22 +115,22 @@ button {
 }
 
 .form-input.has-error:focus {
-  box-shadow: 0 0 0 3px rgba(180, 52, 43, 0.12);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
 }
 
 .form-error {
   font-size: 0.75rem;
   color: var(--danger);
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
-/* Primary and Secondary Buttons */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 8px 16px;
+  padding: 9px 18px;
   border-radius: var(--radius-sm);
   font-weight: 500;
   font-size: 0.875rem;
@@ -122,25 +139,32 @@ button {
 }
 
 .btn-primary {
-  background: var(--primary);
+  background: var(--primary-gradient);
   color: var(--text-inverse);
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--primary-hover);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-secondary {
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-primary);
   border: 1px solid var(--border-medium);
+  backdrop-filter: var(--glass-blur-sm);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: var(--bg-hover);
+  background: rgba(255, 255, 255, 0.08);
   border-color: var(--border-strong);
+  color: var(--text-inverse);
 }
 
 .btn-ghost {
@@ -156,6 +180,7 @@ button {
 .btn-danger {
   background: var(--danger);
   color: var(--text-inverse);
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
 }
 
 .btn-danger:hover:not(:disabled) {
@@ -163,21 +188,23 @@ button {
 }
 
 .btn:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none !important;
 }
 
 /* Badges */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
+  gap: 5px;
+  padding: 3px 9px;
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: var(--radius-full);
   border: 1px solid transparent;
   white-space: nowrap;
+  backdrop-filter: blur(4px);
 }
 
 .badge-new {
@@ -204,40 +231,46 @@ button {
   border-color: var(--status-lost-border);
 }
 
-/* Card Container */
+/* Card Container with Glassmorphism */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-xs);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: var(--glass-blur);
   padding: var(--space-5);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
-/* Modals */
+.card:hover {
+  border-color: var(--border-medium);
+}
+
+/* Glassmorphism Modals & Dialogs */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(18, 22, 20, 0.45);
-  backdrop-filter: blur(2px);
+  background: rgba(3, 6, 12, 0.75);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-4);
   z-index: 1000;
-  animation: fadeIn 150ms ease-out;
+  animation: fadeIn 180ms ease-out;
 }
 
 .modal-container {
-  background: var(--bg-card);
+  background: var(--bg-card-solid);
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(99, 102, 241, 0.15);
   width: 100%;
   max-width: 520px;
   max-height: 90vh;
   overflow-y: auto;
-  animation: slideUp 180ms ease-out;
+  animation: slideUp 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
 .modal-header {
@@ -251,6 +284,7 @@ button {
 .modal-title {
   font-size: 1.125rem;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .modal-body {
@@ -264,25 +298,54 @@ button {
   align-items: center;
   justify-content: flex-end;
   gap: var(--space-3);
-  background: var(--bg-card-subtle);
+  background: rgba(10, 14, 24, 0.7);
   border-bottom-left-radius: var(--radius-lg);
   border-bottom-right-radius: var(--radius-lg);
 }
 
-/* Animations */
+/* Keyframe Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(8px); opacity: 0; }
+  from { transform: translateY(12px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes skeletonPulse {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Responsive Layout */
@@ -325,16 +388,16 @@ button {
 
 /* Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.28);
 }

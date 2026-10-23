@@ -31,11 +31,12 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
   return (
     <div
       style={{
-        backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border-light)',
-        borderRadius: 'var(--radius-md)',
+        backgroundColor: 'rgba(15, 21, 35, 0.75)',
+        backdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRadius: '14px',
         overflow: 'hidden',
-        boxShadow: 'var(--shadow-xs)',
+        boxShadow: 'var(--shadow-sm)',
       }}
     >
       <div style={{ overflowX: 'auto' }}>
@@ -43,20 +44,20 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
           <thead>
             <tr
               style={{
-                backgroundColor: 'var(--bg-card-subtle)',
+                backgroundColor: 'rgba(10, 14, 24, 0.75)',
                 borderBottom: '1px solid var(--border-light)',
-                color: 'var(--text-secondary)',
+                color: 'var(--text-tertiary)',
                 fontSize: '0.75rem',
                 textTransform: 'uppercase',
-                letterSpacing: '0.04em',
+                letterSpacing: '0.06em',
               }}
             >
-              <th style={{ padding: '12px 16px', fontWeight: 600 }}>Customer</th>
-              <th style={{ padding: '12px 16px', fontWeight: 600 }}>Email</th>
-              <th style={{ padding: '12px 16px', fontWeight: 600 }}>Phone</th>
-              <th style={{ padding: '12px 16px', fontWeight: 600 }}>Stage</th>
-              <th style={{ padding: '12px 16px', fontWeight: 600 }}>Created</th>
-              <th style={{ padding: '12px 16px', fontWeight: 600, textAlign: 'right' }}>Actions</th>
+              <th style={{ padding: '14px 18px', fontWeight: 600 }}>Customer</th>
+              <th style={{ padding: '14px 18px', fontWeight: 600 }}>Email</th>
+              <th style={{ padding: '14px 18px', fontWeight: 600 }}>Phone</th>
+              <th style={{ padding: '14px 18px', fontWeight: 600 }}>Stage</th>
+              <th style={{ padding: '14px 18px', fontWeight: 600 }}>Created</th>
+              <th style={{ padding: '14px 18px', fontWeight: 600, textAlign: 'right' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -67,11 +68,11 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
                   borderBottom: '1px solid var(--border-light)',
                   transition: 'background-color var(--transition-fast)',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-card-subtle)')}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.035)')}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
                 {/* Customer & Company */}
-                <td style={{ padding: '14px 16px' }}>
+                <td style={{ padding: '14px 18px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <button
                       onClick={() => onView(c)}
@@ -81,17 +82,20 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
                         color: 'var(--text-primary)',
                         cursor: 'pointer',
                         padding: 0,
+                        transition: 'color 150ms',
                       }}
                       className="btn-ghost"
+                      onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-blue)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
                     >
                       {c.name}
                     </button>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>{c.company}</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '2px' }}>{c.company}</span>
                   </div>
                 </td>
 
                 {/* Email */}
-                <td style={{ padding: '14px 16px' }}>
+                <td style={{ padding: '14px 18px' }}>
                   <a
                     href={`mailto:${c.email}`}
                     style={{
@@ -100,15 +104,18 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
                       gap: '6px',
                       color: 'var(--text-secondary)',
                       fontSize: '0.8125rem',
+                      transition: 'color 150ms',
                     }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-blue)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
                   >
-                    <Mail size={13} color="var(--primary)" />
+                    <Mail size={13} color="var(--accent-blue)" />
                     {c.email}
                   </a>
                 </td>
 
                 {/* Phone */}
-                <td style={{ padding: '14px 16px' }}>
+                <td style={{ padding: '14px 18px' }}>
                   <a
                     href={`tel:${c.phone}`}
                     style={{
@@ -117,47 +124,56 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
                       gap: '6px',
                       color: 'var(--text-secondary)',
                       fontSize: '0.8125rem',
+                      transition: 'color 150ms',
                     }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#34D399')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
                   >
-                    <Phone size={13} color="var(--primary)" />
+                    <Phone size={13} color="#34D399" />
                     {c.phone}
                   </a>
                 </td>
 
                 {/* Status */}
-                <td style={{ padding: '14px 16px' }}>
+                <td style={{ padding: '14px 18px' }}>
                   <Badge status={c.status} />
                 </td>
 
                 {/* Date */}
-                <td style={{ padding: '14px 16px', color: 'var(--text-tertiary)', fontSize: '0.8125rem' }}>
+                <td style={{ padding: '14px 18px', color: 'var(--text-tertiary)', fontSize: '0.8125rem' }}>
                   {formatDate(c.created_at)}
                 </td>
 
                 {/* Actions */}
-                <td style={{ padding: '14px 16px', textAlign: 'right' }}>
+                <td style={{ padding: '14px 18px', textAlign: 'right' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
                     <button
                       onClick={() => onView(c)}
                       className="btn-ghost"
-                      style={{ padding: '6px', borderRadius: 'var(--radius-sm)' }}
+                      style={{ padding: '6px', borderRadius: '6px' }}
                       title="View Details & Notes"
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                     >
                       <Eye size={15} color="var(--text-secondary)" />
                     </button>
                     <button
                       onClick={() => onEdit(c)}
                       className="btn-ghost"
-                      style={{ padding: '6px', borderRadius: 'var(--radius-sm)' }}
+                      style={{ padding: '6px', borderRadius: '6px' }}
                       title="Edit Customer"
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                     >
-                      <Edit2 size={15} color="var(--text-secondary)" />
+                      <Edit2 size={15} color="var(--accent-violet)" />
                     </button>
                     <button
                       onClick={() => onDelete(c)}
                       className="btn-ghost"
-                      style={{ padding: '6px', borderRadius: 'var(--radius-sm)' }}
+                      style={{ padding: '6px', borderRadius: '6px' }}
                       title="Delete Customer"
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.12)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                     >
                       <Trash2 size={15} color="var(--danger)" />
                     </button>

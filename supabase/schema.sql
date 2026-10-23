@@ -148,3 +148,22 @@ DROP POLICY IF EXISTS "Users can delete own notes" ON public.notes;
 CREATE POLICY "Users can delete own notes"
     ON public.notes FOR DELETE
     USING (auth.uid() = user_id);
+
+-- ==============================================================================
+-- 7. Table Privileges (GRANTs)
+-- Essential for Supabase: Grants role-level permissions to 'authenticated' and
+-- 'service_role'. Table access is then strictly governed by the RLS policies above.
+-- ==============================================================================
+
+GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
+
+GRANT ALL ON TABLE public.profiles TO authenticated;
+GRANT ALL ON TABLE public.profiles TO service_role;
+
+GRANT ALL ON TABLE public.customers TO authenticated;
+GRANT ALL ON TABLE public.customers TO service_role;
+
+GRANT ALL ON TABLE public.notes TO authenticated;
+GRANT ALL ON TABLE public.notes TO service_role;
+
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO authenticated, service_role;

@@ -98,6 +98,41 @@ import '@testing-library/jest-dom/vitest'
 
 ---
 
+---
+
+## Bug #4: "permission denied for table customers" & infinite toast notification loop
+
+**Severity**: Runtime / Database Access  
+**Discovered**: After user configured Supabase credentials, registered/logged in, and loaded the dashboard  
+**Error**:
+```
+permission denied for table customers
+```
+- Dashboard showed 0 customers.
+- Multiple identical toast error notifications appeared repeatedly in an infinite loop.
+
+**Root Causes**:
+1. **Missing Table-Level GRANTs in PostgreSQL**:
+   PostgreSQL evaluates role table permissions (`GRANT`) *before* Row-Level Security (RLS) policies. While `supabase/schema.sql` enabled RLS and defined policies for `auth.uid() = user_id`, it lacked explicit table-level grants for the `authenticated` role (`GRANT ALL ON TABLE public.customers TO authenticated`). PostgREST executes queries using the `authenticated` role; without table grants, PostgreSQL immediately returns `ERROR: 42501: permission denied for table customers`.
+2. **Infinite Re-render / Toast Loop**:
+   In `ToastContext.tsx`, the `toast` helper object was an un-memoized object literal (`{ success, error, info }`), recreated on every render of `ToastProvider`. In `App.tsx`, `loadCustomers` had `toast` in its `useCallback` dependency array. When `loadCustomers()` failed, it called `toast.error(msg)`, which changed `toasts` state, re-rendering `ToastProvider`. This created a new `toast` object, invalidating `loadCustomers`, which re-triggered the `useEffect([user, loadCustomers])`, firing `loadCustomers` and `toast.error` continuously in an infinite cycle.
+
+**Fix Applied**:
+1. Added explicit `GRANT USAGE ON SCHEMA public` and `GRANT ALL ON TABLE` for `customers`, `notes`, and `profiles` to `authenticated` and `service_role` in `supabase/schema.sql`.
+2. Stabilized `toast` in `src/context/ToastContext.tsx` with `useMemo([showToast])` and added message deduplication to prevent identical error notifications from stacking simultaneously.
+3. Decoupled `toast` from `loadCustomers` dependency array in `src/App.tsx` using a stable `toastRef`.
+
+**Changed Files**:
+- `supabase/schema.sql`
+- `src/context/ToastContext.tsx`
+- `src/App.tsx`
+
+**Verified**:
+- Unit and component tests: 22/22 pass (`npm test`).
+- Production build: TypeScript check passes, bundle succeeds (`npm run build`).
+
+---
+
 ## Build & Test Summary After All Fixes
 
 | Check | Result | Output |
@@ -112,6 +147,6 @@ import '@testing-library/jest-dom/vitest'
 
 | Item | Status | Notes |
 | :--- | :--- | :--- |
-| Live deployment URL | ⏳ Pending | Requires user to set up Supabase credentials and push to GitHub |
-| Manual test execution | ⏳ Pending user run | 22 automated pass; 24 manual tests awaiting live Supabase setup |
-| Email confirmation flow | ⚠️ Optional | Supabase default requires email confirmation; disable in Auth settings for instant login |
+| Live deployment URL | ⏳ Pending | Requires user to push to GitHub and deploy to Vercel |
+| Manual test execution | ⏳ Pending user run | 22 automated pass; manual test matrix in `TEST_CASES.md` |
+| Email confirmation setting | ℹ️ Handled | If "Confirm email" is enabled in Supabase, confirmation link is required before session starts. If disabled, signup provides an immediate active session. |

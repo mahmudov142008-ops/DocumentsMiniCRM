@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider, useToast } from './context/ToastContext';
 import { AuthPage } from './pages/AuthPage';
@@ -18,6 +18,10 @@ const MainApplication: React.FC = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loadingCustomers, setLoadingCustomers] = useState(false);
 
+  // Stable ref to toast so it never causes useCallback to re-create
+  const toastRef = useRef(toast);
+  useEffect(() => { toastRef.current = toast; });
+
   // Load customer records from Supabase
   const loadCustomers = useCallback(async () => {
     if (!user) {
@@ -33,12 +37,12 @@ const MainApplication: React.FC = () => {
       const msg = err instanceof Error ? err.message : 'Failed to fetch customer records';
       // Only show error toast if not just an initial setup notice
       if (!msg.includes('credentials are not configured')) {
-        toast.error(msg);
+        toastRef.current.error(msg);
       }
     } finally {
       setLoadingCustomers(false);
     }
-  }, [user, toast]);
+  }, [user]); // toast intentionally omitted — accessed via stable ref to prevent render loop
 
   useEffect(() => {
     if (user) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Customer } from '../../types/crm';
 import { Badge } from '../ui/Badge';
+import { usePreferences } from '../../context/PreferencesContext';
 import { Eye, Edit2, Trash2, Mail, Phone } from 'lucide-react';
 
 interface CustomerTableProps {
@@ -16,24 +17,14 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
   onEdit,
   onDelete,
 }) => {
-  const formatDate = (isoString: string) => {
-    try {
-      return new Date(isoString).toLocaleDateString(undefined, {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-      });
-    } catch {
-      return isoString;
-    }
-  };
+  const { formatDate } = usePreferences();
 
   return (
     <div
       style={{
-        backgroundColor: 'rgba(15, 21, 35, 0.75)',
+        backgroundColor: 'var(--bg-card)',
         backdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        border: '1px solid var(--border-light)',
         borderRadius: '14px',
         overflow: 'hidden',
         boxShadow: 'var(--shadow-sm)',
@@ -44,7 +35,7 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
           <thead>
             <tr
               style={{
-                backgroundColor: 'rgba(10, 14, 24, 0.75)',
+                backgroundColor: 'var(--bg-card-subtle)',
                 borderBottom: '1px solid var(--border-light)',
                 color: 'var(--text-tertiary)',
                 fontSize: '0.75rem',
@@ -68,7 +59,7 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
                   borderBottom: '1px solid var(--border-light)',
                   transition: 'background-color var(--transition-fast)',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.035)')}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-hover)')}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
                 {/* Customer & Company */}

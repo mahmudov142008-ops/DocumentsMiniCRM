@@ -34,9 +34,9 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
   return (
     <div
       style={{
-        backgroundColor: 'rgba(15, 21, 35, 0.75)',
+        backgroundColor: 'var(--bg-card)',
         backdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        border: '1px solid var(--border-light)',
         borderRadius: '14px',
         padding: '16px 20px',
         marginBottom: '20px',
@@ -98,7 +98,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
         {/* Status Filter Buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginRight: '4px', color: 'var(--text-tertiary)', fontSize: '0.8125rem', fontWeight: 500 }}>
-            <Filter size={14} color="var(--accent-violet)" />
+            <Filter size={14} color="var(--primary)" />
             <span>Stage:</span>
           </div>
           {STATUS_OPTIONS.map((opt) => {
@@ -112,10 +112,10 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
                   borderRadius: '9999px',
                   fontSize: '0.8125rem',
                   fontWeight: isActive ? 600 : 400,
-                  backgroundColor: isActive ? 'var(--primary-subtle)' : 'rgba(255, 255, 255, 0.04)',
-                  color: isActive ? '#FFFFFF' : 'var(--text-secondary)',
+                  backgroundColor: isActive ? 'var(--primary-subtle)' : 'var(--bg-card-subtle)',
+                  color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
                   border: `1px solid ${isActive ? 'var(--primary-border)' : 'var(--border-light)'}`,
-                  boxShadow: isActive ? '0 0 16px rgba(99, 102, 241, 0.25)' : 'none',
+                  boxShadow: isActive ? 'var(--shadow-xs)' : 'none',
                   transition: 'all var(--transition-fast)',
                 }}
               >

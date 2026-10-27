@@ -70,7 +70,7 @@ export const StatCards: React.FC<StatCardsProps> = ({ customers }) => {
             justifyContent: 'space-between',
             padding: '20px 22px',
             border: `1px solid ${s.borderAccent}`,
-            background: 'linear-gradient(180deg, rgba(20, 27, 45, 0.7) 0%, rgba(13, 18, 30, 0.85) 100%)',
+            background: 'var(--bg-card)',
           }}
         >
           <div>

@@ -28,14 +28,14 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           style={{
-            backgroundColor: 'rgba(20, 27, 45, 0.85)',
-            border: `1px solid ${snapshot.isDragging ? 'var(--accent-violet)' : 'rgba(255, 255, 255, 0.08)'}`,
+            backgroundColor: 'var(--bg-card)',
+            border: `1px solid ${snapshot.isDragging ? 'var(--primary)' : 'var(--border-light)'}`,
             borderRadius: '12px',
             padding: '14px',
             marginBottom: '10px',
             boxShadow: snapshot.isDragging
-              ? '0 16px 36px rgba(0, 0, 0, 0.8), 0 0 24px rgba(139, 92, 246, 0.35)'
-              : '0 2px 6px rgba(0, 0, 0, 0.3)',
+              ? 'var(--shadow-lg), var(--primary-glow)'
+              : 'var(--shadow-xs)',
             cursor: 'grab',
             transition: 'box-shadow var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast)',
             position: 'relative',
@@ -86,10 +86,10 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
                     position: 'absolute',
                     right: 0,
                     top: '24px',
-                    backgroundColor: 'rgba(15, 21, 35, 0.95)',
+                    backgroundColor: 'var(--bg-card-solid)',
                     border: '1px solid var(--border-medium)',
                     borderRadius: '8px',
-                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.7)',
+                    boxShadow: 'var(--shadow-md)',
                     padding: '6px',
                     minWidth: '160px',
                     zIndex: 50,
@@ -114,10 +114,10 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
                       color: 'var(--text-primary)',
                       transition: 'background-color 150ms',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)')}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-hover)')}
                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                   >
-                    <Eye size={13} color="var(--accent-blue)" /> View Details & Notes
+                    <Eye size={13} color="var(--primary)" /> View Details & Notes
                   </button>
 
                   <div style={{ height: '1px', backgroundColor: 'var(--border-light)', margin: '4px 0' }} />
@@ -146,7 +146,7 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
                         transition: 'all 150ms',
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                        e.currentTarget.style.backgroundColor = 'var(--bg-hover)';
                         e.currentTarget.style.color = 'var(--text-primary)';
                       }}
                       onMouseLeave={(e) => {
@@ -154,7 +154,7 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
                         e.currentTarget.style.color = 'var(--text-secondary)';
                       }}
                     >
-                      <MoveRight size={12} color="var(--accent-violet)" />
+                      <MoveRight size={12} color="var(--primary)" />
                       {targetStage}
                     </button>
                   ))}

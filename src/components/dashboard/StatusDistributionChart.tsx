@@ -47,13 +47,13 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        background: 'linear-gradient(180deg, rgba(20, 27, 45, 0.7) 0%, rgba(13, 18, 30, 0.85) 100%)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-light)',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', color: '#FFFFFF' }}>
-          <PieChartIcon size={18} color="var(--accent-blue)" />
+        <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)' }}>
+          <PieChartIcon size={18} color="var(--primary)" />
           Pipeline Distribution
         </h3>
         <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', background: 'rgba(255, 255, 255, 0.05)', padding: '2px 8px', borderRadius: '999px', border: '1px solid var(--border-light)' }}>
@@ -93,7 +93,7 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                 cy="80"
                 r={radius}
                 fill="none"
-                stroke="rgba(255, 255, 255, 0.06)"
+                stroke="var(--border-light)"
                 strokeWidth="18"
               />
               {segments.map((s) => (
@@ -123,7 +123,7 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                 pointerEvents: 'none',
               }}
             >
-              <span style={{ fontSize: '1.625rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1 }}>
+              <span style={{ fontSize: '1.625rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>
                 {total}
               </span>
               <span style={{ fontSize: '0.6875rem', color: 'var(--text-tertiary)', marginTop: '2px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -165,7 +165,7 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                 <div
                   style={{
                     height: '5px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                    backgroundColor: 'var(--border-light)',
                     borderRadius: 'var(--radius-full)',
                     overflow: 'hidden',
                   }}

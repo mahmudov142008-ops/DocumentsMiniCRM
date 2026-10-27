@@ -1,41 +1,38 @@
-:root {
-  /* ==============================================================================
-     MiniCRM Design Tokens — Premium Dark Glassmorphism SaaS
-     Deep Navy / Graphite backgrounds with Violet and Electric Blue Accents
-     ============================================================================== */
+/* ==============================================================================
+   MiniCRM Design System Tokens
+   Supports: Dark Theme (Default), Light Theme, Violet/Blue/Green Accents, Compact Mode
+   ============================================================================== */
 
-  /* Backgrounds */
-  --bg-primary: #080B11;
-  --bg-secondary: #0D121D;
-  --bg-tertiary: #121826;
-  --bg-card: rgba(15, 21, 35, 0.75);
-  --bg-card-hover: rgba(22, 31, 52, 0.85);
-  --bg-card-subtle: rgba(12, 17, 28, 0.65);
-  --bg-card-solid: #0F1523;
+/* 1. DEFAULT DARK THEME (Deep charcoal and soft graphite) */
+:root,
+:root[data-theme="dark"] {
+  --bg-primary: #0A0E17;
+  --bg-secondary: #0F1624;
+  --bg-tertiary: #162032;
+  --bg-card: rgba(18, 26, 42, 0.75);
+  --bg-card-hover: rgba(25, 36, 58, 0.85);
+  --bg-card-subtle: rgba(14, 20, 33, 0.65);
+  --bg-card-solid: #121A2A;
   --bg-hover: rgba(255, 255, 255, 0.05);
   --bg-active: rgba(255, 255, 255, 0.09);
 
-  /* Primary Palette: Vibrant Indigo to Violet Gradient */
-  --primary: #6366F1;
-  --primary-hover: #4F46E5;
-  --primary-active: #4338CA;
-  --primary-subtle: rgba(99, 102, 241, 0.14);
-  --primary-border: rgba(99, 102, 241, 0.32);
-  --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
-  --primary-glow: 0 0 24px rgba(99, 102, 241, 0.32);
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --text-inverse: #FFFFFF;
+  --text-ivory: #FDFBF7;
 
-  /* Secondary Accents: Electric Blue / Cyan & Violet */
-  --accent-blue: #38BDF8;
-  --accent-blue-hover: #0EA5E9;
-  --accent-blue-subtle: rgba(56, 189, 248, 0.12);
-  --accent-blue-border: rgba(56, 189, 248, 0.3);
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --border-glow: rgba(16, 185, 129, 0.45);
 
-  --accent-violet: #8B5CF6;
-  --accent-violet-hover: #7C3AED;
-  --accent-violet-subtle: rgba(139, 92, 246, 0.14);
-  --accent-violet-border: rgba(139, 92, 246, 0.35);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.7);
 
-  /* Semantic Status Colors (Glassmorphic Badges & Indicators) */
+  /* Status Colors */
   --status-new-text: #38BDF8;
   --status-new-bg: rgba(56, 189, 248, 0.12);
   --status-new-border: rgba(56, 189, 248, 0.28);
@@ -52,37 +49,138 @@
   --status-lost-bg: rgba(148, 163, 184, 0.12);
   --status-lost-border: rgba(148, 163, 184, 0.24);
 
-  /* Destructive */
+  --status-won-text: #34D399;
+  --status-won-bg: rgba(16, 185, 129, 0.14);
+  --status-won-border: rgba(16, 185, 129, 0.32);
+
   --danger: #EF4444;
   --danger-hover: #DC2626;
   --danger-subtle: rgba(239, 68, 68, 0.12);
   --danger-border: rgba(239, 68, 68, 0.28);
 
-  /* Typography Colors - Crisp SaaS Contrast */
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-tertiary: #64748B;
+  /* Champagne Gold Accents */
+  --accent-gold: #D4AF37;
+  --accent-gold-hover: #C5A059;
+  --accent-gold-subtle: rgba(212, 175, 55, 0.14);
+  --accent-gold-border: rgba(212, 175, 55, 0.32);
+  --accent-gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F5DE88 100%);
+  --accent-gold-glow: 0 0 20px rgba(212, 175, 55, 0.25);
+
+  --bg-sidebar: rgba(13, 19, 31, 0.88);
+  --bg-sidebar-footer: rgba(10, 14, 24, 0.92);
+
+  --modal-backdrop-bg: rgba(4, 7, 14, 0.78);
+}
+
+/* 2. LIGHT THEME (Warm ivory and muted neutral text) */
+:root[data-theme="light"] {
+  --bg-primary: #FDFBF7;
+  --bg-secondary: #F6F3EC;
+  --bg-tertiary: #EDE8DD;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAF8F5;
+  --bg-card-subtle: #F7F4EE;
+  --bg-card-solid: #FFFFFF;
+  --bg-hover: rgba(0, 0, 0, 0.04);
+  --bg-active: rgba(0, 0, 0, 0.08);
+
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-tertiary: #6B7280;
   --text-inverse: #FFFFFF;
+  --text-ivory: #FDFBF7;
 
-  /* Borders & Dividers */
-  --border-light: rgba(255, 255, 255, 0.07);
-  --border-medium: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.2);
-  --border-glow: rgba(139, 92, 246, 0.45);
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.15);
+  --border-strong: rgba(0, 0, 0, 0.25);
+  --border-glow: rgba(5, 150, 105, 0.4);
 
-  /* Shadows (Glassmorphic Depth) */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.7);
-  --shadow-glow: 0 0 28px rgba(99, 102, 241, 0.28);
-  --shadow-glow-cyan: 0 0 28px rgba(56, 189, 248, 0.22);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.12);
 
-  /* Glassmorphism Blur */
+  --status-new-text: #0284C7;
+  --status-new-bg: #E0F2FE;
+  --status-new-border: #BAE6FD;
+
+  --status-contacted-text: #B45309;
+  --status-contacted-bg: #FEF3C7;
+  --status-contacted-border: #FDE68A;
+
+  --status-negotiation-text: #7E22CE;
+  --status-negotiation-bg: #F3E8FF;
+  --status-negotiation-border: #E9D5FF;
+
+  --status-lost-text: #475569;
+  --status-lost-bg: #F1F5F9;
+  --status-lost-border: #CBD5E1;
+
+  --status-won-text: #047857;
+  --status-won-bg: #ECFDF5;
+  --status-won-border: #A7F3D0;
+
+  --danger: #DC2626;
+  --danger-hover: #B91C1C;
+  --danger-subtle: #FEF2F2;
+  --danger-border: #FECACA;
+
+  --accent-gold: #B8860B;
+  --accent-gold-hover: #996F0A;
+  --accent-gold-subtle: #FEF9C3;
+  --accent-gold-border: #FDE047;
+  --accent-gold-gradient: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+  --accent-gold-glow: 0 0 16px rgba(184, 134, 11, 0.2);
+
+  --bg-sidebar: #FAF8F5;
+  --bg-sidebar-footer: #F2ECE0;
+
+  --modal-backdrop-bg: rgba(17, 24, 39, 0.55);
+}
+
+/* 3. ACCENT COLORS (Default Emerald Green, Violet, Blue) */
+:root,
+:root[data-accent="green"] {
+  --primary: #059669;
+  --primary-hover: #047857;
+  --primary-active: #065F46;
+  --primary-subtle: rgba(16, 185, 129, 0.14);
+  --primary-border: rgba(16, 185, 129, 0.35);
+  --primary-gradient: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  --primary-glow: 0 0 24px rgba(16, 185, 129, 0.3);
+  --accent-emerald: #10B981;
+  --accent-forest: #047857;
+}
+
+:root[data-accent="violet"] {
+  --primary: #6366F1;
+  --primary-hover: #4F46E5;
+  --primary-active: #4338CA;
+  --primary-subtle: rgba(99, 102, 241, 0.14);
+  --primary-border: rgba(99, 102, 241, 0.35);
+  --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  --primary-glow: 0 0 24px rgba(99, 102, 241, 0.32);
+  --accent-emerald: #8B5CF6;
+  --accent-forest: #6366F1;
+}
+
+:root[data-accent="blue"] {
+  --primary: #0284C7;
+  --primary-hover: #0369A1;
+  --primary-active: #075985;
+  --primary-subtle: rgba(2, 132, 199, 0.14);
+  --primary-border: rgba(2, 132, 199, 0.35);
+  --primary-gradient: linear-gradient(135deg, #0284C7 0%, #2563EB 100%);
+  --primary-glow: 0 0 24px rgba(2, 132, 199, 0.32);
+  --accent-emerald: #38BDF8;
+  --accent-forest: #0284C7;
+}
+
+/* 4. BASE GEOMETRY & TYPOGRAPHY SCALES */
+:root {
   --glass-blur: blur(16px);
   --glass-blur-sm: blur(8px);
 
-  /* Border Radii */
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -90,7 +188,6 @@
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -101,7 +198,42 @@
   --space-10: 40px;
   --space-12: 48px;
 
-  /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 5. COMPACT MODE (Visibly reduces spacing without breaking layout) */
+:root.compact-mode {
+  --space-1: 2px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 14px;
+  --space-6: 18px;
+  --space-8: 24px;
+}
+
+:root.compact-mode .card {
+  padding: 14px 16px !important;
+}
+
+:root.compact-mode table th,
+:root.compact-mode table td {
+  padding: 8px 12px !important;
+}
+
+:root.compact-mode .form-input,
+:root.compact-mode .form-select,
+:root.compact-mode .form-textarea {
+  padding: 7px 11px !important;
+  font-size: 0.875rem !important;
+}
+
+:root.compact-mode .btn {
+  padding: 6px 14px !important;
+  font-size: 0.8125rem !important;
+}
+
+:root.compact-mode .form-group {
+  margin-bottom: 10px !important;
 }

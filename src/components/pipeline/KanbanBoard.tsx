@@ -61,11 +61,11 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
             <div
               key={columnKey}
               style={{
-                backgroundColor: 'rgba(13, 18, 29, 0.75)',
+                backgroundColor: 'var(--bg-card-subtle)',
                 backdropFilter: 'blur(16px)',
                 borderRadius: '16px',
                 padding: '16px',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
+                border: '1px solid var(--border-light)',
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: '520px',
@@ -120,7 +120,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.color = 'var(--text-primary)';
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                    e.currentTarget.style.backgroundColor = 'var(--bg-hover)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = 'var(--text-tertiary)';
@@ -141,9 +141,9 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                     style={{
                       flex: 1,
                       minHeight: '220px',
-                      backgroundColor: snapshot.isDraggingOver ? 'rgba(99, 102, 241, 0.12)' : 'transparent',
+                      backgroundColor: snapshot.isDraggingOver ? 'var(--primary-subtle)' : 'transparent',
                       borderRadius: '12px',
-                      border: snapshot.isDraggingOver ? '1px dashed var(--accent-violet)' : '1px solid transparent',
+                      border: snapshot.isDraggingOver ? '1px dashed var(--primary)' : '1px solid transparent',
                       transition: 'all var(--transition-fast)',
                       padding: '4px',
                     }}
@@ -153,7 +153,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                         style={{
                           textAlign: 'center',
                           padding: '36px 12px',
-                          border: '1px dashed rgba(255, 255, 255, 0.1)',
+                          border: '1px dashed var(--border-medium)',
                           borderRadius: '12px',
                           color: 'var(--text-tertiary)',
                           fontSize: '0.8125rem',

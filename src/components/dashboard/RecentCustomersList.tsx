@@ -1,6 +1,7 @@
 import React from 'react';
 import { Customer } from '../../types/crm';
 import { Badge } from '../ui/Badge';
+import { usePreferences } from '../../context/PreferencesContext';
 import { Clock, ArrowRight, Building, Plus } from 'lucide-react';
 
 interface RecentCustomersListProps {
@@ -16,21 +17,12 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
   onNavigateToCustomers,
   onAddCustomer,
 }) => {
+  const { formatDate } = usePreferences();
+
   // Sort descending by created_at and take top 5
   const recent = [...customers]
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     .slice(0, 5);
-
-  const formatDate = (isoString: string) => {
-    try {
-      return new Date(isoString).toLocaleDateString(undefined, {
-        month: 'short',
-        day: 'numeric',
-      });
-    } catch {
-      return isoString;
-    }
-  };
 
   return (
     <div
@@ -39,8 +31,8 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        background: 'linear-gradient(180deg, rgba(20, 27, 45, 0.7) 0%, rgba(13, 18, 30, 0.85) 100%)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-light)',
       }}
     >
       <div
@@ -51,8 +43,8 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
           marginBottom: '20px',
         }}
       >
-        <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', color: '#FFFFFF' }}>
-          <Clock size={18} color="var(--accent-violet)" />
+        <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)' }}>
+          <Clock size={18} color="var(--primary)" />
           Recently Added Leads
         </h3>
         <button
@@ -112,19 +104,19 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
                 justifyContent: 'space-between',
                 padding: '12px 14px',
                 borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-                backgroundColor: 'rgba(15, 21, 35, 0.6)',
+                border: '1px solid var(--border-light)',
+                backgroundColor: 'var(--bg-card-subtle)',
                 cursor: 'pointer',
                 transition: 'all var(--transition-fast)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(25, 35, 58, 0.75)';
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.35)';
+                e.currentTarget.style.backgroundColor = 'var(--bg-card-hover)';
+                e.currentTarget.style.borderColor = 'var(--primary-border)';
                 e.currentTarget.style.transform = 'translateX(2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(15, 21, 35, 0.6)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                e.currentTarget.style.backgroundColor = 'var(--bg-card-subtle)';
+                e.currentTarget.style.borderColor = 'var(--border-light)';
                 e.currentTarget.style.transform = 'none';
               }}
             >

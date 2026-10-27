@@ -23,8 +23,8 @@ export const CustomerCardList: React.FC<CustomerCardListProps> = ({
           key={c.id}
           className="card"
           style={{
-            backgroundColor: 'rgba(15, 21, 35, 0.75)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--border-light)',
             borderRadius: '14px',
             padding: '18px',
             boxShadow: 'var(--shadow-sm)',

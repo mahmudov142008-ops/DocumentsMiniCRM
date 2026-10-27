@@ -4,6 +4,7 @@ import { Badge } from '../ui/Badge';
 import { notesService } from '../../services/notesService';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
+import { usePreferences } from '../../context/PreferencesContext';
 import { Mail, Phone, Building, Calendar, Edit3, Trash2, Send, Clock, X, MessageSquare } from 'lucide-react';
 
 interface CustomerDetailDrawerProps {
@@ -23,6 +24,7 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
 }) => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { formatDate } = usePreferences();
   const [notes, setNotes] = useState<CustomerNote[]>([]);
   const [newNoteContent, setNewNoteContent] = useState('');
   const [loadingNotes, setLoadingNotes] = useState(false);
@@ -85,21 +87,6 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
 
   if (!isOpen || !customer) return null;
 
-  const formatDate = (isoString: string) => {
-    try {
-      const d = new Date(isoString);
-      return d.toLocaleDateString(undefined, {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-    } catch {
-      return isoString;
-    }
-  };
-
   return (
     <div
       className="modal-backdrop"
@@ -116,15 +103,15 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
           height: '88vh',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: '#0F1523',
-          border: '1px solid rgba(255, 255, 255, 0.12)',
-          boxShadow: '0 24px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(99, 102, 241, 0.2)',
+          backgroundColor: 'var(--bg-card-solid)',
+          border: '1px solid var(--border-medium)',
+          boxShadow: 'var(--shadow-lg)',
         }}
       >
         {/* Header */}
         <div className="modal-header" style={{ padding: '20px 24px', borderBottom: '1px solid var(--border-light)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <h2 className="modal-title" style={{ fontSize: '1.25rem', color: '#FFFFFF' }}>{customer.name}</h2>
+            <h2 className="modal-title" style={{ fontSize: '1.25rem', color: 'var(--text-primary)' }}>{customer.name}</h2>
             <Badge status={customer.status} />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -280,8 +267,8 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                 style={{
                   textAlign: 'center',
                   padding: '32px 16px',
-                  backgroundColor: 'rgba(20, 27, 45, 0.45)',
-                  border: '1px dashed rgba(255, 255, 255, 0.1)',
+                  backgroundColor: 'var(--bg-card-subtle)',
+                  border: '1px dashed var(--border-medium)',
                   borderRadius: '12px',
                   color: 'var(--text-tertiary)',
                   fontSize: '0.875rem',
@@ -296,15 +283,15 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                     key={note.id}
                     style={{
                       padding: '16px 18px',
-                      backgroundColor: 'rgba(20, 27, 45, 0.7)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      backgroundColor: 'var(--bg-card)',
+                      border: '1px solid var(--border-light)',
                       borderRadius: '12px',
                       boxShadow: 'var(--shadow-xs)',
                       position: 'relative',
                       transition: 'border-color 150ms',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)')}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--primary-border)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-light)')}
                   >
                     <div
                       style={{
@@ -323,15 +310,15 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
                           gap: '6px',
                         }}
                       >
-                        <Clock size={13} color="var(--accent-violet)" />
-                        {formatDate(note.created_at)}
+                        <Clock size={13} color="var(--primary)" />
+                        {formatDate(note.created_at, { includeTime: true })}
                       </span>
                       <button
                         onClick={() => handleDeleteNote(note.id)}
                         className="btn-ghost"
                         style={{ padding: '3px 6px', fontSize: '0.75rem', color: 'var(--danger)', borderRadius: '4px' }}
                         title="Delete note"
-                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.15)')}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--danger-subtle)')}
                         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                       >
                         <Trash2 size={13} />

@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider, useToast } from './context/ToastContext';
+import { PreferencesProvider } from './context/PreferencesContext';
 import { LandingPage } from './pages/LandingPage';
 import { AuthPage } from './pages/AuthPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { CustomersPage } from './pages/CustomersPage';
 import { PipelinePage } from './pages/PipelinePage';
+import { SettingsPage } from './pages/SettingsPage';
+import { TasksPage } from './pages/TasksPage';
+import { CalendarPage } from './pages/CalendarPage';
+import { CompaniesPage } from './pages/CompaniesPage';
+import { ReportsPage } from './pages/ReportsPage';
 import { AppLayout, AppPage } from './components/layout/AppLayout';
 import { customerService } from './services/customerService';
 import { Customer, CustomerInput, CustomerStatus } from './types/crm';
@@ -13,11 +19,33 @@ import './styles/main.css';
 
 type PublicView = 'landing' | 'login' | 'register';
 
+const VALID_PAGES: AppPage[] = [
+  'dashboard',
+  'customers',
+  'pipeline',
+  'settings',
+  'tasks',
+  'calendar',
+  'companies',
+  'reports',
+];
+
 const MainApplication: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
 
-  const [currentPage, setCurrentPage] = useState<AppPage>('dashboard');
+  // Authenticated page navigation synced with hash
+  const getInitialAppPage = (): AppPage => {
+    if (typeof window !== 'undefined') {
+      const cleanHash = window.location.hash.toLowerCase().replace('#', '') as AppPage;
+      if (VALID_PAGES.includes(cleanHash)) {
+        return cleanHash;
+      }
+    }
+    return 'dashboard';
+  };
+
+  const [currentPage, setCurrentPage] = useState<AppPage>(getInitialAppPage);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loadingCustomers, setLoadingCustomers] = useState(false);
 
@@ -33,18 +61,22 @@ const MainApplication: React.FC = () => {
 
   const [publicView, setPublicView] = useState<PublicView>(getInitialPublicView);
 
-  // Sync publicView with browser hash
+  // Sync publicView and currentPage with browser hash
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.toLowerCase();
+      const cleanHash = hash.replace('#', '') as AppPage;
+
+      if (VALID_PAGES.includes(cleanHash)) {
+        setCurrentPage(cleanHash);
+      }
+
       if (hash === '#login') {
         setPublicView('login');
       } else if (hash === '#register') {
         setPublicView('register');
-      } else if (!hash || hash === '#' || hash === '#/' || hash === '#features' || hash === '#workflow' || hash === '#about') {
-        if (!window.location.hash.startsWith('#login') && !window.location.hash.startsWith('#register')) {
-          setPublicView('landing');
-        }
+      } else if (!hash || hash === '#' || hash === '#/') {
+        setPublicView('landing');
       }
     };
 
@@ -60,6 +92,13 @@ const MainApplication: React.FC = () => {
       window.location.hash = '#register';
     } else {
       window.history.pushState(null, '', window.location.pathname);
+    }
+  };
+
+  const handleNavigate = (page: AppPage) => {
+    setCurrentPage(page);
+    if (typeof window !== 'undefined') {
+      window.location.hash = `#${page}`;
     }
   };
 
@@ -80,7 +119,6 @@ const MainApplication: React.FC = () => {
       setCustomers(data);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Failed to fetch customer records';
-      // Only show error toast if not just an initial setup notice
       if (!msg.includes('credentials are not configured')) {
         toastRef.current.error(msg);
       }
@@ -166,7 +204,7 @@ const MainApplication: React.FC = () => {
             height: '46px',
             borderRadius: '12px',
             background: 'var(--primary-gradient)',
-            boxShadow: '0 0 28px rgba(99, 102, 241, 0.45)',
+            boxShadow: 'var(--primary-glow)',
             color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
@@ -205,7 +243,7 @@ const MainApplication: React.FC = () => {
 
   // Authenticated Main Workspace
   return (
-    <AppLayout currentPage={currentPage} onNavigate={setCurrentPage}>
+    <AppLayout currentPage={currentPage} onNavigate={handleNavigate}>
       {currentPage === 'dashboard' && (
         <DashboardPage
           customers={customers}
@@ -214,7 +252,7 @@ const MainApplication: React.FC = () => {
           onCreateCustomer={handleCreateCustomer}
           onUpdateCustomer={handleUpdateCustomer}
           onDeleteCustomer={handleDeleteCustomer}
-          onNavigate={setCurrentPage}
+          onNavigate={handleNavigate}
         />
       )}
 
@@ -240,6 +278,16 @@ const MainApplication: React.FC = () => {
           onStatusChange={handleStatusChange}
         />
       )}
+
+      {currentPage === 'tasks' && <TasksPage />}
+
+      {currentPage === 'calendar' && <CalendarPage />}
+
+      {currentPage === 'companies' && <CompaniesPage />}
+
+      {currentPage === 'reports' && <ReportsPage />}
+
+      {currentPage === 'settings' && <SettingsPage />}
     </AppLayout>
   );
 };
@@ -247,9 +295,11 @@ const MainApplication: React.FC = () => {
 export function App() {
   return (
     <ToastProvider>
-      <AuthProvider>
-        <MainApplication />
-      </AuthProvider>
+      <PreferencesProvider>
+        <AuthProvider>
+          <MainApplication />
+        </AuthProvider>
+      </PreferencesProvider>
     </ToastProvider>
   );
 }

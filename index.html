@@ -4,11 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Mini CRM — A refined, Apple-inspired minimalist CRM for small businesses to track leads, manage customer notes, and close deals." />
-    <title>Mini CRM — Pipeline & Customer Management</title>
+    <meta name="description" content="MiniCRM — Build Better Customer Relationships. Modern SaaS platform for lead tracking, customer notes, and visual Kanban pipeline." />
+    <title>MiniCRM — Build Better Customer Relationships</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Immediate theme bootstrap to prevent FOUC / theme flash -->
+    <script>
+      (function() {
+        try {
+          var savedTheme = localStorage.getItem('minicrm_theme') || 'dark';
+          var resolvedTheme = savedTheme;
+          if (savedTheme === 'system') {
+            resolvedTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          var savedAccent = localStorage.getItem('minicrm_accent') || 'violet';
+          var savedCompact = localStorage.getItem('minicrm_compact') === 'true';
+
+          document.documentElement.setAttribute('data-theme', resolvedTheme);
+          document.documentElement.setAttribute('data-accent', savedAccent);
+          if (savedCompact) {
+            document.documentElement.classList.add('compact-mode');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

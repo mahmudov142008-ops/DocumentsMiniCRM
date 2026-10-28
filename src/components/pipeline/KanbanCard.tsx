@@ -34,7 +34,7 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
             padding: '14px',
             marginBottom: '10px',
             boxShadow: snapshot.isDragging
-              ? 'var(--shadow-lg), var(--primary-glow)'
+              ? 'var(--shadow-lg)'
               : 'var(--shadow-xs)',
             cursor: 'grab',
             transition: 'box-shadow var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast)',
@@ -56,7 +56,7 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
                   lineHeight: 1.3,
                   transition: 'color 150ms',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-blue)')}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--primary)')}
                 onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
               >
                 {customer.name}

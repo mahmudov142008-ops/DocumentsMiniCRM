@@ -90,7 +90,6 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                       height: '8px',
                       borderRadius: '50%',
                       backgroundColor: config.color,
-                      boxShadow: `0 0 8px ${config.color}`,
                     }}
                   />
                   <h3 style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)' }}>{config.label}</h3>

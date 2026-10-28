@@ -334,8 +334,8 @@ export const CalendarPage: React.FC = () => {
                           padding: '3px 6px',
                           borderRadius: '4px',
                           fontSize: '0.6875rem',
-                          backgroundColor: m.status === 'completed' ? 'rgba(16, 185, 129, 0.15)' : 'var(--bg-hover)',
-                          color: m.status === 'completed' ? '#10B981' : 'var(--text-primary)',
+                          backgroundColor: m.status === 'completed' ? 'rgba(36, 57, 47, 0.10)' : 'var(--bg-hover)',
+                          color: m.status === 'completed' ? 'var(--primary)' : 'var(--text-primary)',
                           borderLeft: '2px solid var(--primary)',
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
@@ -387,7 +387,7 @@ export const CalendarPage: React.FC = () => {
                     justifyContent: 'space-between',
                     padding: '16px 20px',
                     gap: '16px',
-                    borderLeft: m.status === 'completed' ? '4px solid #10B981' : '4px solid var(--primary)',
+                    borderLeft: m.status === 'completed' ? '4px solid var(--accent-olive)' : '4px solid var(--primary)',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', flex: 1 }}>
@@ -412,7 +412,7 @@ export const CalendarPage: React.FC = () => {
                         </span>
                         <span className="badge badge-emerald">{m.meeting_type}</span>
                         {m.status === 'completed' && (
-                          <span className="badge" style={{ backgroundColor: 'rgba(16, 185, 129, 0.12)', color: '#10B981' }}>
+                          <span className="badge" style={{ backgroundColor: 'rgba(36, 57, 47, 0.10)', color: 'var(--primary)' }}>
                             <CheckCircle size={12} /> COMPLETED
                           </span>
                         )}

@@ -143,11 +143,11 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({ isOpen, on
       case 'customer':
         return <Users size={16} color="var(--primary)" />;
       case 'deal':
-        return <KanbanSquare size={16} color="var(--accent-gold)" />;
+        return <KanbanSquare size={16} color="var(--accent-brass)" />;
       case 'task':
-        return <CheckSquare size={16} color="#38BDF8" />;
+        return <CheckSquare size={16} color="var(--accent-olive)" />;
       case 'company':
-        return <Building size={16} color="#A78BFA" />;
+        return <Building size={16} color="var(--primary)" />;
     }
   };
 

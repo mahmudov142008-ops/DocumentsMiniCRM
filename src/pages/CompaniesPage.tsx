@@ -340,7 +340,7 @@ export const CompaniesPage: React.FC = () => {
                     <Users size={13} color="var(--primary)" /> {linkedContacts.length} contacts
                   </span>
 
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--accent-gold)', fontWeight: 600 }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--accent-brass)', fontWeight: 600 }}>
                     <KanbanSquare size={13} /> {linkedDeals.length} deals (${totalDealValue.toLocaleString()})
                   </span>
                 </div>
@@ -461,7 +461,7 @@ export const CompaniesPage: React.FC = () => {
                         >
                           <div>
                             <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)' }}>{d.title}</span>
-                            <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', marginLeft: '8px' }}>
+                            <span style={{ fontSize: '0.75rem', color: 'var(--accent-brass)', marginLeft: '8px' }}>
                               ${Number(d.value).toLocaleString()}
                             </span>
                           </div>

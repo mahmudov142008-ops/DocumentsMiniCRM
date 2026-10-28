@@ -1,191 +1,236 @@
 /* ==============================================================================
    MiniCRM Design System Tokens
-   Supports: Dark Theme (Default), Light Theme, Violet/Blue/Green Accents, Compact Mode
+   Aesthetic: Warm Ivory, Deep Forest Green, Muted Olive, Antique Brass
+   Color Palette:
+     - Warm Ivory: #F7F5EF
+     - Clean White: #FFFFFF
+     - Deep Forest Green: #24392F
+     - Muted Olive: #69735C
+     - Subtle Antique Brass: #B49A69
+     - Primary Text: #252A25
+     - Secondary Text: #74766F
+     - Soft Borders: #E5E1D8
    ============================================================================== */
 
-/* 1. DEFAULT DARK THEME (Deep charcoal and soft graphite) */
+/* 1. SIGNATURE LIGHT THEME (Warm Ivory & Deep Forest Green - Default) */
 :root,
-:root[data-theme="dark"] {
-  --bg-primary: #0A0E17;
-  --bg-secondary: #0F1624;
-  --bg-tertiary: #162032;
-  --bg-card: rgba(18, 26, 42, 0.75);
-  --bg-card-hover: rgba(25, 36, 58, 0.85);
-  --bg-card-subtle: rgba(14, 20, 33, 0.65);
-  --bg-card-solid: #121A2A;
-  --bg-hover: rgba(255, 255, 255, 0.05);
-  --bg-active: rgba(255, 255, 255, 0.09);
-
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-tertiary: #64748B;
-  --text-inverse: #FFFFFF;
-  --text-ivory: #FDFBF7;
-
-  --border-light: rgba(255, 255, 255, 0.08);
-  --border-medium: rgba(255, 255, 255, 0.14);
-  --border-strong: rgba(255, 255, 255, 0.22);
-  --border-glow: rgba(16, 185, 129, 0.45);
-
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.7);
-
-  /* Status Colors */
-  --status-new-text: #38BDF8;
-  --status-new-bg: rgba(56, 189, 248, 0.12);
-  --status-new-border: rgba(56, 189, 248, 0.28);
-
-  --status-contacted-text: #FBBF24;
-  --status-contacted-bg: rgba(251, 191, 36, 0.12);
-  --status-contacted-border: rgba(251, 191, 36, 0.28);
-
-  --status-negotiation-text: #C084FC;
-  --status-negotiation-bg: rgba(192, 132, 252, 0.14);
-  --status-negotiation-border: rgba(192, 132, 252, 0.32);
-
-  --status-lost-text: #94A3B8;
-  --status-lost-bg: rgba(148, 163, 184, 0.12);
-  --status-lost-border: rgba(148, 163, 184, 0.24);
-
-  --status-won-text: #34D399;
-  --status-won-bg: rgba(16, 185, 129, 0.14);
-  --status-won-border: rgba(16, 185, 129, 0.32);
-
-  --danger: #EF4444;
-  --danger-hover: #DC2626;
-  --danger-subtle: rgba(239, 68, 68, 0.12);
-  --danger-border: rgba(239, 68, 68, 0.28);
-
-  /* Champagne Gold Accents */
-  --accent-gold: #D4AF37;
-  --accent-gold-hover: #C5A059;
-  --accent-gold-subtle: rgba(212, 175, 55, 0.14);
-  --accent-gold-border: rgba(212, 175, 55, 0.32);
-  --accent-gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F5DE88 100%);
-  --accent-gold-glow: 0 0 20px rgba(212, 175, 55, 0.25);
-
-  --bg-sidebar: rgba(13, 19, 31, 0.88);
-  --bg-sidebar-footer: rgba(10, 14, 24, 0.92);
-
-  --modal-backdrop-bg: rgba(4, 7, 14, 0.78);
-}
-
-/* 2. LIGHT THEME (Warm ivory and muted neutral text) */
 :root[data-theme="light"] {
-  --bg-primary: #FDFBF7;
-  --bg-secondary: #F6F3EC;
-  --bg-tertiary: #EDE8DD;
+  /* Surfaces */
+  --bg-primary: #F7F5EF;
+  --bg-secondary: #EFECE3;
+  --bg-tertiary: #E7E3D8;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #FAF8F5;
-  --bg-card-subtle: #F7F4EE;
+  --bg-card-hover: #FAF8F4;
+  --bg-card-subtle: #FAF9F5;
   --bg-card-solid: #FFFFFF;
-  --bg-hover: rgba(0, 0, 0, 0.04);
-  --bg-active: rgba(0, 0, 0, 0.08);
+  --bg-hover: rgba(36, 57, 47, 0.04);
+  --bg-active: rgba(36, 57, 47, 0.08);
 
-  --text-primary: #111827;
-  --text-secondary: #4B5563;
-  --text-tertiary: #6B7280;
+  --bg-sidebar: #F2EFE7;
+  --bg-sidebar-footer: #EBE6DC;
+  --bg-header: rgba(247, 245, 239, 0.95);
+
+  /* Typography */
+  --text-primary: #252A25;
+  --text-secondary: #74766F;
+  --text-tertiary: #8E9189;
   --text-inverse: #FFFFFF;
-  --text-ivory: #FDFBF7;
+  --text-ivory: #F7F5EF;
 
-  --border-light: rgba(0, 0, 0, 0.08);
-  --border-medium: rgba(0, 0, 0, 0.15);
-  --border-strong: rgba(0, 0, 0, 0.25);
-  --border-glow: rgba(5, 150, 105, 0.4);
+  /* Borders & Dividers */
+  --border-light: #EBE7DE;
+  --border-medium: #E5E1D8;
+  --border-strong: #D5CFBF;
+  --border-focus: #24392F;
 
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.12);
+  /* Natural Grounded Shadows */
+  --shadow-xs: 0 1px 2px rgba(37, 42, 37, 0.04);
+  --shadow-sm: 0 1px 3px rgba(37, 42, 37, 0.06), 0 1px 2px rgba(37, 42, 37, 0.04);
+  --shadow-md: 0 4px 14px rgba(37, 42, 37, 0.06), 0 1px 3px rgba(37, 42, 37, 0.03);
+  --shadow-lg: 0 12px 30px rgba(37, 42, 37, 0.08), 0 2px 6px rgba(37, 42, 37, 0.04);
 
-  --status-new-text: #0284C7;
-  --status-new-bg: #E0F2FE;
-  --status-new-border: #BAE6FD;
+  /* Primary Brand: Deep Forest Green */
+  --primary: #24392F;
+  --primary-hover: #1A2A22;
+  --primary-active: #14201A;
+  --primary-subtle: rgba(36, 57, 47, 0.08);
+  --primary-border: rgba(36, 57, 47, 0.22);
+  --primary-gradient: linear-gradient(135deg, #24392F 0%, #344E40 100%);
+  --primary-glow: 0 2px 10px rgba(36, 57, 47, 0.15);
 
-  --status-contacted-text: #B45309;
-  --status-contacted-bg: #FEF3C7;
-  --status-contacted-border: #FDE68A;
+  /* Accent: Antique Brass */
+  --accent-brass: #B49A69;
+  --accent-brass-hover: #9E8555;
+  --accent-brass-subtle: rgba(180, 154, 105, 0.12);
+  --accent-brass-border: rgba(180, 154, 105, 0.32);
 
-  --status-negotiation-text: #7E22CE;
-  --status-negotiation-bg: #F3E8FF;
-  --status-negotiation-border: #E9D5FF;
+  /* Accent: Muted Olive */
+  --accent-olive: #69735C;
+  --accent-olive-hover: #5A634E;
+  --accent-olive-subtle: rgba(105, 115, 92, 0.12);
+  --accent-olive-border: rgba(105, 115, 92, 0.28);
 
-  --status-lost-text: #475569;
-  --status-lost-bg: #F1F5F9;
-  --status-lost-border: #CBD5E1;
+  /* Legacy aliases — mapped to palette equivalents */
+  --accent-gold: #B49A69;
+  --accent-gold-gradient: linear-gradient(135deg, #B49A69, #C4AD7E);
+  --accent-violet: #69735C;
+  --accent-blue: #24392F;
 
-  --status-won-text: #047857;
-  --status-won-bg: #ECFDF5;
-  --status-won-border: #A7F3D0;
+  /* Restrained Lifecycle Status Colors */
+  --status-new-text: #3D5A50;
+  --status-new-bg: #EEF4F0;
+  --status-new-border: #D6E3DC;
 
-  --danger: #DC2626;
-  --danger-hover: #B91C1C;
-  --danger-subtle: #FEF2F2;
-  --danger-border: #FECACA;
+  --status-contacted-text: #59654B;
+  --status-contacted-bg: #F2F5ED;
+  --status-contacted-border: #D9E1D0;
 
-  --accent-gold: #B8860B;
-  --accent-gold-hover: #996F0A;
-  --accent-gold-subtle: #FEF9C3;
-  --accent-gold-border: #FDE047;
-  --accent-gold-gradient: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
-  --accent-gold-glow: 0 0 16px rgba(184, 134, 11, 0.2);
+  --status-negotiation-text: #8A7242;
+  --status-negotiation-bg: #FAF5EB;
+  --status-negotiation-border: #EFE2C9;
 
-  --bg-sidebar: #FAF8F5;
-  --bg-sidebar-footer: #F2ECE0;
+  --status-won-text: #24392F;
+  --status-won-bg: #EAF2ED;
+  --status-won-border: #CADECF;
 
-  --modal-backdrop-bg: rgba(17, 24, 39, 0.55);
+  --status-lost-text: #74766F;
+  --status-lost-bg: #F1EFE8;
+  --status-lost-border: #DDD8CD;
+
+  /* Terracotta Red (Restrained) */
+  --danger: #9E4334;
+  --danger-hover: #863629;
+  --danger-subtle: #FDF4F2;
+  --danger-border: #F7D4CE;
+
+  /* Modal Backdrop */
+  --modal-backdrop-bg: rgba(37, 42, 37, 0.45);
 }
 
-/* 3. ACCENT COLORS (Default Emerald Green, Violet, Blue) */
+/* 2. SOPHISTICATED DARK THEME (Deep Forest Obsidian & Antique Brass) */
+:root[data-theme="dark"] {
+  --bg-primary: #151A17;
+  --bg-secondary: #1B211D;
+  --bg-tertiary: #222924;
+  --bg-card: #1D231E;
+  --bg-card-hover: #242C26;
+  --bg-card-subtle: #191E1A;
+  --bg-card-solid: #1D231E;
+  --bg-hover: rgba(255, 255, 255, 0.04);
+  --bg-active: rgba(255, 255, 255, 0.08);
+
+  --bg-sidebar: #181E19;
+  --bg-sidebar-footer: #141915;
+  --bg-header: rgba(21, 26, 23, 0.95);
+
+  --text-primary: #F4F3EE;
+  --text-secondary: #9EA298;
+  --text-tertiary: #71766D;
+  --text-inverse: #151A17;
+  --text-ivory: #F7F5EF;
+
+  --border-light: rgba(255, 255, 255, 0.07);
+  --border-medium: #2C352E;
+  --border-strong: #3D4840;
+  --border-focus: #537562;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.65);
+
+  /* Primary in Dark: Luminous Sage Forest */
+  --primary: #3E624E;
+  --primary-hover: #4B735C;
+  --primary-active: #345442;
+  --primary-subtle: rgba(62, 98, 78, 0.2);
+  --primary-border: rgba(62, 98, 78, 0.4);
+  --primary-gradient: linear-gradient(135deg, #3E624E 0%, #4E7B62 100%);
+  --primary-glow: 0 2px 12px rgba(62, 98, 78, 0.25);
+
+  --accent-brass: #C4AD7E;
+  --accent-brass-hover: #D5BF91;
+  --accent-brass-subtle: rgba(196, 173, 126, 0.16);
+  --accent-brass-border: rgba(196, 173, 126, 0.35);
+
+  --accent-olive: #8F9E80;
+  --accent-olive-hover: #9EAE8E;
+  --accent-olive-subtle: rgba(143, 158, 128, 0.16);
+  --accent-olive-border: rgba(143, 158, 128, 0.35);
+
+  /* Legacy aliases */
+  --accent-gold: #C4AD7E;
+  --accent-gold-gradient: linear-gradient(135deg, #C4AD7E, #D5BF91);
+  --accent-violet: #8F9E80;
+  --accent-blue: #3E624E;
+
+  --status-new-text: #7FA394;
+  --status-new-bg: rgba(127, 163, 148, 0.14);
+  --status-new-border: rgba(127, 163, 148, 0.3);
+
+  --status-contacted-text: #A6B495;
+  --status-contacted-bg: rgba(166, 180, 149, 0.14);
+  --status-contacted-border: rgba(166, 180, 149, 0.3);
+
+  --status-negotiation-text: #D2BA8E;
+  --status-negotiation-bg: rgba(210, 186, 142, 0.14);
+  --status-negotiation-border: rgba(210, 186, 142, 0.3);
+
+  --status-won-text: #8EC3A2;
+  --status-won-bg: rgba(142, 195, 162, 0.16);
+  --status-won-border: rgba(142, 195, 162, 0.35);
+
+  --status-lost-text: #9EA298;
+  --status-lost-bg: rgba(158, 162, 152, 0.12);
+  --status-lost-border: rgba(158, 162, 152, 0.25);
+
+  --danger: #C25644;
+  --danger-hover: #D66350;
+  --danger-subtle: rgba(194, 86, 68, 0.16);
+  --danger-border: rgba(194, 86, 68, 0.35);
+
+  --modal-backdrop-bg: rgba(10, 13, 11, 0.72);
+}
+
+/* 3. ACCENT PALETTES (Default Forest Green, Olive, Brass) */
 :root,
 :root[data-accent="green"] {
-  --primary: #059669;
-  --primary-hover: #047857;
-  --primary-active: #065F46;
-  --primary-subtle: rgba(16, 185, 129, 0.14);
-  --primary-border: rgba(16, 185, 129, 0.35);
-  --primary-gradient: linear-gradient(135deg, #059669 0%, #10B981 100%);
-  --primary-glow: 0 0 24px rgba(16, 185, 129, 0.3);
-  --accent-emerald: #10B981;
-  --accent-forest: #047857;
+  /* Default: Deep Forest Green (#24392F) */
 }
 
-:root[data-accent="violet"] {
-  --primary: #6366F1;
-  --primary-hover: #4F46E5;
-  --primary-active: #4338CA;
-  --primary-subtle: rgba(99, 102, 241, 0.14);
-  --primary-border: rgba(99, 102, 241, 0.35);
-  --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
-  --primary-glow: 0 0 24px rgba(99, 102, 241, 0.32);
-  --accent-emerald: #8B5CF6;
-  --accent-forest: #6366F1;
+:root[data-accent="violet"],
+:root[data-accent="brass"] {
+  --primary: #B49A69;
+  --primary-hover: #9E8555;
+  --primary-active: #8C7548;
+  --primary-subtle: rgba(180, 154, 105, 0.12);
+  --primary-border: rgba(180, 154, 105, 0.3);
+  --primary-gradient: linear-gradient(135deg, #B49A69 0%, #C4AD7E 100%);
+  --primary-glow: 0 2px 10px rgba(180, 154, 105, 0.2);
 }
 
-:root[data-accent="blue"] {
-  --primary: #0284C7;
-  --primary-hover: #0369A1;
-  --primary-active: #075985;
-  --primary-subtle: rgba(2, 132, 199, 0.14);
-  --primary-border: rgba(2, 132, 199, 0.35);
-  --primary-gradient: linear-gradient(135deg, #0284C7 0%, #2563EB 100%);
-  --primary-glow: 0 0 24px rgba(2, 132, 199, 0.32);
-  --accent-emerald: #38BDF8;
-  --accent-forest: #0284C7;
+:root[data-accent="blue"],
+:root[data-accent="olive"] {
+  --primary: #69735C;
+  --primary-hover: #5A634E;
+  --primary-active: #4B5341;
+  --primary-subtle: rgba(105, 115, 92, 0.12);
+  --primary-border: rgba(105, 115, 92, 0.3);
+  --primary-gradient: linear-gradient(135deg, #69735C 0%, #7D886E 100%);
+  --primary-glow: 0 2px 10px rgba(105, 115, 92, 0.2);
 }
 
-/* 4. BASE GEOMETRY & TYPOGRAPHY SCALES */
+/* 4. TYPOGRAPHY & SPACING SYSTEM */
 :root {
-  --glass-blur: blur(16px);
-  --glass-blur-sm: blur(8px);
+  --font-serif: 'Newsreader', Garamond, Georgia, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  /* Restrained, elegant radiuses (no oversized bubbly cards) */
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 9px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
   --space-1: 4px;
@@ -198,11 +243,11 @@
   --space-10: 40px;
   --space-12: 48px;
 
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 120ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-normal: 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* 5. COMPACT MODE (Visibly reduces spacing without breaking layout) */
+/* 5. COMPACT DENSITY MODE */
 :root.compact-mode {
   --space-1: 2px;
   --space-2: 6px;
@@ -214,7 +259,7 @@
 }
 
 :root.compact-mode .card {
-  padding: 14px 16px !important;
+  padding: 12px 16px !important;
 }
 
 :root.compact-mode table th,
@@ -230,7 +275,7 @@
 }
 
 :root.compact-mode .btn {
-  padding: 6px 14px !important;
+  padding: 6px 13px !important;
   font-size: 0.8125rem !important;
 }
 

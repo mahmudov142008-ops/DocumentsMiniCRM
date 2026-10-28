@@ -206,16 +206,16 @@ export const TasksPage: React.FC = () => {
           <div
             style={{
               padding: '12px',
-              borderRadius: '10px',
-              backgroundColor: 'rgba(56, 189, 248, 0.12)',
-              color: '#38BDF8',
+              borderRadius: '8px',
+              backgroundColor: 'var(--primary-subtle)',
+              color: 'var(--primary)',
             }}
           >
             <Clock size={24} />
           </div>
           <div>
             <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Pending Tasks</span>
-            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{pendingCount}</div>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 600, color: 'var(--text-primary)' }}>{pendingCount}</div>
           </div>
         </div>
 
@@ -242,16 +242,16 @@ export const TasksPage: React.FC = () => {
           <div
             style={{
               padding: '12px',
-              borderRadius: '10px',
-              backgroundColor: 'rgba(16, 185, 129, 0.12)',
-              color: '#10B981',
+              borderRadius: '8px',
+              backgroundColor: 'rgba(105, 115, 92, 0.10)',
+              color: 'var(--accent-olive)',
             }}
           >
             <CheckSquare size={24} />
           </div>
           <div>
             <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Completed Tasks</span>
-            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{completedCount}</div>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 600, color: 'var(--text-primary)' }}>{completedCount}</div>
           </div>
         </div>
       </div>
@@ -361,17 +361,17 @@ export const TasksPage: React.FC = () => {
                   padding: '14px 18px',
                   gap: '16px',
                   opacity: isDone ? 0.65 : 1,
-                  borderLeft: isOverdue ? '4px solid #EF4444' : isDone ? '4px solid #10B981' : '4px solid var(--border-medium)',
+                  borderLeft: isOverdue ? '4px solid #DC2626' : isDone ? '4px solid var(--accent-olive)' : '4px solid var(--border-medium)',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', flex: 1, minWidth: 0 }}>
                   <button
                     onClick={() => handleToggleStatus(task)}
                     className="btn-ghost"
-                    style={{ padding: '2px', color: isDone ? '#10B981' : 'var(--text-tertiary)', marginTop: '2px' }}
+                    style={{ padding: '2px', color: isDone ? 'var(--accent-olive)' : 'var(--text-tertiary)', marginTop: '2px' }}
                     title={isDone ? 'Mark as pending' : 'Mark as complete'}
                   >
-                    {isDone ? <CheckSquare size={20} color="#10B981" /> : <Square size={20} />}
+                    {isDone ? <CheckSquare size={20} color="var(--accent-olive)" /> : <Square size={20} />}
                   </button>
 
                   <div style={{ minWidth: 0, flex: 1 }}>
@@ -419,7 +419,7 @@ export const TasksPage: React.FC = () => {
                       )}
 
                       {linkedDeal && (
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--accent-gold)' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--accent-brass)' }}>
                           <KanbanSquare size={13} /> Deal: {linkedDeal.title}
                         </span>
                       )}

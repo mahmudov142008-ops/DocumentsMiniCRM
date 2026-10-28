@@ -46,12 +46,12 @@ describe('Preferences & Settings Tests', () => {
         wrapper: ({ children }) => <PreferencesProvider>{children}</PreferencesProvider>,
       });
 
-      expect(result.current.theme).toBe('dark');
-      expect(result.current.accent).toBe('violet');
+      expect(result.current.theme).toBe('light');
+      expect(result.current.accent).toBe('green');
       expect(result.current.compactMode).toBe(false);
       expect(result.current.dateFormat).toBe('MMM D, YYYY');
-      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-      expect(document.documentElement.getAttribute('data-accent')).toBe('violet');
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+      expect(document.documentElement.getAttribute('data-accent')).toBe('green');
       expect(document.documentElement.classList.contains('compact-mode')).toBe(false);
     });
 

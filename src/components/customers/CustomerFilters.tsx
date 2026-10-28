@@ -150,7 +150,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
             style={{
               padding: '2px 8px',
               fontSize: '0.8125rem',
-              color: 'var(--accent-blue)',
+              color: 'var(--primary)',
               display: 'flex',
               alignItems: 'center',
               gap: '4px',

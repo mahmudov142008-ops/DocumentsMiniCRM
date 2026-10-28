@@ -52,7 +52,7 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
           className="btn-ghost"
           style={{
             fontSize: '0.8125rem',
-            color: 'var(--accent-blue)',
+            color: 'var(--primary)',
             padding: '4px 8px',
             display: 'flex',
             alignItems: 'center',
@@ -62,7 +62,7 @@ export const RecentCustomersList: React.FC<RecentCustomersListProps> = ({
             transition: 'all 150ms',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'rgba(56, 189, 248, 0.1)';
+            e.currentTarget.style.backgroundColor = 'var(--primary-subtle)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = 'transparent';

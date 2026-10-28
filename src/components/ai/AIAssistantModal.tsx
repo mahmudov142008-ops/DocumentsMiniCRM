@@ -204,7 +204,7 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
                   className="btn btn-secondary"
                   style={{ fontSize: '0.8125rem', display: 'flex', alignItems: 'center', gap: '6px' }}
                 >
-                  {copied ? <Check size={14} color="#10B981" /> : <Copy size={14} />}
+                  {copied ? <Check size={14} color="var(--primary)" /> : <Copy size={14} />}
                   {copied ? 'Copied' : 'Copy Summary'}
                 </button>
               </div>
@@ -234,7 +234,7 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
                   className="btn btn-secondary"
                   style={{ fontSize: '0.8125rem', display: 'flex', alignItems: 'center', gap: '6px' }}
                 >
-                  {copied ? <Check size={14} color="#10B981" /> : <Copy size={14} />}
+                  {copied ? <Check size={14} color="var(--primary)" /> : <Copy size={14} />}
                   {copied ? 'Copied to Clipboard' : 'Copy Email Draft'}
                 </button>
               </div>

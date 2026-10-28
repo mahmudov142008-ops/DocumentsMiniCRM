@@ -58,14 +58,14 @@ export const CustomerCardList: React.FC<CustomerCardListProps> = ({
               href={`mailto:${c.email}`}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)' }}
             >
-              <Mail size={14} color="var(--accent-blue)" />
+              <Mail size={14} color="var(--primary)" />
               {c.email}
             </a>
             <a
               href={`tel:${c.phone}`}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)' }}
             >
-              <Phone size={14} color="#34D399" />
+              <Phone size={14} color="var(--accent-olive)" />
               {c.phone}
             </a>
           </div>

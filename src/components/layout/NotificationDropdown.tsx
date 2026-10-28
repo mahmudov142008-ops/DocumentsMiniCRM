@@ -79,13 +79,13 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onNa
   const getIcon = (type: NotificationItem['type']) => {
     switch (type) {
       case 'task_overdue':
-        return <AlertTriangle size={15} color="#EF4444" />;
+        return <AlertTriangle size={15} color="#DC2626" />;
       case 'task_due':
-        return <Clock size={15} color="#F59E0B" />;
+        return <Clock size={15} color="var(--accent-brass)" />;
       case 'meeting_upcoming':
-        return <Calendar size={15} color="#38BDF8" />;
+        return <Calendar size={15} color="var(--accent-olive)" />;
       case 'deal_won':
-        return <Trophy size={15} color="#10B981" />;
+        return <Trophy size={15} color="var(--primary)" />;
       default:
         return <Bell size={15} color="var(--primary)" />;
     }
@@ -130,7 +130,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onNa
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--primary-glow)',
+              boxShadow: 'none',
             }}
           >
             {unreadCount > 9 ? '9+' : unreadCount}

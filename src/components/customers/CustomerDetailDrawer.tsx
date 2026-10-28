@@ -170,32 +170,32 @@ export const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(139, 92, 246, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Mail size={18} color="var(--accent-violet)" />
+              <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'var(--primary-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Mail size={18} color="var(--primary)" />
               </div>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'block' }}>Email</span>
-                <a href={`mailto:${customer.email}`} style={{ fontSize: '0.9375rem', wordBreak: 'break-all', color: 'var(--accent-blue)' }}>
+                <a href={`mailto:${customer.email}`} style={{ fontSize: '0.9375rem', wordBreak: 'break-all', color: 'var(--primary)' }}>
                   {customer.email}
                 </a>
               </div>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Phone size={18} color="#34D399" />
+              <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(105, 115, 92, 0.10)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Phone size={18} color="var(--accent-olive)" />
               </div>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'block' }}>Phone</span>
-                <a href={`tel:${customer.phone}`} style={{ fontSize: '0.9375rem', color: '#34D399' }}>
+                <a href={`tel:${customer.phone}`} style={{ fontSize: '0.9375rem', color: 'var(--accent-olive)' }}>
                   {customer.phone}
                 </a>
               </div>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(251, 191, 36, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Calendar size={18} color="#FBBF24" />
+              <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(180, 154, 105, 0.10)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Calendar size={18} color="var(--accent-brass)" />
               </div>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'block' }}>Added On</span>

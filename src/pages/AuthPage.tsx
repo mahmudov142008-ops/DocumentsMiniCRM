@@ -87,7 +87,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
         overflow: 'hidden',
       }}
     >
-      {/* Background Ambient Glow */}
+      {/* Background Subtle Warm Atmosphere */}
       <div
         aria-hidden="true"
         style={{
@@ -97,8 +97,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
           transform: 'translateX(-50%)',
           width: '600px',
           height: '400px',
-          background: 'radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, rgba(99, 102, 241, 0.1) 40%, transparent 70%)',
-          filter: 'blur(80px)',
+          background: 'radial-gradient(circle, rgba(180, 154, 105, 0.08) 0%, transparent 70%)',
+          filter: 'blur(60px)',
           pointerEvents: 'none',
         }}
       />
@@ -127,8 +127,9 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
               color: 'var(--text-secondary)',
               padding: '6px 12px',
               borderRadius: '8px',
-              background: 'rgba(255, 255, 255, 0.04)',
+              background: 'var(--bg-card)',
               border: '1px solid var(--border-light)',
+              cursor: 'pointer',
               transition: 'all 150ms',
             }}
             onMouseEnter={(e) => {
@@ -149,23 +150,24 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
         <div style={{ textAlign: 'center' }}>
           <div
             style={{
-              width: '46px',
-              height: '46px',
-              borderRadius: '12px',
-              background: 'var(--primary-gradient)',
+              width: '44px',
+              height: '44px',
+              borderRadius: '8px',
+              background: 'var(--primary)',
               color: '#FFFFFF',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: 800,
-              fontSize: '1.375rem',
-              boxShadow: '0 0 24px rgba(99, 102, 241, 0.45)',
+              fontSize: '1.25rem',
+              border: '1px solid rgba(180, 154, 105, 0.35)',
+              boxShadow: '0 2px 8px rgba(36, 57, 47, 0.12)',
               marginBottom: '14px',
             }}
           >
             M
           </div>
-          <h1 style={{ fontSize: '1.625rem', fontWeight: 700, letterSpacing: '-0.025em', color: '#FFFFFF' }}>
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
             {mode === 'login' ? 'Sign in to MiniCRM' : 'Create your CRM workspace'}
           </h1>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
@@ -175,16 +177,15 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
           </p>
         </div>
 
-        {/* Auth Glassmorphism Card */}
+        {/* Auth Card */}
         <div
           className="card"
           style={{
             padding: '32px 28px',
-            borderRadius: '18px',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            background: 'linear-gradient(180deg, rgba(20, 27, 45, 0.8) 0%, rgba(12, 17, 28, 0.95) 100%)',
-            boxShadow: '0 16px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.15)',
-            backdropFilter: 'blur(20px)',
+            borderRadius: '12px',
+            border: '1px solid var(--border-light)',
+            background: 'var(--bg-card)',
+            boxShadow: 'var(--shadow-md)',
           }}
         >
           {/* Mode Switcher Tabs */}
@@ -192,9 +193,9 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
-              backgroundColor: 'rgba(8, 11, 17, 0.8)',
+              backgroundColor: 'var(--bg-card-subtle)',
               border: '1px solid var(--border-light)',
-              borderRadius: '10px',
+              borderRadius: '8px',
               padding: '3px',
               marginBottom: '24px',
             }}
@@ -208,12 +209,14 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
               }}
               style={{
                 padding: '9px',
-                borderRadius: '8px',
+                borderRadius: '6px',
                 fontSize: '0.875rem',
                 fontWeight: mode === 'login' ? 600 : 500,
-                backgroundColor: mode === 'login' ? 'var(--primary-subtle)' : 'transparent',
-                color: mode === 'login' ? '#FFFFFF' : 'var(--text-secondary)',
-                border: mode === 'login' ? '1px solid var(--primary-border)' : '1px solid transparent',
+                backgroundColor: mode === 'login' ? 'var(--bg-card)' : 'transparent',
+                color: mode === 'login' ? 'var(--primary)' : 'var(--text-secondary)',
+                border: mode === 'login' ? '1px solid var(--border-light)' : '1px solid transparent',
+                boxShadow: mode === 'login' ? '0 1px 3px rgba(0,0,0,0.05)' : 'none',
+                cursor: 'pointer',
                 transition: 'all var(--transition-fast)',
               }}
             >
@@ -228,12 +231,14 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
               }}
               style={{
                 padding: '9px',
-                borderRadius: '8px',
+                borderRadius: '6px',
                 fontSize: '0.875rem',
                 fontWeight: mode === 'register' ? 600 : 500,
-                backgroundColor: mode === 'register' ? 'var(--primary-subtle)' : 'transparent',
-                color: mode === 'register' ? '#FFFFFF' : 'var(--text-secondary)',
-                border: mode === 'register' ? '1px solid var(--primary-border)' : '1px solid transparent',
+                backgroundColor: mode === 'register' ? 'var(--bg-card)' : 'transparent',
+                color: mode === 'register' ? 'var(--primary)' : 'var(--text-secondary)',
+                border: mode === 'register' ? '1px solid var(--border-light)' : '1px solid transparent',
+                boxShadow: mode === 'register' ? '0 1px 3px rgba(0,0,0,0.05)' : 'none',
+                cursor: 'pointer',
                 transition: 'all var(--transition-fast)',
               }}
             >
@@ -245,10 +250,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
             <div
               style={{
                 padding: '14px',
-                backgroundColor: 'rgba(16, 185, 129, 0.12)',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
-                color: '#34D399',
-                borderRadius: '10px',
+                backgroundColor: 'var(--primary-subtle)',
+                border: '1px solid var(--primary-border)',
+                color: 'var(--primary)',
+                borderRadius: '8px',
                 marginBottom: '20px',
                 fontSize: '0.875rem',
                 display: 'flex',
@@ -354,9 +359,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
                 width: '100%',
                 padding: '12px',
                 fontSize: '0.9375rem',
-                borderRadius: '10px',
+                borderRadius: '8px',
                 fontWeight: 600,
-                boxShadow: '0 4px 18px rgba(99, 102, 241, 0.4)',
               }}
             >
               {loading ? (
@@ -387,7 +391,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
               fontSize: '0.75rem',
             }}
           >
-            <Shield size={13} color="var(--accent-blue)" />
+            <Shield size={13} color="var(--accent-olive)" />
             <span>Encrypted passwords & PostgreSQL Row-Level Security</span>
           </div>
         </div>
@@ -395,7 +399,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login', onBac
         {/* Feature badge footer */}
         <div style={{ textAlign: 'center', color: 'var(--text-tertiary)', fontSize: '0.8125rem' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-            <Sparkles size={13} color="var(--accent-violet)" />
+            <Sparkles size={13} color="var(--accent-brass)" />
             Multi-tenant data isolation enabled
           </span>
         </div>

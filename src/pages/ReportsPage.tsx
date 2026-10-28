@@ -287,10 +287,10 @@ export const ReportsPage: React.FC = () => {
       >
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Closed Won Revenue</span>
-            <Trophy size={18} color="var(--accent-gold)" />
+            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Closed Won Revenue</span>
+            <Trophy size={18} color="var(--accent-brass)" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--accent-gold)', marginTop: '8px' }}>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--accent-brass)', marginTop: '8px', letterSpacing: '-0.02em' }}>
             ${wonRevenue.toLocaleString()}
           </div>
           <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -300,10 +300,10 @@ export const ReportsPage: React.FC = () => {
 
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Total Pipeline Value</span>
+            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Total Pipeline Value</span>
             <BarChart3 size={18} color="var(--primary)" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '8px' }}>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
             ${totalPipelineValue.toLocaleString()}
           </div>
           <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -313,10 +313,10 @@ export const ReportsPage: React.FC = () => {
 
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Win Conversion Rate</span>
-            <TrendingUp size={18} color="#10B981" />
+            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Win Conversion Rate</span>
+            <TrendingUp size={18} color="var(--accent-olive)" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 700, color: '#10B981', marginTop: '8px' }}>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--accent-olive)', marginTop: '8px', letterSpacing: '-0.02em' }}>
             {conversionRate}%
           </div>
           <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -326,10 +326,10 @@ export const ReportsPage: React.FC = () => {
 
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Customer Growth</span>
-            <PieChart size={18} color="#38BDF8" />
+            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Customer Growth</span>
+            <PieChart size={18} color="var(--primary)" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '8px' }}>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
             {filteredCustomers.length}
           </div>
           <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -454,10 +454,10 @@ export const ReportsPage: React.FC = () => {
 
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.8125rem', marginBottom: '6px' }}>
-                      <span style={{ fontWeight: 600, color: isFinished ? '#10B981' : 'var(--accent-gold)' }}>
+                      <span style={{ fontWeight: 600, color: isFinished ? 'var(--primary)' : 'var(--accent-brass)' }}>
                         ${progress.current.toLocaleString()} / ${Number(goal.target_amount).toLocaleString()}
                       </span>
-                      <span style={{ fontWeight: 700, color: isFinished ? '#10B981' : 'var(--text-primary)' }}>
+                      <span style={{ fontWeight: 700, color: isFinished ? 'var(--primary)' : 'var(--text-primary)' }}>
                         {progress.percentage}%
                       </span>
                     </div>
@@ -475,7 +475,7 @@ export const ReportsPage: React.FC = () => {
                         style={{
                           height: '100%',
                           width: `${progress.percentage}%`,
-                          background: isFinished ? 'var(--primary-gradient)' : 'var(--accent-gold-gradient)',
+                          background: isFinished ? 'var(--primary)' : 'var(--accent-brass)',
                           borderRadius: '4px',
                         }}
                       />
@@ -484,7 +484,7 @@ export const ReportsPage: React.FC = () => {
 
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'flex', justifyContent: 'space-between' }}>
                     <span>Remaining: ${progress.remaining.toLocaleString()}</span>
-                    {isFinished && <span style={{ color: '#10B981', fontWeight: 600 }}>Target Reached!</span>}
+                    {isFinished && <span style={{ color: 'var(--primary)', fontWeight: 600 }}>Target Reached!</span>}
                   </div>
                 </div>
               );

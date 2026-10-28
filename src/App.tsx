@@ -60,6 +60,13 @@ const MainApplication: React.FC = () => {
   };
 
   const [publicView, setPublicView] = useState<PublicView>(getInitialPublicView);
+  const [isViewingLanding, setIsViewingLanding] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.toLowerCase();
+      return hash === '#landing' || hash === '#/' || hash === '#home';
+    }
+    return false;
+  });
 
   // Sync publicView and currentPage with browser hash
   useEffect(() => {
@@ -69,13 +76,19 @@ const MainApplication: React.FC = () => {
 
       if (VALID_PAGES.includes(cleanHash)) {
         setCurrentPage(cleanHash);
+        setIsViewingLanding(false);
       }
 
       if (hash === '#login') {
         setPublicView('login');
+        setIsViewingLanding(false);
       } else if (hash === '#register') {
         setPublicView('register');
-      } else if (!hash || hash === '#' || hash === '#/') {
+        setIsViewingLanding(false);
+      } else if (hash === '#landing' || hash === '#/' || hash === '#home') {
+        setPublicView('landing');
+        setIsViewingLanding(true);
+      } else if (!hash || hash === '#') {
         setPublicView('landing');
       }
     };
@@ -95,11 +108,25 @@ const MainApplication: React.FC = () => {
     }
   };
 
+  const navigateToLanding = () => {
+    setIsViewingLanding(true);
+    setPublicView('landing');
+    if (typeof window !== 'undefined') {
+      window.location.hash = '#landing';
+    }
+  };
+
   const handleNavigate = (page: AppPage) => {
+    setIsViewingLanding(false);
     setCurrentPage(page);
     if (typeof window !== 'undefined') {
       window.location.hash = `#${page}`;
     }
+  };
+
+  const handleReturnToDashboard = () => {
+    setIsViewingLanding(false);
+    handleNavigate('dashboard');
   };
 
   // Stable ref to toast so it never causes useCallback to re-create
@@ -200,17 +227,17 @@ const MainApplication: React.FC = () => {
       >
         <div
           style={{
-            width: '46px',
-            height: '46px',
-            borderRadius: '12px',
-            background: 'var(--primary-gradient)',
-            boxShadow: 'var(--primary-glow)',
+            width: '42px',
+            height: '42px',
+            borderRadius: '8px',
+            background: 'var(--primary)',
+            boxShadow: '0 2px 8px rgba(36, 57, 47, 0.12)',
             color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontWeight: 800,
-            fontSize: '1.25rem',
+            fontSize: '1.125rem',
           }}
         >
           M
@@ -224,7 +251,7 @@ const MainApplication: React.FC = () => {
 
   // Not authenticated: Show Public Landing Page or Auth Page based on route
   if (!user) {
-    if (publicView === 'landing') {
+    if (publicView === 'landing' || isViewingLanding) {
       return (
         <LandingPage
           onGetStarted={() => navigatePublicView('register')}
@@ -236,14 +263,33 @@ const MainApplication: React.FC = () => {
     return (
       <AuthPage
         initialMode={publicView === 'register' ? 'register' : 'login'}
-        onBackToLanding={() => navigatePublicView('landing')}
+        onBackToLanding={() => {
+          setIsViewingLanding(true);
+          navigatePublicView('landing');
+        }}
+      />
+    );
+  }
+
+  // Authenticated user viewing public landing page
+  if (isViewingLanding) {
+    return (
+      <LandingPage
+        onGetStarted={handleReturnToDashboard}
+        onSignIn={handleReturnToDashboard}
+        onGoToDashboard={handleReturnToDashboard}
+        isAuthenticated={true}
       />
     );
   }
 
   // Authenticated Main Workspace
   return (
-    <AppLayout currentPage={currentPage} onNavigate={handleNavigate}>
+    <AppLayout
+      currentPage={currentPage}
+      onNavigate={handleNavigate}
+      onNavigateToLanding={navigateToLanding}
+    >
       {currentPage === 'dashboard' && (
         <DashboardPage
           customers={customers}

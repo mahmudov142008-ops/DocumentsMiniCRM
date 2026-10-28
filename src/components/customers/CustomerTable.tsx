@@ -117,10 +117,10 @@ export const CustomerTable: React.FC<CustomerTableProps> = ({
                       fontSize: '0.8125rem',
                       transition: 'color 150ms',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#34D399')}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-olive)')}
                     onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
                   >
-                    <Phone size={13} color="#34D399" />
+                    <Phone size={13} color="var(--accent-olive)" />
                     {c.phone}
                   </a>
                 </td>

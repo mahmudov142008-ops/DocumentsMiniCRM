@@ -94,7 +94,7 @@ export const SettingsPage: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', maxWidth: '1000px', margin: '0 auto', paddingBottom: '40px' }}>
       {/* Page Header */}
       <div>
-        <h2 style={{ fontSize: '1.625rem', fontWeight: 700, letterSpacing: '-0.025em', color: 'var(--text-primary)' }}>
+        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
           Settings & Preferences
         </h2>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
@@ -163,7 +163,7 @@ export const SettingsPage: React.FC = () => {
                 borderRadius: '12px',
                 border: `2px solid ${theme === 'dark' ? 'var(--primary)' : 'var(--border-medium)'}`,
                 backgroundColor: theme === 'dark' ? 'var(--primary-subtle)' : 'var(--bg-card)',
-                boxShadow: theme === 'dark' ? '0 0 20px var(--primary-glow)' : 'var(--shadow-xs)',
+                boxShadow: theme === 'dark' ? '0 1px 4px rgba(36, 57, 47, 0.1)' : 'var(--shadow-xs)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'all var(--transition-fast)',
@@ -175,12 +175,12 @@ export const SettingsPage: React.FC = () => {
                     width: '32px',
                     height: '32px',
                     borderRadius: '8px',
-                    backgroundColor: '#0F1523',
+                    backgroundColor: '#1E2420',
                     border: '1px solid rgba(255,255,255,0.1)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#38BDF8',
+                    color: 'var(--accent-brass)',
                   }}
                 >
                   <Moon size={16} />
@@ -204,7 +204,7 @@ export const SettingsPage: React.FC = () => {
               </div>
               <span style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)' }}>Dark Theme</span>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                Glassmorphism & deep graphite
+                Deep forest & graphite atmosphere
               </span>
             </button>
 
@@ -220,7 +220,7 @@ export const SettingsPage: React.FC = () => {
                 borderRadius: '12px',
                 border: `2px solid ${theme === 'light' ? 'var(--primary)' : 'var(--border-medium)'}`,
                 backgroundColor: theme === 'light' ? 'var(--primary-subtle)' : 'var(--bg-card)',
-                boxShadow: theme === 'light' ? '0 0 20px var(--primary-glow)' : 'var(--shadow-xs)',
+                boxShadow: theme === 'light' ? '0 1px 4px rgba(36, 57, 47, 0.1)' : 'var(--shadow-xs)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'all var(--transition-fast)',
@@ -237,7 +237,7 @@ export const SettingsPage: React.FC = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#F59E0B',
+                    color: 'var(--accent-brass)',
                     boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
                   }}
                 >
@@ -262,7 +262,7 @@ export const SettingsPage: React.FC = () => {
               </div>
               <span style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)' }}>Light Theme</span>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                High-contrast clean workspace
+                Warm ivory & forest green palette
               </span>
             </button>
 
@@ -278,7 +278,7 @@ export const SettingsPage: React.FC = () => {
                 borderRadius: '12px',
                 border: `2px solid ${theme === 'system' ? 'var(--primary)' : 'var(--border-medium)'}`,
                 backgroundColor: theme === 'system' ? 'var(--primary-subtle)' : 'var(--bg-card)',
-                boxShadow: theme === 'system' ? '0 0 20px var(--primary-glow)' : 'var(--shadow-xs)',
+                boxShadow: theme === 'system' ? '0 1px 4px rgba(36, 57, 47, 0.1)' : 'var(--shadow-xs)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'all var(--transition-fast)',
@@ -342,8 +342,8 @@ export const SettingsPage: React.FC = () => {
                 padding: '10px 16px',
                 borderRadius: '10px',
                 border: `2px solid ${accent === 'violet' ? '#8B5CF6' : 'var(--border-medium)'}`,
-                backgroundColor: accent === 'violet' ? 'rgba(139, 92, 246, 0.12)' : 'var(--bg-card)',
-                boxShadow: accent === 'violet' ? '0 0 16px rgba(139, 92, 246, 0.25)' : 'none',
+                backgroundColor: accent === 'violet' ? 'rgba(139, 92, 246, 0.08)' : 'var(--bg-card)',
+                boxShadow: 'none',
                 cursor: 'pointer',
                 transition: 'all var(--transition-fast)',
               }}
@@ -353,8 +353,7 @@ export const SettingsPage: React.FC = () => {
                   width: '14px',
                   height: '14px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
-                  boxShadow: '0 0 8px #7C3AED',
+                  background: '#7C3AED',
                 }}
               />
               <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Violet / Indigo</span>
@@ -371,8 +370,8 @@ export const SettingsPage: React.FC = () => {
                 padding: '10px 16px',
                 borderRadius: '10px',
                 border: `2px solid ${accent === 'blue' ? '#0284C7' : 'var(--border-medium)'}`,
-                backgroundColor: accent === 'blue' ? 'rgba(2, 132, 199, 0.12)' : 'var(--bg-card)',
-                boxShadow: accent === 'blue' ? '0 0 16px rgba(2, 132, 199, 0.25)' : 'none',
+                backgroundColor: accent === 'blue' ? 'rgba(2, 132, 199, 0.08)' : 'var(--bg-card)',
+                boxShadow: 'none',
                 cursor: 'pointer',
                 transition: 'all var(--transition-fast)',
               }}
@@ -382,8 +381,7 @@ export const SettingsPage: React.FC = () => {
                   width: '14px',
                   height: '14px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #0284C7, #2563EB)',
-                  boxShadow: '0 0 8px #0284C7',
+                  background: '#0284C7',
                 }}
               />
               <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Electric Blue</span>
@@ -400,8 +398,8 @@ export const SettingsPage: React.FC = () => {
                 padding: '10px 16px',
                 borderRadius: '10px',
                 border: `2px solid ${accent === 'green' ? '#059669' : 'var(--border-medium)'}`,
-                backgroundColor: accent === 'green' ? 'rgba(16, 185, 129, 0.12)' : 'var(--bg-card)',
-                boxShadow: accent === 'green' ? '0 0 16px rgba(16, 185, 129, 0.25)' : 'none',
+                backgroundColor: accent === 'green' ? 'rgba(5, 150, 105, 0.08)' : 'var(--bg-card)',
+                boxShadow: 'none',
                 cursor: 'pointer',
                 transition: 'all var(--transition-fast)',
               }}
@@ -411,8 +409,7 @@ export const SettingsPage: React.FC = () => {
                   width: '14px',
                   height: '14px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #059669, #10B981)',
-                  boxShadow: '0 0 8px #10B981',
+                  background: '#059669',
                 }}
               />
               <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Emerald Green</span>
@@ -467,7 +464,7 @@ export const SettingsPage: React.FC = () => {
                 backgroundColor: compactMode ? 'var(--primary)' : 'var(--border-strong)',
                 borderRadius: '24px',
                 transition: 'all 200ms ease',
-                boxShadow: compactMode ? '0 0 10px var(--primary-glow)' : 'none',
+                boxShadow: compactMode ? '0 1px 3px rgba(36, 57, 47, 0.15)' : 'none',
               }}
             >
               <span
@@ -685,7 +682,7 @@ export const SettingsPage: React.FC = () => {
                     borderRadius: '10px',
                     border: `2px solid ${isSelected ? 'var(--primary)' : 'var(--border-medium)'}`,
                     backgroundColor: isSelected ? 'var(--primary-subtle)' : 'var(--bg-card)',
-                    boxShadow: isSelected ? '0 0 16px var(--primary-glow)' : 'none',
+                    boxShadow: isSelected ? '0 1px 3px rgba(36, 57, 47, 0.08)' : 'none',
                     cursor: 'pointer',
                     textAlign: 'left',
                     transition: 'all var(--transition-fast)',

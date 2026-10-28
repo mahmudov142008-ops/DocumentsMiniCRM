@@ -17,6 +17,7 @@ import {
   Building,
   BarChart3,
   Search,
+  Home,
 } from 'lucide-react';
 
 export type AppPage =
@@ -32,12 +33,14 @@ export type AppPage =
 interface AppLayoutProps {
   currentPage: AppPage;
   onNavigate: (page: AppPage) => void;
+  onNavigateToLanding?: () => void;
   children: React.ReactNode;
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({
   currentPage,
   onNavigate,
+  onNavigateToLanding,
   children,
 }) => {
   const { user, signOut, isConfigured } = useAuth();
@@ -70,6 +73,14 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   const handleNavClick = (page: AppPage) => {
     onNavigate(page);
     setMobileMenuOpen(false);
+  };
+
+  const handleGoToLanding = () => {
+    if (onNavigateToLanding) {
+      onNavigateToLanding();
+    } else if (typeof window !== 'undefined') {
+      window.location.hash = '#landing';
+    }
   };
 
   const userEmail = user?.email || 'User';
@@ -110,37 +121,52 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           }}
           className="desktop-sidebar"
         >
-          {/* Logo / Brand Header */}
+          {/* Logo / Brand Header - Clickable to return to Public Home Page */}
           <div
+            id="sidebar-brand-logo"
+            data-testid="sidebar-brand-logo"
+            onClick={handleGoToLanding}
             style={{
               padding: '20px 18px',
               borderBottom: '1px solid var(--border-light)',
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
+              cursor: 'pointer',
+              userSelect: 'none',
+            }}
+            title="Return to Public Home Page"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleGoToLanding();
+              }
             }}
           >
             <div
               style={{
                 width: '36px',
                 height: '36px',
-                borderRadius: '10px',
-                background: 'var(--primary-gradient)',
+                borderRadius: '8px',
+                background: 'var(--primary)',
                 color: '#FFFFFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontWeight: 800,
-                fontSize: '1.125rem',
-                boxShadow: 'var(--primary-glow)',
+                fontSize: '1.0625rem',
+                border: '1px solid rgba(180, 154, 105, 0.3)',
+                boxShadow: '0 2px 6px rgba(36, 57, 47, 0.1)',
                 flexShrink: 0,
               }}
             >
               M
             </div>
             <div>
-              <h1 style={{ fontSize: '1.0625rem', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-                Mini<span style={{ color: 'var(--primary)' }}>CRM</span>
+              <h1 style={{ fontSize: '1.0625rem', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)', margin: 0 }}>
+                Mini<span style={{ color: 'var(--accent-brass)' }}>CRM</span>
               </h1>
               <span style={{ fontSize: '0.6875rem', color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                 Relationship Suite
@@ -194,13 +220,13 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
                     gap: '12px',
                     width: '100%',
                     padding: '10px 14px',
-                    borderRadius: '10px',
+                    borderRadius: '8px',
                     fontSize: '0.875rem',
                     fontWeight: isActive ? 600 : 500,
                     backgroundColor: isActive ? 'var(--primary-subtle)' : 'transparent',
                     color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
-                    border: isActive ? '1px solid var(--primary-border)' : '1px solid transparent',
-                    boxShadow: isActive ? '0 0 16px var(--primary-subtle)' : 'none',
+                    border: isActive ? '1px solid var(--border-light)' : '1px solid transparent',
+                    boxShadow: isActive ? '0 1px 3px rgba(36, 57, 47, 0.05)' : 'none',
                     transition: 'all var(--transition-fast)',
                     textAlign: 'left',
                   }}
@@ -229,12 +255,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
             style={{
               padding: '10px 14px',
               margin: '0 12px 12px',
-              backgroundColor: 'rgba(16, 185, 129, 0.08)',
-              borderRadius: '10px',
-              border: '1px solid rgba(16, 185, 129, 0.22)',
+              backgroundColor: 'var(--bg-secondary)',
+              borderRadius: '8px',
+              border: '1px solid var(--border-light)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: '#34D399', fontWeight: 600 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--accent-olive)', fontWeight: 600 }}>
               <ShieldCheck size={14} />
               <span>Row-Level Security Active</span>
             </div>
@@ -365,31 +391,84 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div
-                style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '8px',
-                  background: 'var(--primary-gradient)',
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 700,
-                  fontSize: '0.875rem',
+                id="mobile-header-brand"
+                data-testid="mobile-header-brand"
+                onClick={handleGoToLanding}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+                title="Return to Public Home Page"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleGoToLanding();
+                  }
                 }}
                 className="mobile-header-brand"
               >
-                M
+                <div
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '6px',
+                    background: 'var(--primary)',
+                    color: '#FFFFFF',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 700,
+                    fontSize: '0.8125rem',
+                  }}
+                >
+                  M
+                </div>
+                <span style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text-primary)' }}>
+                  Mini<span style={{ color: 'var(--accent-brass)' }}>CRM</span>
+                </span>
               </div>
-              <span className="mobile-header-brand" style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text-primary)' }}>
-                Mini<span style={{ color: 'var(--primary)' }}>CRM</span>
-              </span>
-              <span className="desktop-header-title" style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text-primary)' }}>
+              <span className="desktop-header-title" style={{ fontFamily: 'var(--font-serif)', fontWeight: 600, fontSize: '1.25rem', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
                 {navItems.find(item => item.id === currentPage)?.label || 'Dashboard'}
               </span>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {/* Clearly visible Home button to return to public landing page */}
+              <button
+                id="header-home-btn"
+                data-testid="header-home-btn"
+                onClick={handleGoToLanding}
+                className="btn-ghost"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '6px 12px',
+                  borderRadius: '6px',
+                  fontSize: '0.8125rem',
+                  fontWeight: 500,
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border-light)',
+                  backgroundColor: 'var(--bg-secondary)',
+                  cursor: 'pointer',
+                  transition: 'all var(--transition-fast)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'var(--text-primary)';
+                  e.currentTarget.style.backgroundColor = 'var(--bg-hover)';
+                  e.currentTarget.style.borderColor = 'var(--border-medium)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'var(--text-secondary)';
+                  e.currentTarget.style.backgroundColor = 'var(--bg-secondary)';
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
+                }}
+                title="Return to Public Home Page"
+                aria-label="Home page"
+              >
+                <Home size={15} />
+                <span>Home</span>
+              </button>
+
               <button
                 onClick={() => setSearchOpen(true)}
                 className="btn-ghost"
@@ -424,6 +503,37 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
               }}
               className="mobile-menu-dropdown"
             >
+              <button
+                id="mobile-nav-home"
+                data-testid="mobile-nav-home"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleGoToLanding();
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '11px 12px',
+                  borderRadius: '8px',
+                  fontSize: '0.875rem',
+                  fontWeight: 500,
+                  color: 'var(--text-secondary)',
+                  backgroundColor: 'transparent',
+                  textAlign: 'left',
+                  cursor: 'pointer',
+                  border: 'none',
+                  width: '100%',
+                }}
+              >
+                <span style={{ color: 'var(--text-tertiary)' }}>
+                  <Home size={18} />
+                </span>
+                <span>Home (Public Page)</span>
+              </button>
+
+              <div style={{ height: '1px', backgroundColor: 'var(--border-light)', margin: '4px 0' }} />
+
               {navItems.map((item) => (
                 <button
                   key={item.id}

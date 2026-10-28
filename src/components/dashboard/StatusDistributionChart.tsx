@@ -152,7 +152,6 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                         height: '8px',
                         borderRadius: '50%',
                         backgroundColor: s.config.color,
-                        boxShadow: `0 0 8px ${s.config.color}`,
                       }}
                     />
                     <strong style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{s.config.label}</strong>
@@ -177,7 +176,6 @@ export const StatusDistributionChart: React.FC<StatusDistributionChartProps> = (
                       backgroundColor: s.config.color,
                       borderRadius: 'var(--radius-full)',
                       transition: 'width 0.4s ease',
-                      boxShadow: `0 0 10px ${s.config.color}`,
                     }}
                   />
                 </div>

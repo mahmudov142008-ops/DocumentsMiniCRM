@@ -142,7 +142,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         }}
       >
         <div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
             Executive Dashboard
           </h1>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
@@ -215,10 +215,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Won Revenue */}
           <div className="card" onClick={() => onNavigate('pipeline')} style={{ cursor: 'pointer' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Closed Revenue</span>
-              <Trophy size={18} color="var(--accent-gold)" />
+              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Closed Revenue</span>
+              <Trophy size={18} color="var(--accent-brass)" />
             </div>
-            <div style={{ fontSize: '1.625rem', fontWeight: 700, color: 'var(--accent-gold)', marginTop: '8px' }}>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--accent-brass)', marginTop: '8px', letterSpacing: '-0.02em' }}>
               ${wonDealValue.toLocaleString()}
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -229,10 +229,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Total Pipeline */}
           <div className="card" onClick={() => onNavigate('pipeline')} style={{ cursor: 'pointer' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Pipeline Value</span>
+              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Pipeline Value</span>
               <KanbanSquare size={18} color="var(--primary)" />
             </div>
-            <div style={{ fontSize: '1.625rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '8px' }}>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
               ${totalDealValue.toLocaleString()}
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -243,10 +243,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Win Rate */}
           <div className="card" onClick={() => onNavigate('reports')} style={{ cursor: 'pointer' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Deal Conversion</span>
-              <TrendingUp size={18} color="#10B981" />
+              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Deal Conversion</span>
+              <TrendingUp size={18} color="var(--accent-olive)" />
             </div>
-            <div style={{ fontSize: '1.625rem', fontWeight: 700, color: '#10B981', marginTop: '8px' }}>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--accent-olive)', marginTop: '8px', letterSpacing: '-0.02em' }}>
               {dealConversionRate}%
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -257,10 +257,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Customers */}
           <div className="card" onClick={() => onNavigate('customers')} style={{ cursor: 'pointer' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Total Customers</span>
-              <Users size={18} color="#38BDF8" />
+              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Total Customers</span>
+              <Users size={18} color="var(--primary)" />
             </div>
-            <div style={{ fontSize: '1.625rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '8px' }}>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
               {totalCustomers}
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -271,13 +271,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Tasks */}
           <div className="card" onClick={() => onNavigate('tasks')} style={{ cursor: 'pointer' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Pending Tasks</span>
-              <CheckSquare size={18} color={overdueTasks.length > 0 ? '#EF4444' : '#F59E0B'} />
+              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Pending Tasks</span>
+              <CheckSquare size={18} color={overdueTasks.length > 0 ? '#DC2626' : 'var(--accent-brass)'} />
             </div>
-            <div style={{ fontSize: '1.625rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '8px' }}>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
               {pendingTasks.length}
             </div>
-            <span style={{ fontSize: '0.75rem', color: overdueTasks.length > 0 ? '#EF4444' : 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
+            <span style={{ fontSize: '0.75rem', color: overdueTasks.length > 0 ? '#DC2626' : 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
               {overdueTasks.length > 0 ? `${overdueTasks.length} overdue tasks!` : 'All tasks on schedule'}
             </span>
           </div>
@@ -285,10 +285,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Meetings */}
           <div className="card" onClick={() => onNavigate('calendar')} style={{ cursor: 'pointer' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Scheduled Meetings</span>
-              <Calendar size={18} color="var(--primary)" />
+              <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Scheduled Meetings</span>
+              <Calendar size={18} color="var(--accent-olive)" />
             </div>
-            <div style={{ fontSize: '1.625rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '8px' }}>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.875rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '8px', letterSpacing: '-0.02em' }}>
               {upcomingMeetings.length}
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '4px', display: 'block' }}>
@@ -314,12 +314,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Target size={16} color="var(--accent-gold)" />
+              <Target size={16} color="var(--accent-brass)" />
               <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 Target Sprint: {activeGoal.name}
               </span>
             </div>
-            <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--accent-gold)' }}>
+            <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--accent-brass)' }}>
               ${goalProgress.current.toLocaleString()} / ${Number(activeGoal.target_amount).toLocaleString()} ({goalProgress.percentage}%)
             </span>
           </div>
@@ -329,7 +329,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               style={{
                 height: '100%',
                 width: `${goalProgress.percentage}%`,
-                background: 'var(--accent-gold-gradient)',
+                background: 'var(--accent-brass)',
                 borderRadius: '4px',
               }}
             />
@@ -369,7 +369,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     <span style={{ color: 'var(--text-secondary)' }}>${val.toLocaleString()}</span>
                   </div>
                   <div style={{ height: '6px', backgroundColor: 'var(--bg-hover)', borderRadius: '3px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${pct}%`, backgroundColor: st === 'Won' ? '#10B981' : 'var(--primary)', borderRadius: '3px' }} />
+                    <div style={{ height: '100%', width: `${pct}%`, backgroundColor: st === 'Won' ? 'var(--primary)' : 'var(--accent-olive)', borderRadius: '3px' }} />
                   </div>
                 </div>
               );

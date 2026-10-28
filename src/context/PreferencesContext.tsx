@@ -40,7 +40,7 @@ export const PreferencesProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const saved = localStorage.getItem(STORAGE_KEYS.THEME) as ThemeMode;
       if (saved === 'light' || saved === 'dark' || saved === 'system') return saved;
     }
-    return 'dark';
+    return 'light';
   });
 
   const [accent, setAccentState] = useState<AccentColor>(() => {
@@ -48,7 +48,7 @@ export const PreferencesProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const saved = localStorage.getItem(STORAGE_KEYS.ACCENT) as AccentColor;
       if (saved === 'violet' || saved === 'blue' || saved === 'green') return saved;
     }
-    return 'violet';
+    return 'green';
   });
 
   const [compactMode, setCompactModeState] = useState<boolean>(() => {

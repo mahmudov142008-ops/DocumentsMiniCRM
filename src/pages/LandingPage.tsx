@@ -10,9 +10,11 @@ import {
   Menu,
   X,
   CheckCircle2,
-  Database,
   LayoutDashboard,
+  Users,
+  CheckSquare,
 } from 'lucide-react';
+import { ConnectionBloom } from '../components/landing/ConnectionBloom';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -237,132 +239,200 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* Hero Section */}
       <section
         style={{
-          padding: '80px 24px 64px',
-          maxWidth: '1200px',
+          padding: '64px 24px 60px',
+          maxWidth: '1240px',
           margin: '0 auto',
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          width: '100%',
         }}
+        className="hero-section"
       >
-        {/* Editorial Sub-kicker */}
         <div
+          className="hero-split-grid"
           style={{
-            display: 'inline-flex',
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1.05fr) minmax(0, 1.15fr)',
+            gap: '52px',
             alignItems: 'center',
-            gap: '8px',
-            padding: '5px 14px',
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border-medium)',
-            marginBottom: '24px',
-            fontSize: '0.75rem',
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.06em',
-            color: 'var(--accent-olive)',
-            boxShadow: 'var(--shadow-xs)',
+            marginBottom: '72px',
           }}
         >
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--primary)' }} />
-          Client Relationship & Pipeline Suite
-        </div>
+          {/* Left Column: Editorial Copy, CTAs, and Badges */}
+          <div className="hero-text-column" style={{ textAlign: 'left' }}>
+            {/* Editorial Sub-kicker */}
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '5px 14px',
+                borderRadius: 'var(--radius-full)',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-medium)',
+                marginBottom: '22px',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+                color: 'var(--accent-olive)',
+                boxShadow: 'var(--shadow-xs)',
+              }}
+            >
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--primary)' }} />
+              Client Relationship & Pipeline Suite
+            </div>
 
-        {/* Hero Headline */}
-        <h1
-          className="editorial-title"
-          style={{
-            fontSize: 'clamp(2.5rem, 5.5vw, 4.25rem)',
-            fontWeight: 600,
-            lineHeight: 1.12,
-            letterSpacing: '-0.025em',
-            maxWidth: '860px',
-            marginBottom: '22px',
-            color: 'var(--text-primary)',
-          }}
-        >
-          Every relationship has room to grow.
-        </h1>
+            {/* Hero Headline */}
+            <h1
+              className="editorial-title"
+              style={{
+                fontSize: 'clamp(2.75rem, 5.5vw, 4.5rem)',
+                fontWeight: 600,
+                lineHeight: 1.08,
+                letterSpacing: '-0.03em',
+                marginBottom: '22px',
+                color: 'var(--text-primary)',
+                maxWidth: '600px',
+                textWrap: 'balance',
+              }}
+            >
+              Every relationship has room to grow.
+            </h1>
 
-        {/* Supporting Copy */}
-        <p
-          style={{
-            fontSize: 'clamp(1.0625rem, 2vw, 1.25rem)',
-            lineHeight: 1.6,
-            color: 'var(--text-secondary)',
-            maxWidth: '680px',
-            marginBottom: '36px',
-            fontWeight: 400,
-          }}
-        >
-          Keep your customers close, your pipeline clear, and your next opportunity within reach.
-        </p>
+            {/* Supporting Copy */}
+            <p
+              style={{
+                fontSize: 'clamp(1.05rem, 1.8vw, 1.2rem)',
+                lineHeight: 1.6,
+                color: 'var(--text-secondary)',
+                maxWidth: '520px',
+                marginBottom: '32px',
+                fontWeight: 400,
+              }}
+            >
+              Bring every connection closer to your next opportunity.
+            </p>
 
-        {/* Call to Action Row */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '12px',
-            marginBottom: '48px',
-          }}
-        >
-          <button
-            onClick={onGetStarted}
-            className="btn btn-primary"
+            {/* Call to Action Row */}
+            <div
+              className="hero-cta-row"
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '36px',
+              }}
+            >
+              {isAuthenticated ? (
+                <button
+                  onClick={onGoToDashboard || onSignIn}
+                  className="btn btn-primary"
+                  style={{
+                    padding: '13px 28px',
+                    fontSize: '0.9375rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                  }}
+                >
+                  <LayoutDashboard size={16} />
+                  Go to Workspace
+                </button>
+              ) : (
+                <button
+                  onClick={onGetStarted}
+                  className="btn btn-primary"
+                  style={{
+                    padding: '13px 28px',
+                    fontSize: '0.9375rem',
+                  }}
+                >
+                  Start Managing Leads
+                  <ArrowRight size={16} />
+                </button>
+              )}
+              <button
+                onClick={() => scrollToSection('features')}
+                className="btn btn-secondary"
+                style={{
+                  padding: '13px 24px',
+                  fontSize: '0.9375rem',
+                }}
+              >
+                Explore Platform
+                <ChevronDown size={16} />
+              </button>
+            </div>
+
+            {/* Quality Badges */}
+            <div
+              className="hero-badges-row"
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: '20px',
+                fontSize: '0.8125rem',
+                color: 'var(--text-secondary)',
+                paddingTop: '16px',
+                borderTop: '1px solid var(--border-light)',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Users size={16} color="var(--primary)" />
+                <span>Organized Customer Relationships</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <KanbanSquare size={16} color="var(--accent-olive)" />
+                <span>Clear Sales Pipeline</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <CheckSquare size={16} color="var(--accent-brass)" />
+                <span>Structured Follow-ups</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ShieldCheck size={16} color="var(--primary)" />
+                <span>Protected Customer Data</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: "The Connection Bloom" Custom Signature Hero Visual */}
+          <div
+            className="hero-visual-column"
             style={{
-              padding: '13px 28px',
-              fontSize: '0.9375rem',
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
             }}
           >
-            Start Managing Leads
-            <ArrowRight size={16} />
-          </button>
-          <button
-            onClick={() => scrollToSection('features')}
-            className="btn btn-secondary"
-            style={{
-              padding: '13px 24px',
-              fontSize: '0.9375rem',
-            }}
-          >
-            Explore Platform
-            <ChevronDown size={16} />
-          </button>
+            <ConnectionBloom />
+          </div>
         </div>
 
-        {/* Quality Badges */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '24px',
-            fontSize: '0.8125rem',
-            color: 'var(--text-secondary)',
-            marginBottom: '52px',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <ShieldCheck size={16} color="var(--primary)" />
-            <span>Row-Level Security (RLS)</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <KanbanSquare size={16} color="var(--accent-olive)" />
-            <span>Interactive Deal Stages</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Lock size={16} color="var(--accent-brass)" />
-            <span>Multi-Tenant Isolation</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Database size={16} color="var(--primary)" />
-            <span>PostgreSQL Persistence</span>
-          </div>
+        {/* Section Divider & Heading for Live Interactive Preview */}
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+          <span
+            style={{
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              color: 'var(--accent-olive)',
+            }}
+          >
+            Live Workspace Preview
+          </span>
+          <h2
+            className="editorial-title"
+            style={{
+              fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
+              marginTop: '6px',
+              color: 'var(--text-primary)',
+            }}
+          >
+            A calm, unified view of every account
+          </h2>
         </div>
 
         {/* Purposeful Miniature CRM Pipeline & Relationship Preview */}
@@ -370,6 +440,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           style={{
             width: '100%',
             maxWidth: '1060px',
+            margin: '0 auto',
             borderRadius: 'var(--radius-lg)',
             border: '1px solid var(--border-medium)',
             backgroundColor: 'var(--bg-card)',
@@ -539,7 +610,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 </div>
               </div>
             ) : (
-              <div style={{ backgroundColor: 'var(--bg-card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', overflow: 'hidden' }}>
+              <div style={{ backgroundColor: 'var(--bg-card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8125rem' }}>
                   <thead>
                     <tr style={{ backgroundColor: 'var(--bg-card-subtle)', borderBottom: '1px solid var(--border-light)', textAlign: 'left', color: 'var(--text-secondary)' }}>
@@ -968,6 +1039,33 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </div>
       </footer>
+
+      {/* Responsive Styles for Hero Split Layout */}
+      <style>{`
+        @media (max-width: 991px) {
+          .hero-split-grid {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+            margin-bottom: 48px !important;
+          }
+          .hero-text-column {
+            text-align: center !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+          }
+          .hero-text-column p {
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+          .hero-cta-row {
+            justify-content: center !important;
+          }
+          .hero-badges-row {
+            justify-content: center !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

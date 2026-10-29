@@ -26,9 +26,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    // 0. Process email confirmation / PKCE / OTP callbacks from URL
-    const processAuthCallback = async () => {
-      if (typeof window === 'undefined') return;
+    // 0. Process email confirmation / PKCE / OTP callbacks from URL.
+    // Returns true if a session was successfully established from the callback URL.
+    const processAuthCallback = async (): Promise<boolean> => {
+      if (typeof window === 'undefined') return false;
 
       const searchParams = new URLSearchParams(window.location.search);
       const hashStr = window.location.hash.startsWith('#')
@@ -43,6 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (errorDescription) {
         console.warn('Supabase Auth redirect error:', errorDescription);
+        return false;
       } else if (tokenHash && otpType) {
         try {
           const { data, error } = await supabase.auth.verifyOtp({
@@ -52,27 +54,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (!error && data?.session) {
             setSession(data.session);
             setUser(data.session.user);
+            // Clear auth params from URL, navigate to dashboard
             window.history.replaceState(null, '', window.location.pathname + '#dashboard');
+            setLoading(false);
+            return true;
           }
         } catch (err) {
           console.error('Error verifying email OTP:', err);
         }
+        return false;
       } else if (code) {
         try {
           const { data, error } = await supabase.auth.exchangeCodeForSession(code);
           if (!error && data?.session) {
             setSession(data.session);
             setUser(data.session.user);
+            // Clear auth params from URL, navigate to dashboard
             window.history.replaceState(null, '', window.location.pathname + '#dashboard');
+            setLoading(false);
+            return true;
           }
         } catch (err) {
           console.error('Error exchanging code for session:', err);
         }
+        return false;
       }
+
+      return false;
     };
 
-    // 1. Process callback then verify active session
-    processAuthCallback().finally(() => {
+    // 1. Process callback; only fall back to getSession() if the callback did NOT
+    //    already establish a session. This prevents the getSession() call from
+    //    racing with the PKCE/OTP exchange and overwriting the new session with null.
+    processAuthCallback().then((callbackEstablishedSession) => {
+      if (callbackEstablishedSession) {
+        // Session already set by processAuthCallback — nothing more to do here.
+        return;
+      }
       supabase.auth.getSession().then(({ data: { session } }) => {
         setSession(session);
         setUser(session?.user ?? null);

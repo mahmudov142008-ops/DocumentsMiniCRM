@@ -1,12 +1,13 @@
-# TEST_CASES.md — Mini CRM Test Case Matrix & Quality Assurance Report
+# TEST_CASES.md — MiniCRM Test Case Matrix & Quality Assurance Report
 
-## Project: Mini CRM
-## Overall Status: 94 Automated Tests Passing (100% Pass Rate) | Manual Test Matrix Configured
-## Verified Test Run: `npm test` — 9 Test Files Passed, 94 Tests Passed
+## Project: MiniCRM
+## Overall Status: 107 Automated Tests Passing (100% Pass Rate) | 20 Live-Application Manual Scenarios Documented | 4 Local Post-Fix Regression Checks
+## Verified Test Run: `npm test` — 10 Test Files Passed, 107 Tests Passed
 
 > **Testing Methodology**:
 > - **Automated Tests (`PASS`)**: Formally executed and verified using Vitest, React Testing Library, and JSDOM. Every automated test entry below reflects actual execution logs from the test runner.
-> - **Manual Tests (`PENDING`)**: End-to-end integration workflows that require human interaction in a live browser session connected to a provisioned Supabase environment. As required, unperformed manual tests are marked **PENDING** and never fabricated.
+> - **Live Manual Tests (`PASS` / `FAIL` / `PASS with defect`)**: 20 end-to-end integration scenarios manually executed on the live application deployment connected to Supabase. Results record factual user observations prior to local patch application.
+> - **Post-Fix Local Regression Checks (`PASS in local verification`)**: Targeted checks performed on the local application following specific code remediations. These have not yet been verified in production deployment.
 
 ---
 
@@ -162,17 +163,83 @@
 
 ---
 
-## 2. Manual Test Matrix — Live Supabase Cloud Scenarios
+### 1.9 Dashboard Search & Filtering Tests (`src/test/dashboard_filters.test.tsx` — 7 Tests)
 
-> **Verification Rule**: These tests evaluate live cloud behavior across different devices, network conditions, and browser origins. Unperformed tests are accurately marked **PENDING**.
-
-| Test ID | Scenario | Verification Steps | Expected Result | Actual Result | Status |
+| Test ID | Category | Scenario | Expected Result | Actual Result | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| TC-MAN-01 | Real User Registration | Enter valid email and password on `/auth` signup form | User account created in Supabase Auth, trigger creates `profiles` and `workspaces` row | Pending manual run with live Supabase credentials | ⏳ PENDING |
-| TC-MAN-02 | Live Sign In & Session Restore | Log in with valid credentials, refresh browser tab | User remains logged in; session token restored from cookie/localStorage | Pending manual run | ⏳ PENDING |
-| TC-MAN-03 | Kanban Drag & Drop Persistence | Drag deal card from 'New' to 'Negotiation' column, refresh page | Card remains in 'Negotiation' column on reload; Supabase `deals.stage` updated | Pending manual run | ⏳ PENDING |
-| TC-MAN-04 | Optimistic Rollback on Disconnect | Turn off network connection, drag deal card to new stage | UI displays error toast and rolls back card to original column | Pending manual run | ⏳ PENDING |
-| TC-MAN-05 | Customer Detail Notes Timeline | Open customer drawer, submit note "Discussed Q4 contract pricing", reload | Note appears in chronological timeline with relative timestamp | Pending manual run | ⏳ PENDING |
-| TC-MAN-06 | Cross-Workspace Data Isolation | User A logs in; creates customer. User B logs in on separate workspace | User B cannot view User A's customer records (verified by RLS policies) | Pending manual run | ⏳ PENDING |
-| TC-MAN-07 | Mobile Responsive Navigation | Open app on mobile device viewport (≤768px), interact with drawer and table | Layout switches to mobile card view and compact header menu seamlessly | Pending manual run | ⏳ PENDING |
-| TC-MAN-08 | Live Production Deployment | Deploy main branch to Vercel with environment variables | Site builds cleanly and serves over HTTPS with live database connection | Pending manual run | ⏳ PENDING |
+| TC-DBF-01 | Dashboard Activity | Render initial customer activity rows | Displays recent customer records in table | All initial test records rendered | ✅ PASS |
+| TC-DBF-02 | Dashboard Search | Search customer activity by company name query | Displays only records matching search term | Only matching record displayed | ✅ PASS |
+| TC-DBF-03 | Dashboard Filter | Filter customer activity by status pill (`Contacted`) | Displays only customers with selected status | Contacted records filtered | ✅ PASS |
+| TC-DBF-04 | Dashboard Combined | Search query (`Cyberdyne`) + Status filter (`Negotiation`) | Displays intersection of query and status | Exact intersection record returned | ✅ PASS |
+| TC-DBF-05 | Dashboard Clear | Click clear search button (`X`) | Clears search input and restores filtered list | Records restored | ✅ PASS |
+| TC-DBF-06 | Dashboard Reset | Click `Clear Filters` button | Clears search query and resets status to `ALL` | Full customer list restored | ✅ PASS |
+| TC-DBF-07 | Dashboard Empty | Non-matching search query | Displays empty state with `Reset Filters` button | Empty state rendered, reset restores list | ✅ PASS |
+
+---
+
+## 2. Live-Application Manual Execution Matrix (20 Production Test Scenarios)
+
+> **Context**: The 20 test scenarios below record factual observations from live testing on the published application connected to the production Supabase project. In accordance with strict auditing standards, failed and defective results are recorded exactly as observed prior to local patch remediation and are not altered simply because code was subsequently updated.
+
+| Test ID | Category | Scenario | Execution Steps | Expected Result | Actual Result | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **TC-01** | Authentication | Email confirmation flow | 1. Register new user on `/auth`.<br>2. Check inbox/spam for confirmation email.<br>3. Click "Confirm email address" link. | Confirmation link marks user confirmed in Supabase (`email_confirmed_at` populated) and directs into authenticated dashboard. | The confirmation email arrived in Spam. Clicking the confirmation link returned to the landing page, and the Supabase user remained unconfirmed. | ❌ FAIL |
+| **TC-02** | Authentication | Sign-in with email confirmation temporarily disabled | 1. Disable "Confirm email" in Supabase Auth.<br>2. Attempt sign-in with newly registered unconfirmed account credentials. | User authenticates successfully and enters MiniCRM workspace. | The user could sign in after the Supabase email-confirmation setting was disabled. | ✅ PASS |
+| **TC-03** | Dashboard | Dashboard search and filters | 1. Navigate to Executive Dashboard.<br>2. Attempt to search and filter customer activity records. | Search query filters displayed records; status pills isolate lifecycle stages. | The user reported that they did not work. | ❌ FAIL |
+| **TC-04** | Customers | Customer creation and saving | 1. Click "New Customer".<br>2. Enter name, email, phone, company.<br>3. Save customer. | Customer created in Supabase and displayed in customer table/cards. | The user created and saved customer data. | ✅ PASS |
+| **TC-05** | Tasks | Task creation and saving | 1. Navigate to Tasks.<br>2. Click "New Task".<br>3. Enter title, priority, due date, save. | Task persisted in Supabase and rendered in task list. | The user created and saved task data. | ✅ PASS |
+| **TC-06** | Calendar | Calendar event creation and saving | 1. Navigate to Calendar.<br>2. Schedule meeting with customer, set time bounds.<br>3. Save meeting. | Meeting persisted in Supabase and displayed on calendar timeline. | The user created and saved calendar event data. | ✅ PASS |
+| **TC-07** | Companies | Company creation and saving | 1. Navigate to Companies.<br>2. Add company with domain and industry.<br>3. Save company. | Company account saved to Supabase and visible in directory. | The user created and saved company data. | ✅ PASS |
+| **TC-08** | Deal Pipeline | Deal Pipeline drag-and-drop | 1. Navigate to Pipeline.<br>2. Drag deal card to a new stage column.<br>3. Reload browser page. | Card moves cleanly above all columns without clipping; new stage persists after reload. | PASS with a visual defect. Moving a card and retaining its status after refresh worked, but the dragged card title appeared behind the columns. | ⚠️ PASS with defect |
+| **TC-09** | Notes | Adding a customer note | 1. Open Customer Detail Drawer.<br>2. Enter interaction note into timeline.<br>3. Click "Add Note". | Note is saved to Supabase and displayed in customer activity history. | The user added and saved a customer note successfully. | ✅ PASS |
+| **TC-10** | Tasks | Task filters | 1. Navigate to Tasks page.<br>2. Filter by status (completed/pending) and priority. | Displayed tasks correctly filter according to selected criteria. | The user reported that task filters worked. | ✅ PASS |
+| **TC-11** | Reports | Adding a Reports goal | 1. Navigate to Reports.<br>2. Set monthly revenue sales target amount.<br>3. Save target. | Sales goal saved to Supabase and progress bar recalculates against deals. | The user added and saved a Reports goal successfully. | ✅ PASS |
+| **TC-12** | Companies | Companies filters | 1. Navigate to Companies.<br>2. Enter search query and select industry filter. | Company directory narrows to matching organizations. | The user reported that companies filters worked. | ✅ PASS |
+| **TC-13** | Settings | Settings Appearance | 1. Navigate to Settings → Appearance.<br>2. Switch between Dark, Light, System themes.<br>3. Click Accent Color buttons. | Theme switches properly; accent controls accurately reflect their names and colors. | PASS for theme switching, with a UI defect. Accent Color controls changed the theme color, but their labels and displayed colors did not match. | ⚠️ PASS with defect |
+| **TC-14** | Authentication | Logout | 1. Click Sign Out in sidebar footer or header.<br>2. Confirm sign-out. | Session token cleared; user redirected to public landing / auth page. | Signing out redirected the user to the authentication/registration screen. | ✅ PASS |
+| **TC-15** | Security / Routing | Protected Dashboard access | 1. Sign out of active account.<br>2. Attempt direct navigation to `/#dashboard`. | Protected route blocks access and redirects unauthenticated user to auth screen. | Opening the Dashboard URL while logged out redirected the user to the authentication/registration screen. | ✅ PASS |
+| **TC-16** | Validation | Customer form validation | 1. Open customer creation form.<br>2. Attempt submission with empty fields, short phone (< 7 digits), and invalid email (`test@`). | Form rejects invalid inputs with clear field-specific error messages. | Empty required fields, incomplete phone numbers, and invalid email formats were rejected. | ✅ PASS |
+| **TC-17** | Customers | Editing an existing customer | 1. Select customer from list.<br>2. Edit details in form modal.<br>3. Save and refresh browser. | Changes persist in Supabase and remain visible after reload. | The change remained after saving and refreshing. | ✅ PASS |
+| **TC-18** | Customers | Deleting a test customer | 1. Click delete action on customer.<br>2. Confirm in delete confirmation dialog. | Customer record deleted from Supabase and removed from displayed list. | The customer was deleted from the displayed list. | ✅ PASS |
+| **TC-19** | Customers | Customers search and filters | 1. Navigate to Customers page.<br>2. Search by contact name, company, email, phone.<br>3. Filter by lifecycle status. | Displayed customers dynamically filter to matching records. | The user reported that searching and filtering worked. | ✅ PASS |
+| **TC-20** | Responsiveness | Mobile layout | 1. View MiniCRM on mobile viewport (≤768px).<br>2. Test responsive header, drawer menu, customer list, buttons. | Layout adapts with readable text, stacked cards, and accessible touch controls without overflow. | The user reported that the mobile layout, menu, customer list, and buttons appeared correctly at the tested screen size. | ✅ PASS |
+
+---
+
+## 3. Post-Fix Local Regression Checks (Performed on Local Application)
+
+> **Important Deployment Notice**: The checks below were performed on the local application after applying code remediations and executing the automated test suite. **These post-fix checks have not yet been verified in production** and must not be claimed as production-verified until the updated build has been deployed to Vercel and manually checked in the live environment.
+
+| Check ID | Category | Target Subsystem | Verification Steps | Outcome | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **RF-01** | Dashboard | Dashboard search & filters | 1. Enter query in dashboard activity search input.<br>2. Select status filter buttons (`New`, `Contacted`, `Negotiation`, `Lost`).<br>3. Test combined query + filter.<br>4. Test clear button and `Clear Filters` reset.<br>5. Execute 7 automated tests in `src/test/dashboard_filters.test.tsx`. | Search responds dynamically, status pills filter correctly, clearing/resetting restores full period dataset, empty state displays reset action, and all 7 automated unit tests pass cleanly. | ✅ PASS in local verification |
+| **RF-02** | Deal Pipeline | Dragging visual layering | 1. Navigate to Deal Pipeline.<br>2. Drag deal card across multiple columns.<br>3. Verify title and card visibility during drag operation. | Dragged card renders via React portal directly to `document.body` with `z-index: 9999`. The card and its title remain completely visible above neighboring columns without being clipped or passed behind. | ✅ PASS in local verification |
+| **RF-03** | Settings | Accent Color labels & swatches | 1. Open Settings → Appearance.<br>2. Inspect displayed labels, swatch colors, and active borders.<br>3. Execute 8 automated tests in `src/test/preferences.test.tsx`. | Labels and swatches accurately match the design tokens: Forest Green (`#24392F`), Antique Brass (`#B49A69`), and Muted Olive (`#69735C`). All 8 preferences tests pass. | ✅ PASS in local verification |
+| **RF-04** | Landing Page | Connection Bloom illustration | 1. Inspect Connection Bloom illustration in landing hero.<br>2. Verify geometry, silhouette, colors, and typography on desktop and mobile viewports. | The illustration retains its recognizable geometry, aesthetic colors, and composition while tastefully incorporating the 5 CRM feature labels: CUSTOMERS, DEALS, MEETINGS, FOLLOW-UPS, and GROWTH without crowding or clipping. | ✅ PASS in local verification |
+
+---
+
+## 4. Final Quality Assurance & Build Verification Evidence
+
+The local engineering environment verified the updated application prior to handoff:
+
+1. **Automated Test Suite**:
+   * **Command**: `npm test` (`vitest run`)
+   * **Result**: **10 passed out of 10 test files (107 total tests passed, 0 failed)**
+     * `src/test/dashboard_filters.test.tsx` (7 tests passed)
+     * `src/test/preferences.test.tsx` (8 tests passed)
+     * `src/test/validation.test.ts` (34 tests passed)
+     * `src/test/services.test.ts` (17 tests passed)
+     * `src/test/full_navigation.test.tsx` (12 tests passed)
+     * `src/test/navigation.test.tsx` (11 tests passed)
+     * `src/test/filters.test.ts` (7 tests passed)
+     * `src/test/cache_reconciliation.test.ts` (5 tests passed)
+     * `src/test/components.test.tsx` (4 tests passed)
+     * `src/test/auth_cache.test.ts` (2 tests passed)
+2. **Production Build Compilation**:
+   * **Command**: `npm run build` (`tsc -b && vite build`)
+   * **Result**: Exit code `0` — Clean production build generated in `dist/`. Zero TypeScript type errors, zero bundling errors.
+   * **Advisory**: Vite emitted an informational chunk-size advisory regarding vendor bundle size (>500 kB after minification), which is non-blocking and expected for single-bundle preview setups.
+3. **Application State**:
+   * Application source code remains fully intact with zero uncommitted code modifications.
+   * Supabase schema, RLS policies, and environment configurations remain untouched.

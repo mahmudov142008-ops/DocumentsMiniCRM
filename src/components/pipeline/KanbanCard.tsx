@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { Customer, CustomerStatus } from '../../types/crm';
 import { Draggable } from '@hello-pangea/dnd';
 import { Mail, Phone, Building, MoreHorizontal, Eye, MoveRight } from 'lucide-react';
@@ -22,26 +23,28 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
 
   return (
     <Draggable draggableId={customer.id} index={index}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          style={{
-            backgroundColor: 'var(--bg-card)',
-            border: `1px solid ${snapshot.isDragging ? 'var(--primary)' : 'var(--border-light)'}`,
-            borderRadius: '12px',
-            padding: '14px',
-            marginBottom: '10px',
-            boxShadow: snapshot.isDragging
-              ? 'var(--shadow-lg)'
-              : 'var(--shadow-xs)',
-            cursor: 'grab',
-            transition: 'box-shadow var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast)',
-            position: 'relative',
-            backdropFilter: 'blur(10px)',
-            ...provided.draggableProps.style,
-          }}
+      {(provided, snapshot) => {
+        const cardNode = (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            style={{
+              backgroundColor: 'var(--bg-card)',
+              border: `1px solid ${snapshot.isDragging ? 'var(--primary)' : 'var(--border-light)'}`,
+              borderRadius: '12px',
+              padding: '14px',
+              marginBottom: '10px',
+              boxShadow: snapshot.isDragging
+                ? '0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.15)'
+                : 'var(--shadow-xs)',
+              cursor: 'grab',
+              transition: 'box-shadow var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast)',
+              position: 'relative',
+              zIndex: snapshot.isDragging ? 9999 : 'auto',
+              backdropFilter: 'blur(10px)',
+              ...provided.draggableProps.style,
+            }}
         >
           {/* Card Header */}
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
@@ -175,7 +178,14 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
             </div>
           </div>
         </div>
-      )}
+      );
+
+        if (snapshot.isDragging && typeof document !== 'undefined') {
+          return createPortal(cardNode, document.body);
+        }
+
+        return cardNode;
+      }}
     </Draggable>
   );
 };

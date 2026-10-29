@@ -456,6 +456,41 @@ export const ConnectionBloom: React.FC = () => {
         >
           THE CONNECTION BLOOM
         </text>
+
+        {/* 10. REFINED CRM FEATURE LABELS */}
+        {/* GROWTH — Apex Crown */}
+        <g transform="translate(260, 26)" filter="url(#crispShadow)">
+          <rect x="-34" y="-9" width="68" height="18" rx="5" fill="#FAF9F5" stroke="#B49A69" strokeWidth="1" />
+          <text textAnchor="middle" y="3.5" fill="#24392F" fontSize="8" fontWeight="700" letterSpacing="0.12em" fontFamily="var(--font-sans)">GROWTH</text>
+        </g>
+
+        {/* CUSTOMERS — Left Bloom Shoulder */}
+        <g transform="translate(86, 180)" filter="url(#crispShadow)">
+          <line x1="41" y1="0" x2="68" y2="0" stroke="#B49A69" strokeWidth="1" strokeDasharray="3 3" />
+          <rect x="-42" y="-9" width="84" height="18" rx="5" fill="#FAF9F5" stroke="#E5E1D8" strokeWidth="1" />
+          <text textAnchor="middle" y="3.5" fill="#24392F" fontSize="8" fontWeight="700" letterSpacing="0.11em" fontFamily="var(--font-sans)">CUSTOMERS</text>
+        </g>
+
+        {/* DEALS — Right Bloom Shoulder */}
+        <g transform="translate(434, 180)" filter="url(#crispShadow)">
+          <line x1="-31" y1="0" x2="-68" y2="0" stroke="#B49A69" strokeWidth="1" strokeDasharray="3 3" />
+          <rect x="-30" y="-9" width="60" height="18" rx="5" fill="#FAF9F5" stroke="#E5E1D8" strokeWidth="1" />
+          <text textAnchor="middle" y="3.5" fill="#24392F" fontSize="8" fontWeight="700" letterSpacing="0.12em" fontFamily="var(--font-sans)">DEALS</text>
+        </g>
+
+        {/* MEETINGS — Convergence Node */}
+        <g transform="translate(260, 324)" filter="url(#crispShadow)">
+          <line x1="0" y1="-18" x2="0" y2="-9" stroke="#B49A69" strokeWidth="1" strokeDasharray="2 2" />
+          <rect x="-38" y="-9" width="76" height="18" rx="5" fill="#FAF9F5" stroke="#E5E1D8" strokeWidth="1" />
+          <text textAnchor="middle" y="3.5" fill="#24392F" fontSize="8" fontWeight="700" letterSpacing="0.11em" fontFamily="var(--font-sans)">MEETINGS</text>
+        </g>
+
+        {/* FOLLOW-UPS — Lower Engagement Foliage */}
+        <g transform="translate(90, 378)" filter="url(#crispShadow)">
+          <line x1="28" y1="-12" x2="48" y2="-22" stroke="#69735C" strokeWidth="1" strokeDasharray="2 2" />
+          <rect x="-44" y="-9" width="88" height="18" rx="5" fill="#FAF9F5" stroke="#E5E1D8" strokeWidth="1" />
+          <text textAnchor="middle" y="3.5" fill="#24392F" fontSize="8" fontWeight="700" letterSpacing="0.1em" fontFamily="var(--font-sans)">FOLLOW-UPS</text>
+        </g>
       </svg>
     </div>
   );

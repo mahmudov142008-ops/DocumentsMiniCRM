@@ -26,14 +26,61 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    // 1. Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    }).catch((err) => {
-      console.error('Error checking initial session:', err);
-      setLoading(false);
+    // 0. Process email confirmation / PKCE / OTP callbacks from URL
+    const processAuthCallback = async () => {
+      if (typeof window === 'undefined') return;
+
+      const searchParams = new URLSearchParams(window.location.search);
+      const hashStr = window.location.hash.startsWith('#')
+        ? window.location.hash.substring(1)
+        : window.location.hash;
+      const hashParams = new URLSearchParams(hashStr);
+
+      const tokenHash = searchParams.get('token_hash') || hashParams.get('token_hash');
+      const otpType = (searchParams.get('type') || hashParams.get('type')) as 'signup' | 'email' | 'recovery' | null;
+      const code = searchParams.get('code') || hashParams.get('code');
+      const errorDescription = searchParams.get('error_description') || hashParams.get('error_description');
+
+      if (errorDescription) {
+        console.warn('Supabase Auth redirect error:', errorDescription);
+      } else if (tokenHash && otpType) {
+        try {
+          const { data, error } = await supabase.auth.verifyOtp({
+            token_hash: tokenHash,
+            type: otpType as any,
+          });
+          if (!error && data?.session) {
+            setSession(data.session);
+            setUser(data.session.user);
+            window.history.replaceState(null, '', window.location.pathname + '#dashboard');
+          }
+        } catch (err) {
+          console.error('Error verifying email OTP:', err);
+        }
+      } else if (code) {
+        try {
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+          if (!error && data?.session) {
+            setSession(data.session);
+            setUser(data.session.user);
+            window.history.replaceState(null, '', window.location.pathname + '#dashboard');
+          }
+        } catch (err) {
+          console.error('Error exchanging code for session:', err);
+        }
+      }
+    };
+
+    // 1. Process callback then verify active session
+    processAuthCallback().finally(() => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }).catch((err) => {
+        console.error('Error checking initial session:', err);
+        setLoading(false);
+      });
     });
 
     // 2. Listen to auth changes
@@ -82,11 +129,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { error: 'Supabase credentials are not configured. Please check your .env file.' };
     }
 
+    const redirectUrl = typeof window !== 'undefined'
+      ? `${window.location.origin}/`
+      : 'https://documents-mini-crm.vercel.app/';
+
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
         options: {
+          emailRedirectTo: redirectUrl,
           data: {
             full_name: fullName?.trim() || '',
           },

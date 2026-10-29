@@ -44,6 +44,19 @@ Throughout this project, the **Google Antigravity IDE** (utilizing Gemini and Cl
 - **International Phone Validation**: Allowing legitimate prefixes (`+`), spaces, hyphens, and parentheses while enforcing 7–15 digit length bounds and rejecting alphabetic characters.
 - **Temporal & Numeric Boundaries**: Enforcing positive numbers on deal revenues and chronological sanity on meeting schedules (end time must strictly succeed start time).
 
+### Phase 6: Targeted Defect Remediation & Verification Documentation
+- **Issue Investigation & Focused Remediation**: Analyzed 5 specific defects reported from user manual testing:
+  1. *Dashboard Search & Filters*: Identified missing input handlers on the Recent Customer Activity table; implemented multi-criteria search, status pills, and reset states.
+  2. *Pipeline Drag Layering*: Diagnosed CSS stacking context isolation caused by `backdrop-filter: blur()`; implemented React portal rendering to `document.body` with elevated `z-index: 9999`.
+  3. *Settings Accent Color Alignment*: Aligned outdated button labels and swatches with the active tokens: Forest Green (`#24392F`), Antique Brass (`#B49A69`), and Muted Olive (`#69735C`).
+  4. *Flower Illustration Conceptual Labels*: Integrated 5 feature-related labels (CUSTOMERS, DEALS, MEETINGS, FOLLOW-UPS, GROWTH) into `ConnectionBloom.tsx` while strictly preserving artwork geometry.
+  5. *Email Confirmation Architecture*: Identified missing `options.emailRedirectTo` and absent URL callback token verification; implemented `processAuthCallback` to handle `token_hash` / `code` parameters.
+- **Distinction Between Automated Verification and User Observations**:
+  - *User Live Observations*: Factual observations from manual interaction on the published application (documented in `TEST_CASES.md` TC-01 through TC-20). Failed or defective states remain recorded as observed.
+  - *AI Automated Verification*: 107 automated tests executed and verified via Vitest in JSDOM, covering unit, service, routing, filter, and component boundaries.
+  - *Local Post-Fix Regression Checks*: Local verification of fixes (RF-01 through RF-04) confirmed in local development, with explicit notes that production deployment verification remains pending.
+  - *External Verification Boundaries*: Explicitly documented that full end-to-end email confirmation requires re-enabling "Confirm email" in the Supabase Dashboard and verifying email template links.
+
 ---
 
 ## 3. Key Prompts and Directives
@@ -104,12 +117,18 @@ A complete, detailed technical report for every issue is documented in [`BUGS_AN
 5. **Least-Privilege Function Security**: Revoked client-side execution privileges on trigger functions.
 6. **Destructive Cache Wipe on Empty Cloud Response**: Added safe two-way reconciliation preserving existing local records.
 7. **Form Validation Escapes**: Implemented robust regex matching and chronological sanity checks on all inputs.
+8. **Dashboard Search and Filters Missing**: Implemented search input, status pills, clear/reset controls, and 7 unit tests.
+9. **Deal Pipeline Dragging Visual Layering**: Implemented `createPortal` rendering to `document.body` with `z-index: 9999` to bypass column stacking contexts.
+10. **Settings Accent Color Label Misalignment**: Aligned labels and swatches with design tokens (Forest Green, Antique Brass, Muted Olive).
+11. **Connection Bloom Semantic Association**: Integrated 5 conceptual CRM feature labels into the SVG illustration.
+12. **Email Confirmation Callback Flow**: Added `emailRedirectTo`, URL OTP `token_hash` verification, and PKCE code exchange handling.
 
 ---
 
 ## 6. Summary of AI Value Delivered
 
 - **Code Quality**: 100% TypeScript type safety across all components and services.
-- **Test Coverage**: 93 automated tests across 9 test files passing cleanly.
-- **Security**: PostgreSQL RLS and least-privilege role assignments verified against Supabase PostgREST standards.
-- **Reliability**: Zero data-loss guarantees through non-destructive offline-first cache reconciliation.
+- **Automated Test Coverage**: 107 automated tests across 10 test files passing with zero failures (`npm test`).
+- **Production Build Status**: Build generated with exit code 0 (`tsc -b && vite build`) with zero TypeScript or bundling errors and a standard vendor chunk-size advisory.
+- **Security & Integrity**: PostgreSQL RLS multi-tenant policies, least-privilege role permissions, and safe offline-first cache reconciliation preserved without modification.
+- **Audit Transparency**: Clear separation maintained between AI-executed automated test metrics, local post-fix verification checks, and user-reported live-environment manual observations.

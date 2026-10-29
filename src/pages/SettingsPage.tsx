@@ -331,63 +331,7 @@ export const SettingsPage: React.FC = () => {
             Accent Color
           </label>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px' }}>
-            {/* Violet */}
-            <button
-              type="button"
-              onClick={() => setAccent('violet')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                padding: '10px 16px',
-                borderRadius: '10px',
-                border: `2px solid ${accent === 'violet' ? '#8B5CF6' : 'var(--border-medium)'}`,
-                backgroundColor: accent === 'violet' ? 'rgba(139, 92, 246, 0.08)' : 'var(--bg-card)',
-                boxShadow: 'none',
-                cursor: 'pointer',
-                transition: 'all var(--transition-fast)',
-              }}
-            >
-              <span
-                style={{
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
-                  background: '#7C3AED',
-                }}
-              />
-              <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Violet / Indigo</span>
-            </button>
-
-            {/* Blue */}
-            <button
-              type="button"
-              onClick={() => setAccent('blue')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                padding: '10px 16px',
-                borderRadius: '10px',
-                border: `2px solid ${accent === 'blue' ? '#0284C7' : 'var(--border-medium)'}`,
-                backgroundColor: accent === 'blue' ? 'rgba(2, 132, 199, 0.08)' : 'var(--bg-card)',
-                boxShadow: 'none',
-                cursor: 'pointer',
-                transition: 'all var(--transition-fast)',
-              }}
-            >
-              <span
-                style={{
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
-                  background: '#0284C7',
-                }}
-              />
-              <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Electric Blue</span>
-            </button>
-
-            {/* Green */}
+            {/* Forest Green (Default) */}
             <button
               type="button"
               onClick={() => setAccent('green')}
@@ -397,8 +341,8 @@ export const SettingsPage: React.FC = () => {
                 gap: '10px',
                 padding: '10px 16px',
                 borderRadius: '10px',
-                border: `2px solid ${accent === 'green' ? '#059669' : 'var(--border-medium)'}`,
-                backgroundColor: accent === 'green' ? 'rgba(5, 150, 105, 0.08)' : 'var(--bg-card)',
+                border: `2px solid ${accent === 'green' ? '#24392F' : 'var(--border-medium)'}`,
+                backgroundColor: accent === 'green' ? 'rgba(36, 57, 47, 0.08)' : 'var(--bg-card)',
                 boxShadow: 'none',
                 cursor: 'pointer',
                 transition: 'all var(--transition-fast)',
@@ -409,10 +353,67 @@ export const SettingsPage: React.FC = () => {
                   width: '14px',
                   height: '14px',
                   borderRadius: '50%',
-                  background: '#059669',
+                  background: '#24392F',
+                  border: '1px solid rgba(0,0,0,0.1)',
                 }}
               />
-              <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Emerald Green</span>
+              <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Forest Green</span>
+            </button>
+
+            {/* Antique Brass */}
+            <button
+              type="button"
+              onClick={() => setAccent('violet')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '10px 16px',
+                borderRadius: '10px',
+                border: `2px solid ${accent === 'violet' ? '#B49A69' : 'var(--border-medium)'}`,
+                backgroundColor: accent === 'violet' ? 'rgba(180, 154, 105, 0.12)' : 'var(--bg-card)',
+                boxShadow: 'none',
+                cursor: 'pointer',
+                transition: 'all var(--transition-fast)',
+              }}
+            >
+              <span
+                style={{
+                  width: '14px',
+                  height: '14px',
+                  borderRadius: '50%',
+                  background: '#B49A69',
+                }}
+              />
+              <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Antique Brass</span>
+            </button>
+
+            {/* Muted Olive */}
+            <button
+              type="button"
+              onClick={() => setAccent('blue')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '10px 16px',
+                borderRadius: '10px',
+                border: `2px solid ${accent === 'blue' ? '#69735C' : 'var(--border-medium)'}`,
+                backgroundColor: accent === 'blue' ? 'rgba(105, 115, 92, 0.12)' : 'var(--bg-card)',
+                boxShadow: 'none',
+                cursor: 'pointer',
+                transition: 'all var(--transition-fast)',
+              }}
+            >
+              <span
+                style={{
+                  width: '14px',
+                  height: '14px',
+                  borderRadius: '50%',
+                  background: '#69735C',
+                }}
+              />
+              <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Muted Olive</span>
             </button>
           </div>
         </div>

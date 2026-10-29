@@ -165,10 +165,10 @@ describe('Preferences & Settings Tests', () => {
       expect(screen.getByText('Light Theme')).toBeInTheDocument();
       expect(screen.getByText('System Default')).toBeInTheDocument();
 
-      // Verify Accent Options
-      expect(screen.getByText('Violet / Indigo')).toBeInTheDocument();
-      expect(screen.getByText('Electric Blue')).toBeInTheDocument();
-      expect(screen.getByText('Emerald Green')).toBeInTheDocument();
+      // Verify Accent Options matching design palette
+      expect(screen.getByText('Forest Green')).toBeInTheDocument();
+      expect(screen.getByText('Antique Brass')).toBeInTheDocument();
+      expect(screen.getByText('Muted Olive')).toBeInTheDocument();
 
       // Verify Profile Read-Only fields
       expect(screen.getByDisplayValue('test@example.com')).toBeDisabled();
@@ -207,7 +207,7 @@ describe('Preferences & Settings Tests', () => {
         </ToastProvider>
       );
 
-      const blueButton = screen.getByText('Electric Blue').closest('button');
+      const blueButton = screen.getByText('Muted Olive').closest('button');
       expect(blueButton).toBeInTheDocument();
 
       fireEvent.click(blueButton!);

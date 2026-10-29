@@ -1,9 +1,9 @@
-# BUGS_AND_FIXES.md — Mini CRM Engineering Defect Log & Resolutions
+# BUGS_AND_FIXES.md — MiniCRM Engineering Defect Log & Resolutions
 
-## Project: Mini CRM — Full Stack Customer Relationship Management
-## Current Build Status: ✅ Production Build Clean | ✅ 93/93 Automated Tests Passing
+## Project: MiniCRM — Full Stack Customer Relationship Management
+## Current Build Status: ✅ Production Build Clean | ✅ 107/107 Automated Tests Passing
 
-This document chronicles the real engineering defects encountered during development, their underlying root causes, the technical resolutions applied, affected files, and verification outcomes.
+This document chronicles the real engineering defects encountered during development and live testing, their underlying root causes, the technical resolutions applied, affected files, and verification outcomes.
 
 ---
 
@@ -20,6 +20,11 @@ This document chronicles the real engineering defects encountered during develop
 | **BUG-07** | Data-Loss Bug: Empty Cloud Overwriting Local Cache | Critical (Data) | Empty Supabase query responses wiped pre-existing local caches | ✅ Resolved |
 | **BUG-08** | Permissive Form Validation & Inverted Meeting Schedules | Medium (Quality) | Permissive email regex, unbounded phone numbers, negative deal values | ✅ Resolved |
 | **BUG-09** | Notification Dropdown Bottom-Left Positioning & Visibility Clipping | Medium (UI / Layout) | Bell in sidebar footer, container overflow-y: auto clipping, hidden top header | ✅ Resolved |
+| **BUG-10** | Dashboard Search and Filters Missing / Nonfunctional | High (Usability) | Missing search input, status filter controls, and reset logic in Dashboard activity view | ✅ Resolved in local code & verified |
+| **BUG-11** | Deal Pipeline Dragged Cards Passing Behind Columns | Medium (UI / Layering) | Parent column `backdrop-filter: blur()` created isolated stacking context trapping fixed dragged cards | ✅ Resolved in local code & verified |
+| **BUG-12** | Settings Accent Color Labels & Swatches Misaligned with Palette | Low (UI / Design System) | Stale neon SaaS labels (`Violet / Indigo`, `Electric Blue`, `Emerald Green`) remained after brand redesign | ✅ Resolved in local code & verified |
+| **BUG-13** | Connection Bloom Illustration Lacked Meaningful CRM Labels | Low (Product / UI) | Abstract geometric flower petals lacked clear conceptual ties to CRM capabilities | ✅ Resolved in local code & verified |
+| **BUG-14** | Email Confirmation Returned to Landing Page Without Verification | High (Authentication) | Missing `emailRedirectTo`, absent URL token/code callback handler, and premature hash routing to landing view | ⚠️ Application fix implemented; external Supabase re-enablement & end-to-end verification pending |
 
 ---
 
@@ -170,8 +175,89 @@ This document chronicles the real engineering defects encountered during develop
 
 ---
 
+### Bug #10: Dashboard Search and Filters Missing / Nonfunctional
+- **Severity**: High (Usability & Feature Completeness)
+- **Discovery**: Reported during live-application testing (TC-03). The user observed that searching and filtering customer activity on the Executive Dashboard was nonfunctional.
+- **Root Cause**: The Executive Dashboard view previously lacked interactive search input handlers and status filtering controls on the Recent Customer Activity table.
+- **Fix Applied**:
+  1. Added `searchQuery` and `statusFilter` states to `src/pages/DashboardPage.tsx`.
+  2. Implemented real-time multi-criteria filtering across name, company, email, and phone, combined with lifecycle status filtering (`ALL`, `New`, `Contacted`, `Negotiation`, `Lost`).
+  3. Added a dedicated search & filter bar to the Recent Customer Activity section with clear search button (`X`) and a 1-click `Clear Filters` reset button.
+  4. Added an explicit empty filter state displaying a `Reset Filters` action when a query returns no records.
+  5. Authored 7 automated tests in `src/test/dashboard_filters.test.tsx` covering all search, filter, reset, and empty-state behaviors.
+- **Files Changed**: `src/pages/DashboardPage.tsx`, `src/test/dashboard_filters.test.tsx`
+- **Verification**: All 7 dashboard filter tests pass; verified locally via `npm test`.
+
+---
+
+### Bug #11: Deal Pipeline Dragged Cards Passing Behind Columns
+- **Severity**: Medium (Visual Layering / Stacking Context)
+- **Discovery**: Reported during live testing (TC-08). Dragging a deal card across the Kanban board functioned logically and persisted on reload, but the dragged card title visually appeared behind neighboring columns.
+- **Root Cause**: Under CSS specifications, `backdrop-filter: blur(16px)` on the Kanban column containers creates an isolated stacking context and containing block. When `@hello-pangea/dnd` positioned the dragging card with `position: fixed`, the card remained trapped within the source column's stacking context, rendering visually behind subsequent columns in DOM order.
+- **Fix Applied**:
+  1. Updated `src/components/pipeline/KanbanCard.tsx` to render the dragged card via `createPortal(cardNode, document.body)` when `snapshot.isDragging` is active, elevating it above all column stacking contexts.
+  2. Added `zIndex: snapshot.isDragging ? 9999 : 'auto'` and enhanced elevation shadow during drag.
+  3. Added explicit `position: relative` to column wrappers in `src/components/pipeline/KanbanBoard.tsx`.
+- **Files Changed**: `src/components/pipeline/KanbanCard.tsx`, `src/components/pipeline/KanbanBoard.tsx`
+- **Verification**: Verified in local rendering; dragged cards remain fully visible above all columns throughout the drag operation.
+
+---
+
+### Bug #12: Settings Accent Color Labels & Swatches Misaligned with Palette
+- **Severity**: Low (UI Defect & Token Alignment)
+- **Discovery**: Reported during live testing (TC-13). Theme switching functioned, but accent color controls displayed outdated labels (`Violet / Indigo`, `Electric Blue`, `Emerald Green`) and neon swatches that contradicted the actual design system palette.
+- **Root Cause**: Stale button labels and neon CSS colors from an earlier theme revision were never updated to reflect the warm ivory/forest green/brass palette defined in `tokens.css`.
+- **Fix Applied**:
+  1. Updated `src/pages/SettingsPage.tsx` button labels, swatches, and active borders to match the design system tokens:
+     - `Forest Green` (`#24392F`) mapping to `data-accent="green"` (Default)
+     - `Antique Brass` (`#B49A69`) mapping to `data-accent="violet"`
+     - `Muted Olive` (`#69735C`) mapping to `data-accent="blue"`
+  2. Preserved backward-compatible stored preference keys (`green`, `violet`, `blue`).
+  3. Updated test assertions in `src/test/preferences.test.tsx`.
+- **Files Changed**: `src/pages/SettingsPage.tsx`, `src/test/preferences.test.tsx`
+- **Verification**: All 8 preference unit tests pass cleanly in `src/test/preferences.test.tsx`.
+
+---
+
+### Bug #13: Connection Bloom Illustration Lacked Meaningful CRM Labels
+- **Severity**: Low (Design Clarity & Product Association)
+- **Discovery**: Review noted that while the flower-like Connection Bloom illustration on the landing page was visually appealing, its organic shapes felt abstract and lacked an obvious conceptual connection to MiniCRM's features.
+- **Root Cause**: Vector artwork consisted of abstract petals and geometric nodes without semantic labels connecting the graphic to CRM capabilities.
+- **Fix Applied**:
+  1. Integrated the 5 exact requested English labels into corresponding petal-like shapes in `src/components/landing/ConnectionBloom.tsx`:
+     - **GROWTH**: Anchored above the Apex Crown (representing long-term development).
+     - **CUSTOMERS**: Positioned on the left petal shoulder with an antique brass leader line (representing customer relationships).
+     - **DEALS**: Positioned on the right petal shoulder with an antique brass leader line (representing the sales pipeline).
+     - **MEETINGS**: Positioned beneath the central convergence node (representing scheduled interactions).
+     - **FOLLOW-UPS**: Positioned alongside the lower engagement foliage (representing continuing engagement).
+  2. Strictly preserved the original geometry, silhouette, palette, animations, and responsive boundaries.
+  3. Formatted with refined typography (`fontSize="8"`, `fontWeight="700"`, letter spacing, warm ivory backing capsules) to ensure readability and zero clipping across desktop and mobile screens.
+- **Files Changed**: `src/components/landing/ConnectionBloom.tsx`
+- **Verification**: Verified via production build and visual inspection across viewports.
+
+---
+
+### Bug #14: Email Confirmation Returned Users to Landing Page Without Completing Verification
+- **Severity**: High (Authentication Flow)
+- **Discovery**: Reported during live-application testing (TC-01). The confirmation email arrived in Spam; clicking "Confirm email address" opened the published landing page, and the Supabase user remained unconfirmed (`email_confirmed_at` null).
+- **Root Causes**:
+  1. In `src/context/AuthContext.tsx`, `supabase.auth.signUp()` was called without `options.emailRedirectTo`, defaulting Supabase to the Site URL root.
+  2. The application had no URL callback handler to parse and verify incoming OTP tokens (`token_hash` & `type`) or PKCE `code` parameters.
+  3. Hash-based routing in `src/App.tsx` treated unexpected hashes or empty routes as public landing page views, bypassing authentication state resolution.
+- **Fix Applied (Application Side)**:
+  1. Configured `options.emailRedirectTo` in `signUp` targeting `${window.location.origin}/`.
+  2. Implemented `processAuthCallback` in `AuthProvider`'s initialization to detect `token_hash` and invoke `supabase.auth.verifyOtp({ token_hash, type })`, exchange PKCE `code` via `supabase.auth.exchangeCodeForSession(code)`, log auth redirect errors, and route to `#dashboard` on success.
+  3. Updated hash-change routing in `src/App.tsx` so authentication tokens and callback parameters are not treated as public landing page navigations.
+- **External Dependencies & Verification Status**:
+  - **Status**: Application-side redirect and callback handling have been updated in code and pass all automated tests. However, **end-to-end email verification has NOT yet been verified in production**.
+  - **Required Supabase Action**: During live testing, Supabase's "Confirm email" setting was temporarily disabled to permit testing unconfirmed accounts. The updated flow requires re-enabling "Confirm email" in the Supabase Dashboard (*Authentication → Providers → Email*), verifying that the email template uses `{{ .ConfirmationURL }}` (or `{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=signup`), and generating a fresh confirmation email to test end-to-end.
+  - **Deliverability Notice**: Gmail Custom SMTP deliverability (inbox vs. spam) depends on external DNS records (SPF, DKIM, DMARC) and cannot be guaranteed by frontend code changes.
+- **Files Changed**: `src/context/AuthContext.tsx`, `src/App.tsx`
+
+---
+
 ## Final Verification Summary
-- **Total Defects Documented**: 9
-- **Total Defects Resolved**: 9 (100% resolution rate)
-- **Automated Regression Suite**: 94 tests passing (`npm test`)
+- **Total Defects Documented**: 14 (BUG-01 through BUG-14)
+- **Defects Resolved in Code**: 13 fully resolved; 1 (BUG-14) application-side fix implemented with external Supabase re-enablement and live verification pending.
+- **Automated Regression Suite**: 107 tests passing across 10 test files (`npm test`)
 - **Production Build Status**: Clean build generated in `dist/` with 0 TypeScript or bundling errors.

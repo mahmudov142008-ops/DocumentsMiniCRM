@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Customer, CustomerInput, Deal, Task, Meeting, SalesGoal } from '../types/crm';
+import { Customer, CustomerInput, CustomerStatus, Deal, Task, Meeting, SalesGoal } from '../types/crm';
 import { dealService } from '../services/dealService';
 import { taskService } from '../services/taskService';
 import { meetingService } from '../services/meetingService';
@@ -21,6 +21,9 @@ import {
   Clock,
   ArrowRight,
   Target,
+  Search,
+  X,
+  Filter,
 } from 'lucide-react';
 
 interface DashboardPageProps {
@@ -50,6 +53,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   // Date Filter
   const [period, setPeriod] = useState<'all' | 'month' | 'quarter' | 'year'>('all');
+
+  // Dashboard Activity Search & Filter
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<CustomerStatus | 'ALL'>('ALL');
 
   // Modals
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
@@ -106,6 +113,29 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   const filteredCustomers = filterByPeriod(customers);
   const filteredDeals = filterByPeriod(deals);
+
+  // Filtered displayed customers for dashboard activity
+  const displayedCustomers = filteredCustomers.filter(c => {
+    if (statusFilter !== 'ALL' && c.status !== statusFilter) {
+      return false;
+    }
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      const matchesName = c.name.toLowerCase().includes(q);
+      const matchesCompany = c.company.toLowerCase().includes(q);
+      const matchesEmail = c.email.toLowerCase().includes(q);
+      const matchesPhone = c.phone?.toLowerCase().includes(q);
+      if (!matchesName && !matchesCompany && !matchesEmail && !matchesPhone) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setStatusFilter('ALL');
+  };
 
   // Real Calculated Metrics
   const totalCustomers = filteredCustomers.length;
@@ -453,12 +483,139 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </button>
         </div>
 
+        {/* Dashboard Search & Filter Bar */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '12px',
+            marginBottom: '16px',
+            padding: '12px 14px',
+            backgroundColor: 'var(--bg-card-subtle)',
+            borderRadius: '10px',
+            border: '1px solid var(--border-light)',
+          }}
+        >
+          {/* Search Input */}
+          <div style={{ position: 'relative', flex: '1 1 240px', minWidth: '200px' }}>
+            <Search
+              size={15}
+              style={{
+                position: 'absolute',
+                left: '12px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: 'var(--text-tertiary)',
+              }}
+            />
+            <input
+              type="text"
+              id="dashboard-search-input"
+              data-testid="dashboard-search-input"
+              className="form-input"
+              style={{
+                width: '100%',
+                paddingLeft: '36px',
+                paddingRight: searchQuery ? '32px' : '12px',
+                fontSize: '0.8125rem',
+                height: '36px',
+              }}
+              placeholder="Search recent activity by name, company, email..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                data-testid="dashboard-clear-search-btn"
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: 'var(--text-tertiary)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  padding: '2px',
+                }}
+                aria-label="Clear search"
+              >
+                <X size={13} />
+              </button>
+            )}
+          </div>
+
+          {/* Status Filter Buttons */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', display: 'flex', alignItems: 'center', gap: '4px', marginRight: '2px' }}>
+              <Filter size={13} /> Status:
+            </span>
+            {(['ALL', 'New', 'Contacted', 'Negotiation', 'Lost'] as const).map(st => (
+              <button
+                key={st}
+                type="button"
+                data-testid={`dashboard-filter-${st.toLowerCase()}`}
+                onClick={() => setStatusFilter(st)}
+                style={{
+                  padding: '4px 10px',
+                  borderRadius: '6px',
+                  fontSize: '0.75rem',
+                  fontWeight: statusFilter === st ? 600 : 500,
+                  backgroundColor: statusFilter === st ? 'var(--primary-subtle)' : 'transparent',
+                  color: statusFilter === st ? 'var(--primary)' : 'var(--text-secondary)',
+                  border: `1px solid ${statusFilter === st ? 'var(--primary-border)' : 'var(--border-light)'}`,
+                  cursor: 'pointer',
+                  transition: 'all 150ms',
+                }}
+              >
+                {st === 'ALL' ? 'All' : st}
+              </button>
+            ))}
+
+            {(searchQuery.trim() !== '' || statusFilter !== 'ALL') && (
+              <button
+                type="button"
+                onClick={handleResetFilters}
+                data-testid="dashboard-reset-filters-btn"
+                className="btn-ghost"
+                style={{
+                  fontSize: '0.75rem',
+                  color: 'var(--danger)',
+                  padding: '4px 8px',
+                  marginLeft: '4px',
+                }}
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
+        </div>
+
         {filteredCustomers.length === 0 ? (
           <div style={{ padding: '36px', textAlign: 'center', color: 'var(--text-tertiary)' }}>
             <Users size={32} style={{ margin: '0 auto 8px', opacity: 0.3 }} />
             <p style={{ fontSize: '0.875rem' }}>No customers registered yet.</p>
             <button onClick={() => setIsAddModalOpen(true)} className="btn btn-primary" style={{ marginTop: '12px' }}>
               <Plus size={15} /> Add First Customer
+            </button>
+          </div>
+        ) : displayedCustomers.length === 0 ? (
+          <div style={{ padding: '36px', textAlign: 'center', color: 'var(--text-tertiary)' }}>
+            <Search size={32} style={{ margin: '0 auto 8px', opacity: 0.3 }} />
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              No recent customer activity matches your search and filter criteria.
+            </p>
+            <button
+              onClick={handleResetFilters}
+              className="btn btn-secondary"
+              style={{ marginTop: '12px', fontSize: '0.8125rem' }}
+            >
+              Reset Filters
             </button>
           </div>
         ) : (
@@ -474,7 +631,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {filteredCustomers.slice(0, 6).map(cust => (
+                {displayedCustomers.slice(0, 6).map(cust => (
                   <tr
                     key={cust.id}
                     style={{ borderBottom: '1px solid var(--border-light)', cursor: 'pointer' }}

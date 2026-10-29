@@ -77,6 +77,9 @@ const MainApplication: React.FC = () => {
       if (VALID_PAGES.includes(cleanHash)) {
         setCurrentPage(cleanHash);
         setIsViewingLanding(false);
+      } else if (hash.includes('access_token=') || hash.includes('token_hash=') || hash.includes('type=')) {
+        setIsViewingLanding(false);
+        return;
       }
 
       if (hash === '#login') {

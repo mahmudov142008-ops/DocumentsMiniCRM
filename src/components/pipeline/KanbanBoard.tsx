@@ -61,6 +61,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
             <div
               key={columnKey}
               style={{
+                position: 'relative',
                 backgroundColor: 'var(--bg-card-subtle)',
                 backdropFilter: 'blur(16px)',
                 borderRadius: '16px',

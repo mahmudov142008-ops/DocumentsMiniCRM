@@ -11,6 +11,7 @@ interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (email: string, password: string, fullName?: string) => Promise<{ error: string | null; requiresEmailConfirmation?: boolean }>;
   signOut: () => Promise<void>;
+  confirmEmail: (tokenHash: string, type: string) => Promise<{ error: string | null }>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -26,84 +27,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    // 0. Process email confirmation / PKCE / OTP callbacks from URL.
-    // Returns true if a session was successfully established from the callback URL.
-    const processAuthCallback = async (): Promise<boolean> => {
-      if (typeof window === 'undefined') return false;
-
-      const searchParams = new URLSearchParams(window.location.search);
-      const hashStr = window.location.hash.startsWith('#')
-        ? window.location.hash.substring(1)
-        : window.location.hash;
-      const hashParams = new URLSearchParams(hashStr);
-
-      const tokenHash = searchParams.get('token_hash') || hashParams.get('token_hash');
-      const otpType = (searchParams.get('type') || hashParams.get('type')) as 'signup' | 'email' | 'recovery' | null;
-      const code = searchParams.get('code') || hashParams.get('code');
-      const errorDescription = searchParams.get('error_description') || hashParams.get('error_description');
-
-      if (errorDescription) {
-        console.warn('Supabase Auth redirect error:', errorDescription);
-        return false;
-      } else if (tokenHash && otpType) {
-        try {
-          const { data, error } = await supabase.auth.verifyOtp({
-            token_hash: tokenHash,
-            type: otpType as any,
-          });
-          if (!error && data?.session) {
-            setSession(data.session);
-            setUser(data.session.user);
-            // Clear auth params from URL, navigate to dashboard
-            window.history.replaceState(null, '', window.location.pathname + '#dashboard');
-            setLoading(false);
-            return true;
-          }
-        } catch (err) {
-          console.error('Error verifying email OTP:', err);
-        }
-        return false;
-      } else if (code) {
-        try {
-          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-          if (!error && data?.session) {
-            setSession(data.session);
-            setUser(data.session.user);
-            // Clear auth params from URL, navigate to dashboard
-            window.history.replaceState(null, '', window.location.pathname + '#dashboard');
-            setLoading(false);
-            return true;
-          }
-        } catch (err) {
-          console.error('Error exchanging code for session:', err);
-        }
-        return false;
-      }
-
-      return false;
-    };
-
-    // 1. Process callback; only fall back to getSession() if the callback did NOT
-    //    already establish a session. This prevents the getSession() call from
-    //    racing with the PKCE/OTP exchange and overwriting the new session with null.
-    processAuthCallback().then((callbackEstablishedSession) => {
-      if (callbackEstablishedSession) {
-        // Session already set by processAuthCallback — nothing more to do here.
-        return;
-      }
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
-      }).catch((err) => {
-        console.error('Error checking initial session:', err);
-        setLoading(false);
-      });
+    // 1. Get the current session once on mount.
+    //    The Supabase JS v2 client automatically handles PKCE code exchange and
+    //    implicit-flow token fragments on its own when the page loads.
+    //    We do NOT manually call exchangeCodeForSession() or verifyOtp() here —
+    //    that would race with the client's own handler and consume the token twice.
+    //    Instead, onAuthStateChange below receives SIGNED_IN with the resulting session.
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    }).catch((err) => {
+      console.error('Error checking initial session:', err);
+      setLoading(false);
     });
 
-    // 2. Listen to auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT') {
+    // 2. Listen to all auth state changes — including SIGNED_IN after email confirmation.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (_event === 'SIGNED_OUT') {
         clearCrmUserData();
       }
       setSession(session);
@@ -147,16 +88,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { error: 'Supabase credentials are not configured. Please check your .env file.' };
     }
 
-    const redirectUrl = typeof window !== 'undefined'
-      ? `${window.location.origin}/`
-      : 'https://documents-mini-crm.vercel.app/';
-
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
         options: {
-          emailRedirectTo: redirectUrl,
+          // emailRedirectTo is not used with the custom TokenHash template approach —
+          // the template links directly to the app's /confirm screen.
           data: {
             full_name: fullName?.trim() || '',
           },
@@ -167,12 +105,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: error.message };
       }
 
-      // If user is returned but session is null, email confirmation is active in Supabase
+      // If user is returned but session is null, email confirmation is required
       const requiresEmailConfirmation = Boolean(data.user && !data.session);
 
       return { error: null, requiresEmailConfirmation };
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'An unexpected error occurred during sign up';
+      return { error: message };
+    }
+  };
+
+  /**
+   * confirmEmail — called by EmailConfirmPage when the user clicks "Confirm & Continue".
+   * Verifies the token_hash from the confirmation URL. On success, onAuthStateChange
+   * fires with SIGNED_IN and the session is automatically set.
+   */
+  const confirmEmail = async (
+    tokenHash: string,
+    type: string
+  ): Promise<{ error: string | null }> => {
+    if (!isSupabaseConfigured) {
+      return { error: 'Supabase is not configured.' };
+    }
+
+    try {
+      const { error } = await supabase.auth.verifyOtp({
+        token_hash: tokenHash,
+        type: type as 'signup' | 'email' | 'recovery',
+      });
+
+      if (error) {
+        return { error: error.message };
+      }
+
+      return { error: null };
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred during verification';
       return { error: message };
     }
   };
@@ -200,6 +168,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signIn,
         signUp,
         signOut,
+        confirmEmail,
       }}
     >
       {children}

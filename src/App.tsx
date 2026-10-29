@@ -13,6 +13,7 @@ import { CalendarPage } from './pages/CalendarPage';
 import { CompaniesPage } from './pages/CompaniesPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { AppLayout, AppPage } from './components/layout/AppLayout';
+import { EmailConfirmPage } from './pages/EmailConfirmPage';
 import { customerService } from './services/customerService';
 import { Customer, CustomerInput, CustomerStatus } from './types/crm';
 import './styles/main.css';
@@ -33,6 +34,23 @@ const VALID_PAGES: AppPage[] = [
 const MainApplication: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
+
+  // ── Email confirmation screen detection ──────────────────────────────────────
+  // Detect ?token_hash=...&type=...&next=confirm in the URL query string.
+  // This is placed in the URL by the custom Supabase email template.
+  // We read these once on mount using a ref so they survive re-renders.
+  const confirmParams = React.useMemo(() => {
+    if (typeof window === 'undefined') return null;
+    const sp = new URLSearchParams(window.location.search);
+    const tokenHash = sp.get('token_hash');
+    const type = sp.get('type');
+    const next = sp.get('next');
+    if (tokenHash && type && next === 'confirm') {
+      return { tokenHash, type };
+    }
+    return null;
+  }, []);
+  // ────────────────────────────────────────────────────────────────────────────
 
   // Authenticated page navigation synced with hash
   const getInitialAppPage = (): AppPage => {
@@ -213,6 +231,32 @@ const MainApplication: React.FC = () => {
       toast.error(msg);
     }
   };
+
+  // ── Email confirmation screen ────────────────────────────────────────────────
+  // Show the confirmation screen whenever the URL contains a valid token_hash.
+  // This is shown BEFORE the auth-loading check so we never flash the landing
+  // page while the user is mid-confirmation. If the user is already authenticated
+  // (e.g. the Supabase client processed the token automatically), onSuccess
+  // navigates straight to the dashboard.
+  if (confirmParams && !authLoading) {
+    return (
+      <EmailConfirmPage
+        tokenHash={confirmParams.tokenHash}
+        type={confirmParams.type}
+        onSuccess={() => {
+          // Clear the query params from the address bar, then go to dashboard
+          window.history.replaceState(null, '', window.location.pathname + '#dashboard');
+          setCurrentPage('dashboard');
+          setIsViewingLanding(false);
+        }}
+      />
+    );
+  }
+
+  if (confirmParams && authLoading) {
+    // Still loading — show the same splash screen (fall through below)
+  }
+  // ────────────────────────────────────────────────────────────────────────────
 
   // Loading Splash Screen
   if (authLoading) {
